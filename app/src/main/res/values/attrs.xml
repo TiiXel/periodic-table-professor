@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PeriodicTableView">
+        <attr name="fitX" format="boolean"/>
+        <attr name="fitY" format="boolean"/>
+        <attr name="zoomable" format="boolean"/>
+        <attr name="drawDetails" format="boolean"/>
+    </declare-styleable>
+</resources>

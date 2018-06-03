@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:cardElevation="1dp"
+            app:contentPadding="10dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/home_fragment_learn_tour_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/home_tour_title"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/home_fragment_learn_tour_message"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/home_tour_message"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+                    app:layout_constraintTop_toBottomOf="@id/home_fragment_learn_tour_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/home_fragment_learn_tour_button"/>
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/home_fragment_learn_tour_button"
+                    android:layout_width="@dimen/touch_zone"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_forward"
+                    android:tint="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="@id/home_fragment_learn_tour_message"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/home_fragment_learn_tour_message"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:cardElevation="1dp"
+            app:contentPadding="10dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/home_fragment_learn_browse_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/home_browse_title"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/home_fragment_learn_browse_message"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/home_browse_message"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+                    app:layout_constraintTop_toBottomOf="@id/home_fragment_learn_browse_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/home_fragment_learn_browse_button"/>
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/home_fragment_learn_browse_button"
+                    android:layout_width="@dimen/touch_zone"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_forward"
+                    android:tint="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="@id/home_fragment_learn_browse_message"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/home_fragment_learn_browse_message"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:cardElevation="1dp"
+            app:contentPadding="10dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/home_fragment_learn_review_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/home_study_title"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/home_fragment_learn_review_message"
+                    android:layout_width="0dp"
+                    android:layout_height="72dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/home_study_review_message"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+                    app:layout_constraintEnd_toStartOf="@id/home_fragment_learn_buttons_barrier"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/home_fragment_learn_review_title"/>
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/home_fragment_learn_review_button"
+                    android:layout_width="@dimen/touch_zone"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_forward"
+                    android:tint="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="@id/home_fragment_learn_review_message"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/home_fragment_learn_review_message"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+                <TextView
+                    android:id="@+id/home_fragment_learn_cram_message"
+                    android:layout_width="0dp"
+                    android:layout_height="72dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/home_study_cram_message"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+                    app:layout_constraintEnd_toStartOf="@id/home_fragment_learn_buttons_barrier"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/home_fragment_learn_review_message"/>
+
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/home_fragment_learn_cram_button"
+                    android:layout_width="@dimen/touch_zone"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:src="@drawable/ic_arrow_forward"
+                    android:tint="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="@id/home_fragment_learn_cram_message"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/home_fragment_learn_cram_message"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+                <android.support.constraint.Barrier
+                    android:id="@+id/home_fragment_learn_buttons_barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="start"
+                    app:constraint_referenced_ids="home_fragment_learn_review_button,home_fragment_learn_cram_button"/>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/small_space"/>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name">Periodic Table Professor</string>
+
+    <string name="ok">OK"</string>
+    <string name="cancel">Cancel</string>
+    <string name="reload">Reload</string>
+
+    <string name="activity_title_review">Review</string>
+
+    <string name="error_message_default">Oops, there was an error fetching the data</string>
+    <string name="error_message_default_button">Try again</string>
+    <string name="error_message_all_cards_are_new">You haven\'t added any cards yet, would you like to start learning?</string>
+    <string name="error_message_all_cards_are_new_button">Yes, load the first card</string>
+    <string name="error_message_no_cards_due_soon">No cards due soon! Looks like you\'ve done your job. Your next card is due in %1$s.</string>
+    <string name="error_message_no_cards_due_soon_button_load_new">Load a new card now</string>
+    <string name="error_message_no_cards_due_soon_button_reload">@string/reload</string>
+    <string name="error_message_no_cards_are_new">No cards are new, you know it all. Congratulations!</string>
+
+    <string name="add_note">Add note</string>
+    <string name="edit_note">Edit note</string>
+
+    <string name="add_new_card_how_many">How many cards would you add in your learning queue?</string>
+
+    <string name="check">Check</string>
+
+    <string name="performance_easy">Easy</string>
+    <string name="performance_medium">Medium</string>
+    <string name="performance_hard">Hard</string>
+    <string name="performance_failed">Failed</string>
+
+    <string name="element_data_point_name_abundance_crust">Abundance in Earth\'s crust</string>
+    <string name="element_data_point_name_abundance_sea">Abundance in sea</string>
+    <string name="element_data_point_name_atomic_number">Atomic number</string>
+    <string name="element_data_point_name_atomic_radius">Atomic radius</string>
+    <string name="element_data_point_name_atomic_weight">Atomic weight</string>
+    <string name="element_data_point_name_description">Description</string>
+    <string name="element_data_point_name_discoverers">Discoverers</string>
+    <string name="element_data_point_name_discovery_location">Discovery location</string>
+    <string name="element_data_point_name_discovery_year">Discovery year</string>
+    <string name="element_data_point_name_electronic_configuration">Electronic configuration</string>
+    <string name="element_data_point_name_en_pauling">Electronegativity (Pauling)</string>
+    <string name="element_data_point_name_is_radioactive">Is radioactive?</string>
+    <string name="element_data_point_name_name">Name</string>
+    <string name="element_data_point_name_name_origin">Name origin</string>
+    <string name="element_data_point_name_sources">Sources</string>
+    <string name="element_data_point_name_symbol">Symbol</string>
+    <string name="element_data_point_name_uses">Uses</string>
+    <string name="element_data_point_name_vdw_radius">Van Der Waals radius</string>
+
+    <string-array name="table_spinner_element_one_line_data_points">
+        <item>@string/element_data_point_name_abundance_crust</item>
+        <item>@string/element_data_point_name_abundance_sea</item>
+        <item>@string/element_data_point_name_atomic_radius</item>
+        <item>@string/element_data_point_name_atomic_weight</item>
+        <item>@string/element_data_point_name_discovery_location</item>
+        <item>@string/element_data_point_name_discovery_year</item>
+        <item>@string/element_data_point_name_electronic_configuration</item>
+        <item>@string/element_data_point_name_en_pauling</item>
+        <item>@string/element_data_point_name_name</item>
+        <item>@string/element_data_point_name_vdw_radius</item>
+    </string-array>
+
+    <string name="review_appbar_extra_counts">Reviewable now: %1$d, today: %2$d</string>
+
+    <string name="home_tab_learn_title">Learn</string>
+    <string name="home_tab_statistics_title">Statistics</string>
+
+    <string name="home_tour_title">Welcome!</string>
+    <string name="home_tour_message">Start a guided tour to explore Periodic Table Professor and discover the memorization mechanics.</string>
+    <string name="home_browse_title">The periodic table</string>
+    <string name="home_browse_message">Visualise the periodic table of the elements and learn more about them.</string>
+    <string name="home_study_title">Study</string>
+    <string name="home_study_review_message">Review cards due soon and memorize atomic number, symbol and name for elements of the periodic table.</string>
+    <string name="home_study_cram_message">Work on all known cards, regardless of due expectedDates, to cement your knowledge.</string>
+    <string name="home_study_new_message">Expose new cards for elements you don\'t know yet.</string>
+
+</resources>

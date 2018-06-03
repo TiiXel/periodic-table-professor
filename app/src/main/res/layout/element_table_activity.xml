@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.otaliastudios.zoom.ZoomLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:hasClickableChildren="true"
+        app:layout_constraintBottom_toTopOf="@id/elements_table_additional_data_spinner"
+        app:layout_constraintTop_toTopOf="parent"
+        app:maxZoom="10"
+        app:maxZoomType="zoom"
+        app:minZoom="1"
+        app:minZoomType="zoom"
+        app:overPinchable="false"
+        app:overScrollHorizontal="false"
+        app:overScrollVertical="false">
+
+            <com.tiixel.periodictableprofessor.widget.periodictable.PeriodicTableView
+                android:id="@+id/elements_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"/>
+
+    </com.otaliastudios.zoom.ZoomLayout>
+
+    <Spinner
+        android:id="@+id/elements_table_additional_data_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>

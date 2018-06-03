@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/error_message_default"
+        android:textAlignment="center"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/button_try_again_0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_message"
+        android:layout_centerHorizontal="true"
+        android:text="@string/error_message_default_button"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/button_try_again_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_try_again_0"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/button_try_again_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_try_again_1"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
+</RelativeLayout>
