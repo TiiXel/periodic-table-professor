@@ -14,6 +14,8 @@ import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.rxkotlin.zipWith
 import java.util.Date
+import java.util.Random
+import java.util.concurrent.ThreadLocalRandom
 import javax.inject.Inject
 
 class CardInteractorImpl @Inject constructor(
@@ -82,8 +84,14 @@ class CardInteractorImpl @Inject constructor(
             .filter { it.isNotEmpty() }
             .switchIfEmpty(Single.error(NoCardsDueSoonException))
             .map { it.sortedBy { it.nextDateOverdue }.last() }
-            .flatMap { cardRepository.getCard(it.element) }
-            .map { Pair(it, Card.Companion.Face.SYMBOL) }
+            .flatMap { cardRepository.getCard(it.element).zipWith(Single.just(it.isKnown)) }
+            .map {
+                if (it.second) {
+                    Pair(it.first, Card.Companion.Face.values()[Random().nextInt(Card.Companion.Face.values().size)])
+                } else {
+                    Pair(it.first, Card.Companion.Face.PICTURE)
+                }
+            }
     }
 
     override fun getNextReviewDate(): Maybe<Date> {

@@ -17,6 +17,11 @@ data class ReviewData(
         }
     val nextDate = Date(reviewDate.time + nextInterval)
 
+    val isKnown: Boolean
+        get() {
+            return nextInterval > 40000000
+        }
+
     fun isDueSoon(reference: Date): Boolean {
         return nextDateOverdue?.let { it >= 0.75 } ?: false
     }
