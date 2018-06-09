@@ -127,7 +127,8 @@ class ReviewActivity : AppCompatActivity(), MviView<ReviewIntent, ReviewViewStat
                 showError(
                     getString(
                         R.string.error_message_no_cards_due_soon,
-                        TimerParser.timerToString(this, state.nextReviewTimer)
+                        TimerParser.timerToString(this, state.nextReviewTimer),
+                        state.newCardCount
                     ),
                     ErrorButton(getString(R.string.error_message_no_cards_due_soon_button_load_new), loadNewCard),
                     ErrorButton(getString(R.string.error_message_no_cards_due_soon_button_reload), reload)

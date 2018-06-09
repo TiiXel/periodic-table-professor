@@ -11,7 +11,7 @@
     <string name="error_message_default_button">Try again</string>
     <string name="error_message_all_cards_are_new">You haven\'t added any cards yet, would you like to start learning?</string>
     <string name="error_message_all_cards_are_new_button">Yes, load the first card</string>
-    <string name="error_message_no_cards_due_soon">No cards due soon! Looks like you\'ve done your job. Your next card is due in %1$s.</string>
+    <string name="error_message_no_cards_due_soon">No cards due soon! Looks like you\'ve done your job. Your next card is due in %1$s. Today, you have already loaded %2$d new cards.</string>
     <string name="error_message_no_cards_due_soon_button_load_new">Load a new card now</string>
     <string name="error_message_no_cards_due_soon_button_reload">@string/reload</string>
     <string name="error_message_no_cards_are_new">No cards are new, you know it all. Congratulations!</string>
