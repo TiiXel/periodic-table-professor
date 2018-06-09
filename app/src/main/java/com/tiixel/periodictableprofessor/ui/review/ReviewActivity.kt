@@ -165,7 +165,11 @@ class ReviewActivity : AppCompatActivity(), MviView<ReviewIntent, ReviewViewStat
             Markwon.setMarkdown(review_mnemonic_phrase, state.card.mnemonicPhrase)
             review_mnemonic_phrase.visibility = if (state.card.visibleMnemonicPhrase) View.VISIBLE else View.INVISIBLE
 
-            review_periodic_table.colorizeElement(state.card.number.toByte())
+            if (state.card.visibleNumber) {
+                review_periodic_table.colorizeElement(state.card.number.toByte())
+            } else {
+                review_periodic_table.generateBlankCells()
+            }
 
             review_user_note.text = state.card.userNote
             review_user_note.visibility = if (state.card.visibleUserNote) View.VISIBLE else View.INVISIBLE
