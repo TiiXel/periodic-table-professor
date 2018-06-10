@@ -71,7 +71,7 @@
     <string name="home_browse_message">Visualise the periodic table of the elements and learn more about them.</string>
     <string name="home_study_title">Study</string>
     <string name="home_study_review_message">Review cards due soon and memorize atomic number, symbol and name for elements of the periodic table.</string>
-    <string name="home_study_cram_message">Work on all known cards, regardless of due expectedDates, to cement your knowledge.</string>
+    <string name="home_study_cram_message">Work on all known cards, regardless of when the algorithm would suggests you to review them, to cement your knowledge.</string>
     <string name="home_study_new_message">Expose new cards for elements you don\'t know yet.</string>
 
 </resources>
