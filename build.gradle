@@ -1,7 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    // Define tools versions
     ext.kotlin_version = '1.2.41'
+    ext.minSdkVersion = 16
+    ext.targetSdkVersion = 26
+    ext.compileSdkVersion = 26
+    ext.buildToolsVersion = '27.0.3'
+
     repositories {
         google()
         jcenter()
@@ -19,20 +25,6 @@ allprojects {
     repositories {
         jcenter()
         google()
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
         maven { url "https://jitpack.io" }
     }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
-
-// Define versions in a single place
-ext {
-    // Sdk and tools
-    minSdkVersion = 16
-    targetSdkVersion = 26
-    compileSdkVersion = 26
-    buildToolsVersion = '27.0.3'
 }
