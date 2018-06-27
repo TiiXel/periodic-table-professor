@@ -38,18 +38,20 @@ application.
 ## Data sources
 
 - Memory peg system: John P. Pratt's [website](http://www.johnpratt.com/atomic/periodic.html)
-- Elements chemical and physical data: [mendeleev](https://bitbucket.org/lukaszmentel/mendeleev/overview) python package database
+- Elements chemical and physical data: [mendeleev](https://bitbucket.org/lukaszmentel/mendeleev/overview)
+python package database
 
 ## How do I use it ?
 
 This application has not been released yet. It's not ready to be used, many
-features are missing or not working as intended. If you know how to do that, you
-can download the sources and compile it yourself: you'll get a basic experience
-of this app's behaviour.
+features are missing or not working as intended.
 
-I don't have a lot of time to work on it right now, so I thought it would be a
-good time to publish it on Github. My intention is mainly to backup the project,
-and start to use git versioning.
+A pre-release is available on the [releases](https://github.com/TiiXel/periodic-table-professor/releases)
+page of this Github repository, you can download and install it to your Android
+device.
+
+If you want to use and test the latest code, which might be unstable, you can
+download the master branch sources and compile the apk.
 
 ## Main todo list
 
