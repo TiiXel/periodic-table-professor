@@ -1,5 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:theme="@style/AppTheme">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/Toolbar"
+            app:popupTheme="@style/Toolbar"
+            style="@style/Widget.AppCompat.Toolbar">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/small_space">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true">
+
+                    <TextView
+                        android:id="@+id/details_atomic_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
+                        android:textColor="@android:color/secondary_text_dark"
+                        app:layout_constraintBottom_toBottomOf="@id/details_symbol"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/details_symbol"
+                        tools:text="98"/>
+
+                    <TextView
+                        android:id="@+id/details_symbol"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="@dimen/medium_space"
+                        android:includeFontPadding="false"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Display2"
+                        android:textColor="@android:color/primary_text_dark"
+                        app:layout_constraintLeft_toRightOf="@id/details_atomic_number"
+                        tools:text="Cf"/>
+
+                    <TextView
+                        android:id="@+id/details_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+                        android:textColor="@android:color/primary_text_dark"
+                        app:layout_constraintLeft_toRightOf="@id/details_symbol"
+                        app:layout_constraintTop_toTopOf="@id/details_symbol"
+                        tools:text="Californium"/>
+
+                </android.support.constraint.ConstraintLayout>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/element_properties"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+
+    </ScrollView>
+
+</LinearLayout>

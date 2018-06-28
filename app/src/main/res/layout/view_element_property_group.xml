@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="0dp"
+    android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/touch_zone"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/small_space"
+        android:paddingStart="@dimen/small_space"
+        android:background="@drawable/light_bg"
+        android:layout_marginBottom="2dp"
+        android:elevation="2dp">
+
+        <com.mikepenz.iconics.view.IconicsImageView
+            android:id="@+id/element_property_group_icon"
+            android:layout_width="@dimen/abc_text_size_body_2_material"
+            android:layout_height="@dimen/abc_text_size_body_2_material"
+            app:layout_constraintBottom_toBottomOf="@id/element_property_group_title"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toTopOf="@id/element_property_group_title"/>
+
+        <TextView
+            android:id="@+id/element_property_group_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/small_space"
+            android:paddingStart="@dimen/small_space"
+            android:layout_centerVertical="true"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/element_property_group_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="General properties"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/element_property_properties_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/small_space"
+        android:paddingLeft="@dimen/medium_space"
+        android:paddingRight="@dimen/small_space"
+        android:paddingStart="@dimen/medium_space"
+        app:layout_constraintTop_toBottomOf="@id/element_property_group_title">
+
+    </LinearLayout>
+
+</LinearLayout>
