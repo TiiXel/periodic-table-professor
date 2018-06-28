@@ -44,14 +44,34 @@ class ElementViewModel @Inject constructor(
     }
 
     private fun actionFromIntent(intent: ElementIntent): ElementAction {
-        TODO("Map actions to intents")
+        return when (intent) {
+            is ElementIntent.InitialIntent -> ElementAction.LoadElement(intent.element)
+        }
     }
 
     companion object {
 
         private val reducer = BiFunction { previousState: ElementViewState, result: ElementResult ->
-            // TODO: Reduce results to view state
-            return@BiFunction ElementViewState.idle()
+            when (result) {
+                is ElementResult.LoadElementResult.Success -> {
+                    previousState.copy(
+                        loadingInProgress = false,
+                        element = result.element
+                    )
+                }
+                is ElementResult.LoadElementResult.Failure -> {
+                    previousState.copy(
+                        loadingInProgress = false,
+                        loadingFailed = true
+                    )
+                    throw result.error
+                }
+                is ElementResult.LoadElementResult.InFlight -> {
+                    previousState.copy(
+                        loadingInProgress = true
+                    )
+                }
+            }
         }
     }
 }

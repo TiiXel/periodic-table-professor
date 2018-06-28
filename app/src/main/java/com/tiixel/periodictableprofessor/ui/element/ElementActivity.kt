@@ -23,6 +23,11 @@ class ElementActivity : AppCompatActivity(), MviView<ElementIntent, ElementViewS
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: ElementViewModel
 
+    // Starting intent extra params
+    enum class Extra(val key: String) {
+        ELEMENT("element")
+    }
+
     //<editor-fold desc="Life cycle methods">
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,10 +50,22 @@ class ElementActivity : AppCompatActivity(), MviView<ElementIntent, ElementViewS
 
     //<editor-fold desc="MVI methods">
     override fun intents(): Observable<ElementIntent> {
-        return Observable.just(ElementIntent.InitialIntent)
+        val element = intent.getByteExtra(Extra.ELEMENT.key, 0)
+        return Observable.just(ElementIntent.InitialIntent(element))
     }
 
     override fun render(state: ElementViewState) {
+        when  {
+            state.loadingInProgress -> {
+            }
+            state.loadingFailed -> {
+            }
+            state.element == null -> {
+            }
+            else -> {
+                
+            }
+        }
     }
     //</editor-fold>
 }

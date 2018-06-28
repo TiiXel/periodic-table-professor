@@ -4,5 +4,5 @@ import com.tiixel.periodictableprofessor.presentation.base.MviIntent
 
 sealed class ElementIntent : MviIntent {
 
-    object InitialIntent : ElementIntent()
+    data class InitialIntent(val element: Byte) : ElementIntent()
 }
