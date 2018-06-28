@@ -3,6 +3,7 @@ package com.tiixel.periodictableprofessor.dagger.module
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.tiixel.periodictableprofessor.dagger.ViewModelFactory
+import com.tiixel.periodictableprofessor.presentation.element.ElementViewModel
 import com.tiixel.periodictableprofessor.presentation.elementlist.ElementListViewModel
 import com.tiixel.periodictableprofessor.presentation.review.ReviewViewModel
 import dagger.Binds
@@ -30,6 +31,11 @@ internal abstract class PresentationModule {
     @IntoMap
     @ViewModelKey(ReviewViewModel::class)
     abstract fun bindLearnViewModel(viewModel: ReviewViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ElementViewModel::class)
+    abstract fun bindElementViewModel(viewModel: ElementViewModel): ViewModel
 
     @Binds
     @Singleton
