@@ -10,11 +10,11 @@ import com.mikepenz.community_material_typeface_library.CommunityMaterial
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
 import com.tiixel.periodictableprofessor.R
-import com.tiixel.periodictableprofessor.domain.Element
 import com.tiixel.periodictableprofessor.presentation.base.MviView
 import com.tiixel.periodictableprofessor.presentation.element.ElementIntent
 import com.tiixel.periodictableprofessor.presentation.element.ElementViewModel
 import com.tiixel.periodictableprofessor.presentation.element.ElementViewState
+import com.tiixel.periodictableprofessor.presentation.element.model.ElementModel
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -79,7 +79,7 @@ class ElementActivity : AppCompatActivity(), MviView<ElementIntent, ElementViewS
     }
     //</editor-fold>
 
-    private fun displayProperties(element: Element) {
+    private fun displayProperties(element: ElementModel) {
 
         details_name.text = element.name
         details_atomic_number.text = element.atomicNumber.toString()

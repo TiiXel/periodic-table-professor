@@ -1,10 +1,10 @@
 package com.tiixel.periodictableprofessor.presentation.element
 
-import com.tiixel.periodictableprofessor.domain.Element
 import com.tiixel.periodictableprofessor.presentation.base.MviViewState
+import com.tiixel.periodictableprofessor.presentation.element.model.ElementModel
 
 data class ElementViewState(
-    val element: Element?,
+    val element: ElementModel?,
     val loadingInProgress: Boolean,
     val loadingFailed: Boolean
 ) : MviViewState {

@@ -1,13 +1,17 @@
 package com.tiixel.periodictableprofessor.presentation.element
 
+import com.tiixel.periodictableprofessor.domain.card.CardInteractor
 import com.tiixel.periodictableprofessor.domain.element.ElementInteractor
+import com.tiixel.periodictableprofessor.presentation.element.model.ElementModel
 import com.tiixel.periodictableprofessor.util.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
+import io.reactivex.rxkotlin.zipWith
 import javax.inject.Inject
 
 class ElementActionProcessor @Inject constructor(
     private val elementInteractor: ElementInteractor,
+    private val cardInteractor: CardInteractor,
     private val schedulerProvider: BaseSchedulerProvider
 ) {
 
@@ -15,7 +19,9 @@ class ElementActionProcessor @Inject constructor(
         ObservableTransformer<ElementAction.LoadElement, ElementResult> { actions ->
             actions.flatMap { action ->
                 elementInteractor.getElement(action.element)
+                    .zipWith(cardInteractor.getCard(action.element))
                     .toObservable()
+                    .map { ElementModel.fromDomain(it.first, it.second) }
                     .map { ElementResult.LoadElementResult.Success(it) }
                     .cast(ElementResult.LoadElementResult::class.java)
                     .onErrorReturn { ElementResult.LoadElementResult.Failure(it) }
