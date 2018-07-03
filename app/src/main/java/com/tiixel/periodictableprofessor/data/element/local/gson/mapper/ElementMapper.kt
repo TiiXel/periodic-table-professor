@@ -16,12 +16,18 @@ object ElementMapper {
 
     fun toDomain(element: ElementEntity, elementLangEntity: ElementLangEntity): Element {
 
+        val abundanceCrust = if (element.abundance_crust.isNotBlank()) element.abundance_crust else null
+        val abundanceSea = if (element.abundance_sea.isNotBlank()) element.abundance_sea else null
+        val atomicRadius = if (element.atomic_radius.isNotBlank()) element.atomic_radius else null
+        val atomicWeight = if (element.atomic_weight.isNotBlank()) element.atomic_weight else null
+        val vdwRadius = if (element.vdw_radius.isNotBlank()) element.vdw_radius else null
+
         return Element(
-            abundanceCrust = Quantity(element.abundance_crust, MILLI(GRAM).divide(KILOGRAM)),
-            abundanceSea = Quantity(element.abundance_sea, MILLI(GRAM).divide(LITRE)),
+            abundanceCrust = abundanceCrust?.let { Quantity(it, MILLI(GRAM).divide(KILOGRAM)) },
+            abundanceSea = abundanceSea?.let { Quantity(it, MILLI(GRAM).divide(LITRE)) },
             atomicNumber = element.atomic_number,
-            atomicRadius = Quantity(element.atomic_radius, PICO(METRE)),
-            atomicWeight = Quantity(element.atomic_weight, NonSI.ATOMIC_MASS),
+            atomicRadius = atomicRadius?.let { Quantity(it, PICO(METRE)) },
+            atomicWeight = atomicWeight?.let { Quantity(it, NonSI.ATOMIC_MASS) },
             description = element.description,
             discoverers = element.discoverers,
             discoveryLocation = element.discovery_location,
@@ -34,7 +40,7 @@ object ElementMapper {
             sources = element.sources,
             symbol = element.symbol,
             uses = element.uses,
-            vdwRadius = Quantity(element.vdw_radius, PICO(METRE))
+            vdwRadius = vdwRadius?.let { Quantity(it, PICO(METRE)) }
         )
     }
 }
