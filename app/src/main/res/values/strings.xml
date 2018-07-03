@@ -47,6 +47,8 @@
     <string name="element_data_point_name_uses">Uses</string>
     <string name="element_data_point_name_vdw_radius">Van Der Waals radius</string>
 
+    <string name="element_property_name_mnemonic_phrase">Mnemonic description</string>
+
     <string-array name="table_spinner_element_one_line_data_points">
         <item>@string/element_data_point_name_abundance_crust</item>
         <item>@string/element_data_point_name_abundance_sea</item>

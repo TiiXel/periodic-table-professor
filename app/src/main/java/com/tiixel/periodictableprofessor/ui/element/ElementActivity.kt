@@ -5,10 +5,13 @@ import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.TypedValue
+import android.widget.ImageView
 import android.widget.LinearLayout
 import com.mikepenz.community_material_typeface_library.CommunityMaterial
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
+import com.mikepenz.iconics.typeface.IIcon
 import com.tiixel.periodictableprofessor.R
 import com.tiixel.periodictableprofessor.presentation.base.MviView
 import com.tiixel.periodictableprofessor.presentation.element.ElementIntent
@@ -21,7 +24,7 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.element_activity.*
 import kotlinx.android.synthetic.main.view_element_property.view.*
 import kotlinx.android.synthetic.main.view_element_property_group.view.*
-import java.util.UUID
+import ru.noties.markwon.Markwon
 import javax.inject.Inject
 
 class ElementActivity : AppCompatActivity(), MviView<ElementIntent, ElementViewState> {
@@ -86,48 +89,67 @@ class ElementActivity : AppCompatActivity(), MviView<ElementIntent, ElementViewS
         details_symbol.text = element.symbol
 
         // General properties
-        val generalGroup =
-            layoutInflater.inflate(R.layout.view_element_property_group, element_properties, false) as LinearLayout
-        generalGroup.element_property_group_icon.icon = IconicsDrawable(this)
-            .icon(GoogleMaterial.Icon.gmd_description)
-            .color(Color.BLACK)
-        generalGroup.element_property_group_title.text = "General properties"
-
-        val descriptionView = layoutInflater.inflate(R.layout.view_element_property, generalGroup, false) as LinearLayout
-        descriptionView.property_title.text = getString(R.string.element_data_point_name_description)
-        descriptionView.property_value.text = element.description
-        generalGroup.addView(descriptionView)
-
-        element_properties.addView(generalGroup)
+        val generalGroup = makeGroup("General properties", GoogleMaterial.Icon.gmd_description)
+        generalGroup.addProperty(R.string.element_data_point_name_description, element.description)
+        generalGroup.addProperty(R.string.element_data_point_name_sources, element.sources)
+        generalGroup.addProperty(R.string.element_data_point_name_uses, element.uses)
+        generalGroup.addProperty(R.string.element_data_point_name_discovery_year, element.discoveryYear)
+        generalGroup.addProperty(R.string.element_data_point_name_discovery_location, element.discoveryLocation)
+        generalGroup.addProperty(R.string.element_data_point_name_discoverers, element.discoverers)
+        generalGroup.addProperty(R.string.element_data_point_name_name_origin, element.nameOrigin)
 
         // Physical and chemical
-        val physicalGroup =
-            layoutInflater.inflate(R.layout.view_element_property_group, element_properties, false) as LinearLayout
-        physicalGroup.element_property_group_icon.icon = IconicsDrawable(this)
-            .icon(CommunityMaterial.Icon.cmd_temperature_celsius)
-            .color(Color.BLACK)
-        physicalGroup.element_property_group_title.text = "Physical & chemical properties"
+        val physicalGroup = makeGroup("Physical & chemical properties", CommunityMaterial.Icon.cmd_temperature_celsius)
+        physicalGroup.addProperty(
+            R.string.element_data_point_name_electronic_configuration,
+            element.electronicConfiguration
+        )
+        physicalGroup.addProperty(R.string.element_data_point_name_en_pauling, element.enPauling)
+        physicalGroup.addProperty(R.string.element_data_point_name_atomic_weight, element.atomicWeight)
+        physicalGroup.addProperty(R.string.element_data_point_name_atomic_radius, element.atomicRadius)
+        physicalGroup.addProperty(R.string.element_data_point_name_vdw_radius, element.vdwRadius)
 
-        val electronicConfigurationView = layoutInflater.inflate(R.layout.view_element_property, physicalGroup, false) as LinearLayout
-        electronicConfigurationView.property_title.text = getString(R.string.element_data_point_name_electronic_configuration)
-        electronicConfigurationView.property_value.text = element.electronicConfiguration
-        physicalGroup.addView(electronicConfigurationView)
-
-        element_properties.addView(physicalGroup)
+        // Geological properties
+        val geologicalGroup = makeGroup("Geological properties", CommunityMaterial.Icon.cmd_earth)
+        geologicalGroup.addProperty(R.string.element_data_point_name_abundance_crust, element.abundanceCrust)
+        geologicalGroup.addProperty(R.string.element_data_point_name_abundance_sea, element.abundanceSea)
 
         // Mnemonic
-        val mnemonicGroup =
+        if (element.mnemonicPhrase != null && element.mnemonicPicture != null) {
+            val mnemonicGroup = makeGroup("Mnemonic", CommunityMaterial.Icon.cmd_lightbulb_on)
+
+            val mnemonicPhrase =
+                layoutInflater.inflate(R.layout.view_element_property, mnemonicGroup, false) as LinearLayout
+            mnemonicPhrase.property_title.text = getString(R.string.element_property_name_mnemonic_phrase)
+            Markwon.setMarkdown(mnemonicPhrase.property_value, element.mnemonicPhrase.orEmpty())
+            mnemonicGroup.addView(mnemonicPhrase)
+
+            val mnemonicPicture = ImageView(this)
+            mnemonicPicture.minimumHeight = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                details_atomic_number.textSize,
+                resources.displayMetrics
+            ).toInt()
+            mnemonicPicture.setImageBitmap(element.mnemonicPicture)
+            mnemonicGroup.addView(mnemonicPicture)
+        }
+    }
+
+    private fun makeGroup(title: String, icon: IIcon): LinearLayout {
+        val group =
             layoutInflater.inflate(R.layout.view_element_property_group, element_properties, false) as LinearLayout
-        mnemonicGroup.element_property_group_icon.icon = IconicsDrawable(this)
-            .icon(CommunityMaterial.Icon.cmd_lightbulb_on)
-            .color(Color.BLACK)
-        mnemonicGroup.element_property_group_title.text = "Mnemonic"
+        group.element_property_group_icon.icon = IconicsDrawable(this).icon(icon).color(Color.BLACK)
+        group.element_property_group_title.text = title
+        element_properties.addView(group)
+        return group
+    }
 
-        val phraseView = layoutInflater.inflate(R.layout.view_element_property, mnemonicGroup, false) as LinearLayout
-        phraseView.property_title.text = "Phrase"
-        phraseView.property_value.text = UUID.randomUUID().toString()
-        mnemonicGroup.addView(phraseView)
+    private fun LinearLayout.addProperty(id: Int, value: String?) {
+        if (value == null) return
 
-        element_properties.addView(mnemonicGroup)
+        val propertyView = layoutInflater.inflate(R.layout.view_element_property, this, false) as LinearLayout
+        propertyView.property_title.text = getString(id)
+        propertyView.property_value.text = value
+        addView(propertyView)
     }
 }
