@@ -8,11 +8,13 @@ import android.support.v7.app.AppCompatActivity
 import android.util.TypedValue
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.mikepenz.community_material_typeface_library.CommunityMaterial
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 import com.tiixel.periodictableprofessor.R
+import com.tiixel.periodictableprofessor.domain.exception.AtomicNumberOutOfBoundsException
 import com.tiixel.periodictableprofessor.presentation.base.MviView
 import com.tiixel.periodictableprofessor.presentation.element.ElementIntent
 import com.tiixel.periodictableprofessor.presentation.element.ElementViewModel
@@ -21,6 +23,7 @@ import com.tiixel.periodictableprofessor.presentation.element.model.ElementModel
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.element_activity.*
 import kotlinx.android.synthetic.main.view_element_property.view.*
 import kotlinx.android.synthetic.main.view_element_property_group.view.*
@@ -29,12 +32,18 @@ import javax.inject.Inject
 
 class ElementActivity : AppCompatActivity(), MviView<ElementIntent, ElementViewState> {
 
+    // Intent publishers
+    private val loadNextElementIntentPublisher = PublishSubject.create<ElementIntent.LoadElement>()
+
     // Used to manage the data flow lifecycle and avoid memory leak
     private val disposable = CompositeDisposable()
 
     // View model
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: ElementViewModel
+
+    // View state
+    private lateinit var viewState: ElementViewState
 
     // Starting intent extra params
     enum class Extra(val key: String) {
@@ -48,6 +57,8 @@ class ElementActivity : AppCompatActivity(), MviView<ElementIntent, ElementViewS
         AndroidInjection.inject(this)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ElementViewModel::class.java)
+
+        setupViewListeners()
 
         // Subscribe to the ViewModel and call render for every emitted state
         disposable.add(viewModel.states().subscribe(this::render))
@@ -64,14 +75,23 @@ class ElementActivity : AppCompatActivity(), MviView<ElementIntent, ElementViewS
     //<editor-fold desc="MVI methods">
     override fun intents(): Observable<ElementIntent> {
         val element = intent.getByteExtra(Extra.ELEMENT.key, 0)
-        return Observable.just(ElementIntent.InitialIntent(element))
+        return Observable.merge(
+            Observable.just(ElementIntent.InitialIntent(element)),
+            loadNextElementIntentPublisher
+        )
     }
 
     override fun render(state: ElementViewState) {
+        viewState = state
+
+        when (state.loadingFailedCause) {
+            is AtomicNumberOutOfBoundsException -> {
+                Toast.makeText(this, "Invalid element requested!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         when {
             state.loadingInProgress -> {
-            }
-            state.loadingFailed -> {
             }
             state.element == null -> {
             }
@@ -82,11 +102,22 @@ class ElementActivity : AppCompatActivity(), MviView<ElementIntent, ElementViewS
     }
     //</editor-fold>
 
+    private fun setupViewListeners() {
+        details_button_prev.setOnClickListener {
+            prevElement()
+        }
+        details_button_next.setOnClickListener {
+            nextElement()
+        }
+    }
+
     private fun displayProperties(element: ElementModel) {
 
         details_name.text = element.name
         details_atomic_number.text = element.atomicNumber.toString()
         details_symbol.text = element.symbol
+
+        element_properties.removeAllViews()
 
         // General properties
         val generalGroup = makeGroup("General properties", GoogleMaterial.Icon.gmd_description)
@@ -152,4 +183,20 @@ class ElementActivity : AppCompatActivity(), MviView<ElementIntent, ElementViewS
         propertyView.property_value.text = value
         addView(propertyView)
     }
+
+    //<editor-fold desc="Intent publisher methods">
+    private fun nextElement() {
+        viewState.element?.let {
+            val intent = ElementIntent.LoadElement(element = (it.atomicNumber.toByte() + 1).toByte())
+            loadNextElementIntentPublisher.onNext(intent)
+        }
+    }
+
+    private fun prevElement() {
+        viewState.element?.let {
+            val intent = ElementIntent.LoadElement(element = (it.atomicNumber.toByte() - 1).toByte())
+            loadNextElementIntentPublisher.onNext(intent)
+        }
+    }
+    //</editor-fold>
 }

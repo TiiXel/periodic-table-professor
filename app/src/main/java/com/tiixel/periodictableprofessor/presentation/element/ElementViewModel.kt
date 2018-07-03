@@ -1,6 +1,7 @@
 package com.tiixel.periodictableprofessor.presentation.element
 
 import android.arch.lifecycle.ViewModel
+import com.tiixel.periodictableprofessor.domain.exception.AtomicNumberOutOfBoundsException
 import com.tiixel.periodictableprofessor.presentation.base.MviViewModel
 import com.tiixel.periodictableprofessor.util.extensions.notOfType
 import io.reactivex.Observable
@@ -46,6 +47,7 @@ class ElementViewModel @Inject constructor(
     private fun actionFromIntent(intent: ElementIntent): ElementAction {
         return when (intent) {
             is ElementIntent.InitialIntent -> ElementAction.LoadElement(intent.element)
+            is ElementIntent.LoadElement -> ElementAction.LoadElement(intent.element)
         }
     }
 
@@ -56,15 +58,20 @@ class ElementViewModel @Inject constructor(
                 is ElementResult.LoadElementResult.Success -> {
                     previousState.copy(
                         loadingInProgress = false,
+                        loadingFailedCause = null,
                         element = result.element
                     )
                 }
                 is ElementResult.LoadElementResult.Failure -> {
+                    when (result.error) {
+                        is AtomicNumberOutOfBoundsException -> {
+                        }
+                        else -> throw result.error
+                    }
                     previousState.copy(
                         loadingInProgress = false,
-                        loadingFailed = true
+                        loadingFailedCause = result.error
                     )
-                    throw result.error
                 }
                 is ElementResult.LoadElementResult.InFlight -> {
                     previousState.copy(

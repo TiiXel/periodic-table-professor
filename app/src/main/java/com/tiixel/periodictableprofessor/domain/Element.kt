@@ -1,7 +1,5 @@
 package com.tiixel.periodictableprofessor.domain
 
-import com.tiixel.periodictableprofessor.domain.exception.AtomicNumberOutOfBoundsException
-
 data class Element(
     val abundanceCrust: Quantity?,
     val abundanceSea: Quantity?,
@@ -29,8 +27,8 @@ data class Element(
 
     companion object {
 
-        fun verifyBounds(number: Byte) {
-            if (number <= 0 || number > 118) throw AtomicNumberOutOfBoundsException(number)
+        fun verifyBounds(number: Byte): Boolean {
+            return !(number <= 0 || number > 118)
         }
 
         fun tableColumnOf(atomicNumber: Byte): Byte {

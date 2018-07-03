@@ -6,7 +6,7 @@ import com.tiixel.periodictableprofessor.presentation.element.model.ElementModel
 data class ElementViewState(
     val element: ElementModel?,
     val loadingInProgress: Boolean,
-    val loadingFailed: Boolean
+    val loadingFailedCause: Throwable?
 ) : MviViewState {
 
     companion object {
@@ -15,7 +15,7 @@ data class ElementViewState(
             return ElementViewState(
                 element = null,
                 loadingInProgress = false,
-                loadingFailed = false
+                loadingFailedCause = null
             )
         }
     }

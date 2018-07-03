@@ -13,10 +13,46 @@
         android:gravity="top"
         android:theme="@style/AppTheme">
 
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/touch_zone"
+            android:paddingBottom="@dimen/small_space"
+            android:paddingEnd="@dimen/small_space"
+            android:paddingStart="@dimen/small_space"
+            android:paddingTop="@dimen/small_space">
+
+            <com.mikepenz.iconics.view.IconicsButton
+                android:id="@+id/details_button_prev"
+                android:layout_width="@dimen/touch_zone"
+                android:layout_height="@dimen/touch_zone"
+                android:text="{gmd-arrow-back}"
+                android:textColor="@android:color/white"
+                android:textSize="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText,SpUsage"
+                style="@style/Widget.AppCompat.Button.Borderless"/>
+
+            <com.mikepenz.iconics.view.IconicsButton
+                android:id="@+id/details_button_next"
+                android:layout_width="@dimen/touch_zone"
+                android:layout_height="@dimen/touch_zone"
+                android:text="{gmd-arrow-forward}"
+                android:textColor="@android:color/white"
+                android:textSize="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText,SpUsage"
+                style="@style/Widget.AppCompat.Button.Borderless"/>
+
+        </android.support.constraint.ConstraintLayout>
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="128dp"
+            android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             android:theme="@style/Toolbar"
             app:popupTheme="@style/Toolbar"
@@ -31,7 +67,6 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true">
 
                     <TextView
