@@ -18,7 +18,7 @@ data class ElementCellModel(
                 ElementCellModel(
                     number = model.atomicNumber,
                     symbol = model.symbol,
-                    data = model.data ?: "",
+                    data = model.dataString ?: "",
                     column = model.column,
                     row = model.row,
                     // TODO: Scale values so colors are rightly linear
