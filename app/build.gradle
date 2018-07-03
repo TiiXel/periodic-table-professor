@@ -93,6 +93,11 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:2.14.1"
     kapt "com.google.dagger:dagger-compiler:2.14.1"
     compileOnly 'javax.annotation:jsr250-api:1.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
+
+    implementation('org.jscience:jscience:4.3.1') {
+        exclude(group: 'org.javolution', module: 'javolution')
+    }
 
     // Icons lib
     implementation "com.mikepenz:iconics-core:3.0.4@aar"

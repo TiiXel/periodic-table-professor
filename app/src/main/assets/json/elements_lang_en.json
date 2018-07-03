@@ -1,0 +1,592 @@
+[
+  {
+    "atomic_number":"1",
+    "name":"Hydrogen",
+    "name_origin":"Greek: hydro (water) and genes (generate)"
+  },
+  {
+    "atomic_number":"2",
+    "name":"Helium",
+    "name_origin":"Greek: hêlios (sun)."
+  },
+  {
+    "atomic_number":"3",
+    "name":"Lithium",
+    "name_origin":"Greek: lithos (stone)."
+  },
+  {
+    "atomic_number":"4",
+    "name":"Beryllium",
+    "name_origin":"Greek: beryllos, \"beryl\" (a mineral)."
+  },
+  {
+    "atomic_number":"5",
+    "name":"Boron",
+    "name_origin":"From Arabic and Persian words for borax."
+  },
+  {
+    "atomic_number":"6",
+    "name":"Carbon",
+    "name_origin":"Latin: carbo, (charcoal)."
+  },
+  {
+    "atomic_number":"7",
+    "name":"Nitrogen",
+    "name_origin":"Greek: nitron and genes, (soda forming)."
+  },
+  {
+    "atomic_number":"8",
+    "name":"Oxygen",
+    "name_origin":"Greek: oxys and genes, (acid former)."
+  },
+  {
+    "atomic_number":"9",
+    "name":"Fluorine",
+    "name_origin":"Latin: fluere (flow)."
+  },
+  {
+    "atomic_number":"10",
+    "name":"Neon",
+    "name_origin":"Greek: neos (new)."
+  },
+  {
+    "atomic_number":"11",
+    "name":"Sodium",
+    "name_origin":"Medieval Latin: sodanum, (headache remedy); symbol from Latin natrium, (sodium carbonate)."
+  },
+  {
+    "atomic_number":"12",
+    "name":"Magnesium",
+    "name_origin":"From Magnesia ancient city in district of Thessaly, Greece."
+  },
+  {
+    "atomic_number":"13",
+    "name":"Aluminum",
+    "name_origin":"Latin: alumen, aluminis, (alum)."
+  },
+  {
+    "atomic_number":"14",
+    "name":"Silicon",
+    "name_origin":"Latin: silex, silicus, (flint)."
+  },
+  {
+    "atomic_number":"15",
+    "name":"Phosphorus",
+    "name_origin":"Greek: phosphoros, (bringer of light)."
+  },
+  {
+    "atomic_number":"16",
+    "name":"Sulfur",
+    "name_origin":"Latin: sulphur (brimstone)."
+  },
+  {
+    "atomic_number":"17",
+    "name":"Chlorine",
+    "name_origin":"Greek: chlôros (greenish yellow)."
+  },
+  {
+    "atomic_number":"18",
+    "name":"Argon",
+    "name_origin":"Greek: argos (inactive)."
+  },
+  {
+    "atomic_number":"19",
+    "name":"Potassium",
+    "name_origin":"English: pot ash; symbol from Latin: kalium, (alkali)."
+  },
+  {
+    "atomic_number":"20",
+    "name":"Calcium",
+    "name_origin":"Latin: calx, calcis (lime)."
+  },
+  {
+    "atomic_number":"21",
+    "name":"Scandium",
+    "name_origin":"Latin: Scandia, Scandinavia."
+  },
+  {
+    "atomic_number":"22",
+    "name":"Titanium",
+    "name_origin":"Greek: titanos (Titans)."
+  },
+  {
+    "atomic_number":"23",
+    "name":"Vanadium",
+    "name_origin":"From Scandinavian goddess, Vanadis."
+  },
+  {
+    "atomic_number":"24",
+    "name":"Chromium",
+    "name_origin":"Greek: chrôma (color)."
+  },
+  {
+    "atomic_number":"25",
+    "name":"Manganese",
+    "name_origin":"Latin: magnes (magnet); Italian: manganese."
+  },
+  {
+    "atomic_number":"26",
+    "name":"Iron",
+    "name_origin":"Anglo-Saxon: iron; symbol from Latin: ferrum (iron)."
+  },
+  {
+    "atomic_number":"27",
+    "name":"Cobalt",
+    "name_origin":"German: kobold (goblin)."
+  },
+  {
+    "atomic_number":"28",
+    "name":"Nickel",
+    "name_origin":"German: kupfernickel (false copper)."
+  },
+  {
+    "atomic_number":"29",
+    "name":"Copper",
+    "name_origin":"Symbol from Latin: cuprum (island of Cyprus famed for its copper mines)."
+  },
+  {
+    "atomic_number":"30",
+    "name":"Zinc",
+    "name_origin":"German: zink (German for tin)."
+  },
+  {
+    "atomic_number":"31",
+    "name":"Gallium",
+    "name_origin":"Latin: Gallia (France)."
+  },
+  {
+    "atomic_number":"32",
+    "name":"Germanium",
+    "name_origin":"Latin: Germania (Germany)."
+  },
+  {
+    "atomic_number":"33",
+    "name":"Arsenic",
+    "name_origin":"Greek: arsenikon; Latin: arsenicum, (both names for yellow pigment)."
+  },
+  {
+    "atomic_number":"34",
+    "name":"Selenium",
+    "name_origin":"Greek: selênê (moon)."
+  },
+  {
+    "atomic_number":"35",
+    "name":"Bromine",
+    "name_origin":"Greek: brômos (stench)."
+  },
+  {
+    "atomic_number":"36",
+    "name":"Krypton",
+    "name_origin":"Greek: kryptos (hidden)."
+  },
+  {
+    "atomic_number":"37",
+    "name":"Rubidium",
+    "name_origin":"Latin: rubidus (deep red); the color its salts impart to flames."
+  },
+  {
+    "atomic_number":"38",
+    "name":"Strontium",
+    "name_origin":"From the Scottish town, Strontian."
+  },
+  {
+    "atomic_number":"39",
+    "name":"Yttrium",
+    "name_origin":"From the Swedish village, Ytterby, where one of its minerals was first found."
+  },
+  {
+    "atomic_number":"40",
+    "name":"Zirconium",
+    "name_origin":"From the mineral, zircon."
+  },
+  {
+    "atomic_number":"41",
+    "name":"Niobium",
+    "name_origin":"From Niobe; daughter of the mythical Greek king Tantalus."
+  },
+  {
+    "atomic_number":"42",
+    "name":"Molybdenum",
+    "name_origin":"Greek: molybdos (lead)."
+  },
+  {
+    "atomic_number":"43",
+    "name":"Technetium",
+    "name_origin":"Greek: technêtos (artificial)."
+  },
+  {
+    "atomic_number":"44",
+    "name":"Ruthenium",
+    "name_origin":"Latin: Ruthenia (Russia)."
+  },
+  {
+    "atomic_number":"45",
+    "name":"Rhodium",
+    "name_origin":"Greek: rhodon (rose). Its salts give a rosy solution."
+  },
+  {
+    "atomic_number":"46",
+    "name":"Palladium",
+    "name_origin":"Named after the asteroid, Pallas, discovered in 1803."
+  },
+  {
+    "atomic_number":"47",
+    "name":"Silver",
+    "name_origin":"Anglo-Saxon: siolful, (silver); symbol from Latin: argentium."
+  },
+  {
+    "atomic_number":"48",
+    "name":"Cadmium",
+    "name_origin":"Greek: kadmeia (ancient name for calamine (zinc oxide))."
+  },
+  {
+    "atomic_number":"49",
+    "name":"Indium",
+    "name_origin":"Latin: indicum (color indigo), the color it shows in a spectroscope."
+  },
+  {
+    "atomic_number":"50",
+    "name":"Tin",
+    "name_origin":"Named after Etruscan god, Tinia; symbol from Latin: stannum (tin)."
+  },
+  {
+    "atomic_number":"51",
+    "name":"Antimony",
+    "name_origin":"Greek: anti and monos (not alone); symbol from mineral stibnite."
+  },
+  {
+    "atomic_number":"52",
+    "name":"Tellurium",
+    "name_origin":"Latin: tellus (earth)."
+  },
+  {
+    "atomic_number":"53",
+    "name":"Iodine",
+    "name_origin":"Greek: iôeides (violet colored)."
+  },
+  {
+    "atomic_number":"54",
+    "name":"Xenon",
+    "name_origin":"Greek: xenos (strange)."
+  },
+  {
+    "atomic_number":"55",
+    "name":"Cesium",
+    "name_origin":"Latin: coesius (sky blue); for the blue lines of its spectrum."
+  },
+  {
+    "atomic_number":"56",
+    "name":"Barium",
+    "name_origin":"Greek: barys (heavy or dense)."
+  },
+  {
+    "atomic_number":"57",
+    "name":"Lanthanum",
+    "name_origin":"Greek: lanthanein (to be hidden)."
+  },
+  {
+    "atomic_number":"58",
+    "name":"Cerium",
+    "name_origin":"Named after the asteroid, Ceres, discovered two years before the element."
+  },
+  {
+    "atomic_number":"59",
+    "name":"Praseodymium",
+    "name_origin":"Greek: prasios and didymos (green twin); from its green salts."
+  },
+  {
+    "atomic_number":"60",
+    "name":"Neodymium",
+    "name_origin":"Greek: neos and didymos (new twin)."
+  },
+  {
+    "atomic_number":"61",
+    "name":"Promethium",
+    "name_origin":"Named for the Greek god, Prometheus."
+  },
+  {
+    "atomic_number":"62",
+    "name":"Samarium",
+    "name_origin":"Named after the mineral samarskite."
+  },
+  {
+    "atomic_number":"63",
+    "name":"Europium",
+    "name_origin":"Named for the continent of Europe."
+  },
+  {
+    "atomic_number":"64",
+    "name":"Gadolinium",
+    "name_origin":"Named after the mineral gadolinite."
+  },
+  {
+    "atomic_number":"65",
+    "name":"Terbium",
+    "name_origin":"Named after Ytterby, a village in Sweden."
+  },
+  {
+    "atomic_number":"66",
+    "name":"Dysprosium",
+    "name_origin":"Greek: dysprositos (hard to get at)."
+  },
+  {
+    "atomic_number":"67",
+    "name":"Holmium",
+    "name_origin":"From Holmia, the Latinized name for Stockholm, Sweden."
+  },
+  {
+    "atomic_number":"68",
+    "name":"Erbium",
+    "name_origin":"Named after the Swedish town, Ytterby."
+  },
+  {
+    "atomic_number":"69",
+    "name":"Thulium",
+    "name_origin":"From Thule ancient name of Scandinavia."
+  },
+  {
+    "atomic_number":"70",
+    "name":"Ytterbium",
+    "name_origin":"Named for the Swedish village of Ytterby."
+  },
+  {
+    "atomic_number":"71",
+    "name":"Lutetium",
+    "name_origin":"Named for the ancient name of Paris, Lutecia."
+  },
+  {
+    "atomic_number":"72",
+    "name":"Hafnium",
+    "name_origin":"From Hafnia, the Latin name of Copenhagen."
+  },
+  {
+    "atomic_number":"73",
+    "name":"Tantalum",
+    "name_origin":"From king Tantalus of Greek mythology, father of Niobe."
+  },
+  {
+    "atomic_number":"74",
+    "name":"Tungsten",
+    "name_origin":"Swedish: tung sten (heavy stone): symbol from its German name wolfram."
+  },
+  {
+    "atomic_number":"75",
+    "name":"Rhenium",
+    "name_origin":"Latin: Rhenus, the Rhine River."
+  },
+  {
+    "atomic_number":"76",
+    "name":"Osmium",
+    "name_origin":"Greek: osmê (odor)."
+  },
+  {
+    "atomic_number":"77",
+    "name":"Iridium",
+    "name_origin":"Latin: iris (rainbow)."
+  },
+  {
+    "atomic_number":"78",
+    "name":"Platinum",
+    "name_origin":"Spanish: platina (little silver)."
+  },
+  {
+    "atomic_number":"79",
+    "name":"Gold",
+    "name_origin":"Anglo-Saxon: geolo (yellow); symbol from Latin: aurum (shining dawn)."
+  },
+  {
+    "atomic_number":"80",
+    "name":"Mercury",
+    "name_origin":"From the Roman god Mercury; symbol from Latin: hydrargyrus (liquid silver)."
+  },
+  {
+    "atomic_number":"81",
+    "name":"Thallium",
+    "name_origin":"Greek: thallos (green twig), for a bright green line in its spectrum."
+  },
+  {
+    "atomic_number":"82",
+    "name":"Lead",
+    "name_origin":"Anglo-Saxon: lead; symbol from Latin: plumbum."
+  },
+  {
+    "atomic_number":"83",
+    "name":"Bismuth",
+    "name_origin":"German: bisemutum, (white mass), Now spelled wismut."
+  },
+  {
+    "atomic_number":"84",
+    "name":"Polonium",
+    "name_origin":"Named for Poland, native country of Marie Curie."
+  },
+  {
+    "atomic_number":"85",
+    "name":"Astatine",
+    "name_origin":"Greek: astatos (unstable)."
+  },
+  {
+    "atomic_number":"86",
+    "name":"Radon",
+    "name_origin":"Variation of the name of another element, radium."
+  },
+  {
+    "atomic_number":"87",
+    "name":"Francium",
+    "name_origin":"Named for France, the nation of its discovery."
+  },
+  {
+    "atomic_number":"88",
+    "name":"Radium",
+    "name_origin":"Latin: radius (ray)."
+  },
+  {
+    "atomic_number":"89",
+    "name":"Actinium",
+    "name_origin":"Greek: akis, aktinos (ray)."
+  },
+  {
+    "atomic_number":"90",
+    "name":"Thorium",
+    "name_origin":"Named for Thor, Norse god of thunder."
+  },
+  {
+    "atomic_number":"91",
+    "name":"Protactinium",
+    "name_origin":"Greek: proto and actinium (parent of actinium); it forms actinium when it radioactively decays."
+  },
+  {
+    "atomic_number":"92",
+    "name":"Uranium",
+    "name_origin":"Named for the planet Uranus."
+  },
+  {
+    "atomic_number":"93",
+    "name":"Neptunium",
+    "name_origin":"Named for the planet Neptune."
+  },
+  {
+    "atomic_number":"94",
+    "name":"Plutonium",
+    "name_origin":"Named for the planet Pluto."
+  },
+  {
+    "atomic_number":"95",
+    "name":"Americium",
+    "name_origin":"Named for the American continent, by analogy with europium."
+  },
+  {
+    "atomic_number":"96",
+    "name":"Curium",
+    "name_origin":"Named in honor of Pierre and Marie Curie."
+  },
+  {
+    "atomic_number":"97",
+    "name":"Berkelium",
+    "name_origin":"Named after Berkeley, California the city of its discovery."
+  },
+  {
+    "atomic_number":"98",
+    "name":"Californium",
+    "name_origin":"Named after the state and University of California."
+  },
+  {
+    "atomic_number":"99",
+    "name":"Einsteinium",
+    "name_origin":"Named in honor of the scientist Albert Einstein."
+  },
+  {
+    "atomic_number":"100",
+    "name":"Fermium",
+    "name_origin":"Named in honor of the scientist Enrico Fermi."
+  },
+  {
+    "atomic_number":"101",
+    "name":"Mendelevium",
+    "name_origin":"Named in honor of the scientist Dmitri Ivanovitch Mendeleyev, who devised the periodic table."
+  },
+  {
+    "atomic_number":"102",
+    "name":"Nobelium",
+    "name_origin":"Named in honor of Alfred Nobel, who invented dynamite and founded Nobel prize."
+  },
+  {
+    "atomic_number":"103",
+    "name":"Lawrencium",
+    "name_origin":"Named in honor of Ernest O. Lawrence, inventor of the cyclotron."
+  },
+  {
+    "atomic_number":"104",
+    "name":"Rutherfordium",
+    "name_origin":"Named in honor of Ernest Rutherford"
+  },
+  {
+    "atomic_number":"105",
+    "name":"Dubnium",
+    "name_origin":"Named after the city of Dubna, the site of the JINR."
+  },
+  {
+    "atomic_number":"106",
+    "name":"Seaborgium",
+    "name_origin":"Named in honor of Glenn Seaborg, American physical chemist known for research on transuranium elements."
+  },
+  {
+    "atomic_number":"107",
+    "name":"Bohrium",
+    "name_origin":"Named in honor of Niels Bohr"
+  },
+  {
+    "atomic_number":"108",
+    "name":"Hassium",
+    "name_origin":"Named in honor of Henri Hess, Swiss born Russian chemist known for work in thermodydamics."
+  },
+  {
+    "atomic_number":"109",
+    "name":"Meitnerium",
+    "name_origin":"Named in honor of Lise Mietner"
+  },
+  {
+    "atomic_number":"110",
+    "name":"Darmstadtium",
+    "name_origin":"Named after the city of Darmstadt, Germany where  GSI Helmholtz Centre for Heavy Ion Research is located."
+  },
+  {
+    "atomic_number":"111",
+    "name":"Roentgenium",
+    "name_origin":"Named in honor of the physicist Wilhelm Roentgen."
+  },
+  {
+    "atomic_number":"112",
+    "name":"Copernicium",
+    "name_origin":"Named in honor of the astronomer Nicolaus Copernicus."
+  },
+  {
+    "atomic_number":"113",
+    "name":"Nihonium",
+    "name_origin":"Named after the country of Japan."
+  },
+  {
+    "atomic_number":"114",
+    "name":"Flerovium",
+    "name_origin":"Named after the Flerov Laboratory of Nuclear Reactions of the Joint Institute for Nuclear Research in Dubna, Russia."
+  },
+  {
+    "atomic_number":"115",
+    "name":"Moscovium",
+    "name_origin":"Named after the city of Moscov."
+  },
+  {
+    "atomic_number":"116",
+    "name":"Livermorium",
+    "name_origin":"Named after the Lawrence Livermore National Laboratory in the United States."
+  },
+  {
+    "atomic_number":"117",
+    "name":"Tennessine",
+    "name_origin":"Named after the state of Tennessee in United States."
+  },
+  {
+    "atomic_number":"118",
+    "name":"Oganesson",
+    "name_origin":"Named in honor of the scientist Yuri Oganessian."
+  }
+]
