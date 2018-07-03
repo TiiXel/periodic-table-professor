@@ -10,5 +10,7 @@ data class Quantity(
 
     override fun toString(): String = "$value $unit"
 
-    fun value() = Amount.valueOf(value.toDouble(), unit) to unit.standardUnit
+    fun value(): Amount<*> = Amount.valueOf(value.toDouble(), unit).to(unit.standardUnit as Unit<*>)
+
+    fun siValue(): Float = value().estimatedValue.toFloat()
 }
