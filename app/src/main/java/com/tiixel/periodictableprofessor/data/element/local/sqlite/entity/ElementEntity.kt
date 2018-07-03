@@ -4,6 +4,12 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import com.tiixel.periodictableprofessor.data.element.local.sqlite.ELEMENTS_TABLE_NAME
 import com.tiixel.periodictableprofessor.domain.Element
+import com.tiixel.periodictableprofessor.domain.Quantity
+import javax.measure.unit.NonSI
+import javax.measure.unit.NonSI.ATOMIC_MASS
+import javax.measure.unit.SI
+import javax.measure.unit.SI.METRE
+import javax.measure.unit.SI.PICO
 
 @Entity(tableName = ELEMENTS_TABLE_NAME)
 data class ElementEntity(
@@ -34,11 +40,11 @@ data class ElementEntity(
         fun toDomain(entity: ElementEntity): Element {
 
             return Element(
-                abundanceCrust = entity.abundance_crust,
-                abundanceSea = entity.abundance_sea,
-                atomicNumber = entity.atomic_number.toByte(),
-                atomicRadius = entity.atomic_radius,
-                atomicWeight = entity.atomic_weight,
+                abundanceCrust = Quantity(entity.abundance_crust.toString(), SI.MILLI(SI.GRAM).divide(SI.KILOGRAM)),
+                abundanceSea = Quantity(entity.abundance_sea.toString(), SI.MILLI(SI.GRAM).divide(NonSI.LITRE)),
+                atomicNumber = entity.atomic_number,
+                atomicRadius = Quantity(entity.atomic_radius.toString(), PICO(METRE)),
+                atomicWeight = Quantity(entity.atomic_weight.toString(), ATOMIC_MASS),
                 description = entity.description,
                 discoverers = entity.discoverers,
                 discoveryLocation = entity.discovery_location,
@@ -51,7 +57,7 @@ data class ElementEntity(
                 sources = entity.sources,
                 symbol = entity.symbol,
                 uses = entity.uses,
-                vdwRadius = entity.vdw_radius
+                vdwRadius = Quantity(entity.vdw_radius.toString(), PICO(METRE))
             )
         }
     }

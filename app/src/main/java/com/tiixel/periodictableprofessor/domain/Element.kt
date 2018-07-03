@@ -3,11 +3,11 @@ package com.tiixel.periodictableprofessor.domain
 import com.tiixel.periodictableprofessor.domain.exception.AtomicNumberOutOfBoundsException
 
 data class Element(
-    val abundanceCrust: Float?,
-    val abundanceSea: Float?,
+    val abundanceCrust: Quantity?,
+    val abundanceSea: Quantity?,
     val atomicNumber: Byte,
-    val atomicRadius: Float?,
-    val atomicWeight: Float?,
+    val atomicRadius: Quantity?,
+    val atomicWeight: Quantity?,
     val description: String?,
     val discoverers: String?,
     val discoveryLocation: String?,
@@ -20,7 +20,7 @@ data class Element(
     val sources: String?,
     val symbol: String,
     val uses: String?,
-    val vdwRadius: Float?
+    val vdwRadius: Quantity?
 ) {
 
     val tableColumn: Byte = tableColumnOf(atomicNumber)

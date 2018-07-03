@@ -3,17 +3,25 @@ package com.tiixel.periodictableprofessor.data.element.local.gson.mapper
 import com.tiixel.periodictableprofessor.data.element.local.gson.entity.ElementEntity
 import com.tiixel.periodictableprofessor.data.element.local.gson.entity.ElementLangEntity
 import com.tiixel.periodictableprofessor.domain.Element
+import com.tiixel.periodictableprofessor.domain.Quantity
+import javax.measure.unit.NonSI
+import javax.measure.unit.NonSI.LITRE
+import javax.measure.unit.SI.GRAM
+import javax.measure.unit.SI.KILOGRAM
+import javax.measure.unit.SI.METRE
+import javax.measure.unit.SI.MILLI
+import javax.measure.unit.SI.PICO
 
 object ElementMapper {
 
     fun toDomain(element: ElementEntity, elementLangEntity: ElementLangEntity): Element {
 
         return Element(
-            abundanceCrust = element.abundance_crust.toFloatOrNull(),
-            abundanceSea = element.abundance_sea.toFloatOrNull(),
-            atomicNumber = element.atomic_number.toByte(),
-            atomicRadius = element.atomic_radius.toFloatOrNull(),
-            atomicWeight = element.atomic_weight.toFloatOrNull(),
+            abundanceCrust = Quantity(element.abundance_crust, MILLI(GRAM).divide(KILOGRAM)),
+            abundanceSea = Quantity(element.abundance_sea, MILLI(GRAM).divide(LITRE)),
+            atomicNumber = element.atomic_number,
+            atomicRadius = Quantity(element.atomic_radius, PICO(METRE)),
+            atomicWeight = Quantity(element.atomic_weight, NonSI.ATOMIC_MASS),
             description = element.description,
             discoverers = element.discoverers,
             discoveryLocation = element.discovery_location,
@@ -26,7 +34,7 @@ object ElementMapper {
             sources = element.sources,
             symbol = element.symbol,
             uses = element.uses,
-            vdwRadius = element.vdw_radius.toFloatOrNull()
+            vdwRadius = Quantity(element.vdw_radius, PICO(METRE))
         )
     }
 }
