@@ -48,7 +48,7 @@ data class ElementModel(
                 nameOrigin = element.nameOrigin,
                 sources = element.sources,
                 symbol = element.symbol,
-                uses = element.symbol,
+                uses = element.uses,
                 vdwRadius = element.vdwRadius?.toString(),
                 mnemonicPhrase = card.mnemonic?.phrase,
                 mnemonicPicture = card.mnemonic?.let {
