@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.TypedValue
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -92,10 +93,19 @@ class ElementActivity : AppCompatActivity(), MviView<ElementIntent, ElementViewS
 
         when {
             state.loadingInProgress -> {
+                element_loading.visibility = View.VISIBLE
+                details_name.visibility = View.INVISIBLE
+                details_symbol.visibility = View.INVISIBLE
+                details_atomic_number.visibility = View.INVISIBLE
+                element_properties.removeAllViews()
             }
             state.element == null -> {
             }
             else -> {
+                element_loading.visibility = View.GONE
+                details_name.visibility = View.VISIBLE
+                details_symbol.visibility = View.VISIBLE
+                details_atomic_number.visibility = View.VISIBLE
                 displayProperties(state.element)
             }
         }
@@ -116,8 +126,6 @@ class ElementActivity : AppCompatActivity(), MviView<ElementIntent, ElementViewS
         details_name.text = element.name
         details_atomic_number.text = element.atomicNumber.toString()
         details_symbol.text = element.symbol
-
-        element_properties.removeAllViews()
 
         // General properties
         val generalGroup = makeGroup("General properties", GoogleMaterial.Icon.gmd_description)

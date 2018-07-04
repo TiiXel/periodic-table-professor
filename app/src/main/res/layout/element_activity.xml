@@ -111,6 +111,15 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <ProgressBar
+        android:paddingTop="@dimen/medium_space"
+        android:id="@+id/element_loading"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        style="?android:progressBarStyle"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
