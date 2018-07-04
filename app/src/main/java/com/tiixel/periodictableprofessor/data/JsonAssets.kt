@@ -13,6 +13,8 @@ class JsonAssets @Inject constructor(
 
     fun elementLangJson() = loadJsonFromAsset("json/elements_lang_en.json")
 
+    fun mnemonicPhraseJson() = loadJsonFromAsset("json/mnemonic_phrases_en.json")
+
     private fun loadJsonFromAsset(fileName: String): String? {
 
         var json: String? = null
