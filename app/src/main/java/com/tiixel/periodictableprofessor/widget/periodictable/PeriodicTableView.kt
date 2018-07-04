@@ -8,6 +8,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.support.v4.content.res.ResourcesCompat
 import android.util.AttributeSet
+import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import com.tiixel.periodictableprofessor.R
@@ -312,17 +313,23 @@ class PeriodicTableView(context: Context, attrs: AttributeSet?, style: Int) : Vi
         }
     }
 
-    override fun onTouchEvent(event: MotionEvent): Boolean {
+    private val tapDetector: GestureDetector = GestureDetector(this.context, GestureTap())
 
-        if (event.action == MotionEvent.ACTION_DOWN) {
+    inner class GestureTap : GestureDetector.SimpleOnGestureListener() {
+        override fun onSingleTapUp(event: MotionEvent): Boolean {
             val element = getElementAt(event.x, event.y)
-            if (element != null) {
+            return if (element != null) {
                 elementClicked(element)
-                return true
+                true
+            } else {
+                false
             }
-            return false
         }
-        return false
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        tapDetector.onTouchEvent(event)
+        return true
     }
 
     private fun elementClicked(element: Byte) {

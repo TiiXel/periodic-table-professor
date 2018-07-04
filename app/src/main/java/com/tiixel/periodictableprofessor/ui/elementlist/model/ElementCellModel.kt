@@ -1,6 +1,7 @@
 package com.tiixel.periodictableprofessor.ui.elementlist.model
 
 import com.tiixel.periodictableprofessor.presentation.elementlist.model.ElementModel
+import kotlin.math.roundToInt
 
 data class ElementCellModel(
     val number: Byte,
@@ -21,8 +22,7 @@ data class ElementCellModel(
                     data = model.dataString ?: "",
                     column = model.column,
                     row = model.row,
-                    // TODO: Scale values so colors are rightly linear
-                    backgroundColor = colorArray[colorArray.size * index / models.size]
+                    backgroundColor = colorArray[model.dataPercent?.let { ((colorArray.size - 2) * it).roundToInt() + 1} ?: 0]
                 )
             }
         }
