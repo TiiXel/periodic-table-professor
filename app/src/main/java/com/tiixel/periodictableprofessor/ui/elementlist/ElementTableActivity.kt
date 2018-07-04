@@ -52,7 +52,7 @@ class ElementTableActivity : AppCompatActivity(), MviView<ElementListIntent, Ele
 
         val spinnerAdapter = ArrayAdapter.createFromResource(
             this,
-            R.array.table_spinner_element_one_line_data_points,
+            R.array.table_spinner_element_one_line_properties,
             android.R.layout.simple_spinner_item
         )
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

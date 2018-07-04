@@ -87,7 +87,7 @@ class ElementActivity : AppCompatActivity(), MviView<ElementIntent, ElementViewS
 
         when (state.loadingFailedCause) {
             is AtomicNumberOutOfBoundsException -> {
-                Toast.makeText(this, "Invalid element requested!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.error_message_invalid_element), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -128,34 +128,39 @@ class ElementActivity : AppCompatActivity(), MviView<ElementIntent, ElementViewS
         details_symbol.text = element.symbol
 
         // General properties
-        val generalGroup = makeGroup("General properties", GoogleMaterial.Icon.gmd_description)
-        generalGroup.addProperty(R.string.element_data_point_name_description, element.description)
-        generalGroup.addProperty(R.string.element_data_point_name_sources, element.sources)
-        generalGroup.addProperty(R.string.element_data_point_name_uses, element.uses)
-        generalGroup.addProperty(R.string.element_data_point_name_discovery_year, element.discoveryYear)
-        generalGroup.addProperty(R.string.element_data_point_name_discovery_location, element.discoveryLocation)
-        generalGroup.addProperty(R.string.element_data_point_name_discoverers, element.discoverers)
-        generalGroup.addProperty(R.string.element_data_point_name_name_origin, element.nameOrigin)
+        val generalGroup =
+            makeGroup(getString(R.string.element_property_group_general), GoogleMaterial.Icon.gmd_description)
+        generalGroup.addProperty(R.string.element_property_name_description, element.description)
+        generalGroup.addProperty(R.string.element_property_name_sources, element.sources)
+        generalGroup.addProperty(R.string.element_property_name_uses, element.uses)
+        generalGroup.addProperty(R.string.element_property_name_discovery_year, element.discoveryYear)
+        generalGroup.addProperty(R.string.element_property_name_discovery_location, element.discoveryLocation)
+        generalGroup.addProperty(R.string.element_property_name_discoverers, element.discoverers)
+        generalGroup.addProperty(R.string.element_property_name_name_origin, element.nameOrigin)
 
         // Physical and chemical
-        val physicalGroup = makeGroup("Physical & chemical properties", CommunityMaterial.Icon.cmd_temperature_celsius)
+        val physicalGroup = makeGroup(
+            getString(R.string.element_property_group_physical_chemical),
+            CommunityMaterial.Icon.cmd_temperature_celsius
+        )
         physicalGroup.addProperty(
-            R.string.element_data_point_name_electronic_configuration,
+            R.string.element_property_name_electronic_configuration,
             element.electronicConfiguration
         )
-        physicalGroup.addProperty(R.string.element_data_point_name_en_pauling, element.enPauling)
-        physicalGroup.addProperty(R.string.element_data_point_name_atomic_weight, element.atomicWeight)
-        physicalGroup.addProperty(R.string.element_data_point_name_atomic_radius, element.atomicRadius)
-        physicalGroup.addProperty(R.string.element_data_point_name_vdw_radius, element.vdwRadius)
+        physicalGroup.addProperty(R.string.element_property_name_en_pauling, element.enPauling)
+        physicalGroup.addProperty(R.string.element_property_name_atomic_weight, element.atomicWeight)
+        physicalGroup.addProperty(R.string.element_property_name_atomic_radius, element.atomicRadius)
+        physicalGroup.addProperty(R.string.element_property_name_vdw_radius, element.vdwRadius)
 
         // Geological properties
-        val geologicalGroup = makeGroup("Geological properties", CommunityMaterial.Icon.cmd_earth)
-        geologicalGroup.addProperty(R.string.element_data_point_name_abundance_crust, element.abundanceCrust)
-        geologicalGroup.addProperty(R.string.element_data_point_name_abundance_sea, element.abundanceSea)
+        val geologicalGroup =
+            makeGroup(getString(R.string.element_property_group_geological), CommunityMaterial.Icon.cmd_earth)
+        geologicalGroup.addProperty(R.string.element_property_name_abundance_crust, element.abundanceCrust)
+        geologicalGroup.addProperty(R.string.element_property_name_abundance_sea, element.abundanceSea)
 
         // Mnemonic
         if (element.mnemonicPhrase != null && element.mnemonicPicture != null) {
-            val mnemonicGroup = makeGroup("Mnemonic", CommunityMaterial.Icon.cmd_lightbulb_on)
+            val mnemonicGroup = makeGroup(getString(R.string.element_property_group_mnemonic), CommunityMaterial.Icon.cmd_lightbulb_on)
 
             val mnemonicPhrase =
                 layoutInflater.inflate(R.layout.view_element_property, mnemonicGroup, false) as LinearLayout

@@ -15,6 +15,7 @@
     <string name="error_message_no_cards_due_soon_button_load_new">Load a new card now</string>
     <string name="error_message_no_cards_due_soon_button_reload">@string/reload</string>
     <string name="error_message_no_cards_are_new">No cards are new, you know it all. Congratulations!</string>
+    <string name="error_message_invalid_element">Invalid element requested!</string>
 
     <string name="add_note">Add note</string>
     <string name="edit_note">Edit note</string>
@@ -27,39 +28,44 @@
     <string name="performance_medium">Medium</string>
     <string name="performance_hard">Hard</string>
     <string name="performance_failed">Failed</string>
+    
+    <string name="element_property_group_general">General properties</string>
+    <string name="element_property_group_physical_chemical">Physical and chemical properties</string>
+    <string name="element_property_group_geological">Geological properties</string>
+    <string name="element_property_group_mnemonic">Mnemonic</string>
 
-    <string name="element_data_point_name_abundance_crust">Abundance in Earth\'s crust</string>
-    <string name="element_data_point_name_abundance_sea">Abundance in sea</string>
-    <string name="element_data_point_name_atomic_number">Atomic number</string>
-    <string name="element_data_point_name_atomic_radius">Atomic radius</string>
-    <string name="element_data_point_name_atomic_weight">Atomic weight</string>
-    <string name="element_data_point_name_description">Description</string>
-    <string name="element_data_point_name_discoverers">Discoverers</string>
-    <string name="element_data_point_name_discovery_location">Discovery location</string>
-    <string name="element_data_point_name_discovery_year">Discovery year</string>
-    <string name="element_data_point_name_electronic_configuration">Electronic configuration</string>
-    <string name="element_data_point_name_en_pauling">Electronegativity (Pauling)</string>
-    <string name="element_data_point_name_is_radioactive">Is radioactive?</string>
-    <string name="element_data_point_name_name">Name</string>
-    <string name="element_data_point_name_name_origin">Name origin</string>
-    <string name="element_data_point_name_sources">Sources</string>
-    <string name="element_data_point_name_symbol">Symbol</string>
-    <string name="element_data_point_name_uses">Uses</string>
-    <string name="element_data_point_name_vdw_radius">Van Der Waals radius</string>
+    <string name="element_property_name_abundance_crust">Abundance in Earth\'s crust</string>
+    <string name="element_property_name_abundance_sea">Abundance in sea</string>
+    <string name="element_property_name_atomic_number">Atomic number</string>
+    <string name="element_property_name_atomic_radius">Atomic radius</string>
+    <string name="element_property_name_atomic_weight">Atomic weight</string>
+    <string name="element_property_name_description">Description</string>
+    <string name="element_property_name_discoverers">Discoverers</string>
+    <string name="element_property_name_discovery_location">Discovery location</string>
+    <string name="element_property_name_discovery_year">Discovery year</string>
+    <string name="element_property_name_electronic_configuration">Electronic configuration</string>
+    <string name="element_property_name_en_pauling">Electronegativity (Pauling)</string>
+    <string name="element_property_name_is_radioactive">Is radioactive?</string>
+    <string name="element_property_name_name">Name</string>
+    <string name="element_property_name_name_origin">Name origin</string>
+    <string name="element_property_name_sources">Sources</string>
+    <string name="element_property_name_symbol">Symbol</string>
+    <string name="element_property_name_uses">Uses</string>
+    <string name="element_property_name_vdw_radius">Van Der Waals radius</string>
 
     <string name="element_property_name_mnemonic_phrase">Mnemonic description</string>
 
-    <string-array name="table_spinner_element_one_line_data_points">
-        <item>@string/element_data_point_name_abundance_crust</item>
-        <item>@string/element_data_point_name_abundance_sea</item>
-        <item>@string/element_data_point_name_atomic_radius</item>
-        <item>@string/element_data_point_name_atomic_weight</item>
-        <item>@string/element_data_point_name_discovery_location</item>
-        <item>@string/element_data_point_name_discovery_year</item>
-        <item>@string/element_data_point_name_electronic_configuration</item>
-        <item>@string/element_data_point_name_en_pauling</item>
-        <item>@string/element_data_point_name_name</item>
-        <item>@string/element_data_point_name_vdw_radius</item>
+    <string-array name="table_spinner_element_one_line_properties">
+        <item>@string/element_property_name_abundance_crust</item>
+        <item>@string/element_property_name_abundance_sea</item>
+        <item>@string/element_property_name_atomic_radius</item>
+        <item>@string/element_property_name_atomic_weight</item>
+        <item>@string/element_property_name_discovery_location</item>
+        <item>@string/element_property_name_discovery_year</item>
+        <item>@string/element_property_name_electronic_configuration</item>
+        <item>@string/element_property_name_en_pauling</item>
+        <item>@string/element_property_name_name</item>
+        <item>@string/element_property_name_vdw_radius</item>
     </string-array>
 
     <string name="review_appbar_extra_counts">Reviewable now: %1$d, today: %2$d</string>
