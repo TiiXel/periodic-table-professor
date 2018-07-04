@@ -2,6 +2,7 @@ package com.tiixel.periodictableprofessor.ui.elementlist
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -13,6 +14,7 @@ import com.tiixel.periodictableprofessor.presentation.elementlist.ElementListInt
 import com.tiixel.periodictableprofessor.presentation.elementlist.ElementListViewModel
 import com.tiixel.periodictableprofessor.presentation.elementlist.ElementListViewState
 import com.tiixel.periodictableprofessor.presentation.elementlist.model.ElementModel
+import com.tiixel.periodictableprofessor.ui.element.ElementActivity
 import com.tiixel.periodictableprofessor.ui.elementlist.model.ElementCellModel
 import com.tiixel.periodictableprofessor.widget.periodictable.PeriodicTableView
 import dagger.android.AndroidInjection
@@ -50,7 +52,7 @@ class ElementTableActivity : AppCompatActivity(), MviView<ElementListIntent, Ele
 
         val spinnerAdapter = ArrayAdapter.createFromResource(
             this,
-            R.array.table_spinner_element_one_line_data_points,
+            R.array.table_spinner_element_one_line_properties,
             android.R.layout.simple_spinner_item
         )
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -61,6 +63,8 @@ class ElementTableActivity : AppCompatActivity(), MviView<ElementListIntent, Ele
         disposable.add(viewModel.states().subscribe(this::render))
         // Pass the UI's intents to the ViewModel
         viewModel.processIntents(intents())
+        // Subscribe to the PeriodicTableView observable
+        disposable.add(table.elementClickedObservable.subscribe(this::onElementClicked))
     }
 
     override fun onDestroy() {
@@ -94,6 +98,12 @@ class ElementTableActivity : AppCompatActivity(), MviView<ElementListIntent, Ele
         }
     }
     //</editor-fold>
+
+    private fun onElementClicked(element: Byte) {
+        val intent = Intent(this, ElementActivity::class.java)
+        intent.putExtra(ElementActivity.Extra.ELEMENT.key, element)
+        startActivity(intent)
+    }
 
     inner class SpinnerListener : AdapterView.OnItemSelectedListener {
 

@@ -2,10 +2,9 @@ package com.tiixel.periodictableprofessor.dagger.module
 
 import android.app.Application
 import android.arch.persistence.room.Room
-import com.fstyle.library.helper.AssetSQLiteOpenHelperFactory
+import com.tiixel.periodictableprofessor.data.JsonAssets
 import com.tiixel.periodictableprofessor.data.LocalDatabase
-import com.tiixel.periodictableprofessor.data.SqliteDatabase
-import com.tiixel.periodictableprofessor.data.element.local.ElementSqliteDataSource
+import com.tiixel.periodictableprofessor.data.element.local.ElementGsonDataSource
 import com.tiixel.periodictableprofessor.data.mnemonic.local.MnemonicMixedDataSource
 import com.tiixel.periodictableprofessor.data.note.local.db.UserNoteDbDataSource
 import com.tiixel.periodictableprofessor.data.review.local.ReviewDbDataSource
@@ -23,17 +22,15 @@ class DataProvideModule {
 
     @Provides
     @Singleton
-    fun provideAssetLocalDatabase(application: Application): SqliteDatabase {
-        return Room.databaseBuilder(application.applicationContext, SqliteDatabase::class.java, "assets_database.db")
-            .openHelperFactory(AssetSQLiteOpenHelperFactory())
+    fun provideLocalDatabase(application: Application): LocalDatabase {
+        return Room.databaseBuilder(application.applicationContext, LocalDatabase::class.java, "user_database.db")
             .build()
     }
 
     @Provides
     @Singleton
-    fun provideLocalDatabase(application: Application): LocalDatabase {
-        return Room.databaseBuilder(application.applicationContext, LocalDatabase::class.java, "user_database.db")
-            .build()
+    fun provideJsonAssets(application: Application): JsonAssets {
+        return JsonAssets(application)
     }
 }
 
@@ -42,7 +39,7 @@ abstract class DataBindModule {
 
     @Binds
     @Singleton
-    abstract fun bindElementLocalDataSource(elementAssetDbDataSource: ElementSqliteDataSource): ElementLocalDataSource
+    abstract fun bindElementLocalDataSource(elementGsonDataSource: ElementGsonDataSource): ElementLocalDataSource
 
     @Binds
     @Singleton

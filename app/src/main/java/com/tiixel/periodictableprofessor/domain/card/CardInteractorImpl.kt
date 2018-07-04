@@ -15,7 +15,6 @@ import io.reactivex.Single
 import io.reactivex.rxkotlin.zipWith
 import java.util.Date
 import java.util.Random
-import java.util.concurrent.ThreadLocalRandom
 import javax.inject.Inject
 
 class CardInteractorImpl @Inject constructor(
@@ -92,6 +91,10 @@ class CardInteractorImpl @Inject constructor(
                     Pair(it.first, Card.Companion.Face.PICTURE)
                 }
             }
+    }
+
+    override fun getCard(element: Byte): Single<Card> {
+        return cardRepository.getCard(element)
     }
 
     override fun getNextReviewDate(): Maybe<Date> {

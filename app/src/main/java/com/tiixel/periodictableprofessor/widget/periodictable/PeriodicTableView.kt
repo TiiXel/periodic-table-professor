@@ -8,10 +8,12 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.support.v4.content.res.ResourcesCompat
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import com.tiixel.periodictableprofessor.R
 import com.tiixel.periodictableprofessor.domain.Element
 import com.tiixel.periodictableprofessor.ui.elementlist.model.ElementCellModel
+import io.reactivex.subjects.PublishSubject
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -55,6 +57,12 @@ class PeriodicTableView(context: Context, attrs: AttributeSet?, style: Int) : Vi
             }
         }
     }
+
+    /**
+     * An observable that emits an element's atomic number when its cell is
+     * touched.
+     */
+    val elementClickedObservable: PublishSubject<Byte> = PublishSubject.create()
 
     /**
      * Whether or not to draw the [PeriodicTableCellModel.number], [PeriodicTableCellModel.symbol], [PeriodicTableCellModel.additionalInfo]
@@ -209,14 +217,16 @@ class PeriodicTableView(context: Context, attrs: AttributeSet?, style: Int) : Vi
         var cellBottom: Float
         var cellLeft: Float
         var cellRight: Float
+        var vertices: Vertices
 
         elements.forEach { element ->
 
+            vertices = getVerticesForCell(row = element.row, column = element.column)
             // Compute cell vertices positions
-            cellLeft = element.column * cellSize + cellMargin / 2f + paddingLeft
-            cellTop = element.row * cellSize + (if (element.row > 6) fBlockSpace else 0) + cellMargin / 2f + paddingTop
-            cellRight = cellLeft + cellSize - cellMargin
-            cellBottom = cellTop + cellSize - cellMargin
+            cellLeft = vertices.left
+            cellTop = vertices.top
+            cellRight = vertices.right
+            cellBottom = vertices.bottom
 
             // Draw cell background
             cellPaint.color = Color.parseColor(element.backgroundColor)
@@ -258,5 +268,64 @@ class PeriodicTableView(context: Context, attrs: AttributeSet?, style: Int) : Vi
                 )
             }
         }
+    }
+
+    inner class Vertices(val left: Float, val top: Float, val bottom: Float, val right: Float)
+
+    /**
+     * Returns the canvas position of the vertices for a cell, given its row and column.
+     */
+    private fun getVerticesForCell(row: Byte, column: Byte): Vertices {
+        val cellLeft = column * cellSize + cellMargin / 2f + paddingLeft
+        val cellTop = row * cellSize + (if (row > 6) fBlockSpace else 0) + cellMargin / 2f + paddingTop
+        val cellRight = cellLeft + cellSize - cellMargin
+        val cellBottom = cellTop + cellSize - cellMargin
+
+        return Vertices(cellLeft, cellTop, cellBottom, cellRight)
+    }
+
+    /**
+     * Returns the atomic number of the element at canvas position (x, y), and null if (x, y) is not in a cell.
+     */
+    private fun getElementAt(x: Float, y: Float): Byte? {
+
+        var col: Byte = 0
+        while (getVerticesForCell(0, (col + 1).toByte()).left < x) {
+            col++
+        }
+
+        var row: Byte = 0
+        while (getVerticesForCell((row + 1).toByte(), 0).top < y) {
+            row++
+        }
+
+        val vertices = getVerticesForCell(row, col)
+
+        if (x < vertices.right && y < vertices.bottom) {
+            val matching = elements.filter { it.column == col }.filter { it.row == row }
+
+            if (matching.isEmpty()) return null
+
+            return matching.first().number
+        } else {
+            return null
+        }
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            val element = getElementAt(event.x, event.y)
+            if (element != null) {
+                elementClicked(element)
+                return true
+            }
+            return false
+        }
+        return false
+    }
+
+    private fun elementClicked(element: Byte) {
+        elementClickedObservable.onNext(element)
     }
 }
