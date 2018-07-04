@@ -4,6 +4,7 @@ import com.tiixel.periodictableprofessor.data.element.local.gson.entity.ElementE
 import com.tiixel.periodictableprofessor.data.element.local.gson.entity.ElementLangEntity
 import com.tiixel.periodictableprofessor.domain.Element
 import com.tiixel.periodictableprofessor.domain.Quantity
+import com.tiixel.periodictableprofessor.util.extensions.nullIfBlank
 import javax.measure.unit.NonSI
 import javax.measure.unit.NonSI.LITRE
 import javax.measure.unit.SI.GRAM
@@ -28,18 +29,18 @@ object ElementMapper {
             atomicNumber = element.atomic_number,
             atomicRadius = atomicRadius?.let { Quantity(it, PICO(METRE)) },
             atomicWeight = atomicWeight?.let { Quantity(it, NonSI.ATOMIC_MASS) },
-            description = element.description,
-            discoverers = element.discoverers,
-            discoveryLocation = element.discovery_location,
+            description = element.description.nullIfBlank(),
+            discoverers = element.discoverers.nullIfBlank(),
+            discoveryLocation = element.discovery_location.nullIfBlank(),
             discoveryYear = element.discovery_year.toIntOrNull(),
             electronicConfiguration = element.electronic_configuration,
             enPauling = element.en_pauling.toFloatOrNull(),
             isRadioactive = element.is_radioactive.toBoolean(),
             name = elementLangEntity.name,
-            nameOrigin = elementLangEntity.name_origin,
-            sources = element.sources,
+            nameOrigin = elementLangEntity.name_origin.nullIfBlank(),
+            sources = element.sources.nullIfBlank(),
             symbol = element.symbol,
-            uses = element.uses,
+            uses = element.uses.nullIfBlank(),
             vdwRadius = vdwRadius?.let { Quantity(it, PICO(METRE)) }
         )
     }
