@@ -99,6 +99,12 @@ dependencies {
         exclude(group: 'org.javolution', module: 'javolution')
     }
 
+    // Icons lib
+    implementation "com.mikepenz:iconics-core:3.0.4@aar"
+    implementation "com.mikepenz:iconics-views:3.0.4@aar"
+    implementation 'com.mikepenz:google-material-typeface:3.0.1.2.original@aar'
+    implementation 'com.mikepenz:community-material-typeface:2.0.46.1@aar'
+
     // Dependencies for mock
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.3'
 
