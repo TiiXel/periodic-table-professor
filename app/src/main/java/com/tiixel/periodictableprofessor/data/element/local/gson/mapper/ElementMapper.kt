@@ -12,6 +12,7 @@ import javax.measure.unit.SI.KILOGRAM
 import javax.measure.unit.SI.METRE
 import javax.measure.unit.SI.MILLI
 import javax.measure.unit.SI.PICO
+import javax.measure.unit.Unit
 
 object ElementMapper {
 
@@ -21,6 +22,8 @@ object ElementMapper {
         val abundanceSea = if (element.abundance_sea.isNotBlank()) element.abundance_sea else null
         val atomicRadius = if (element.atomic_radius.isNotBlank()) element.atomic_radius else null
         val atomicWeight = if (element.atomic_weight.isNotBlank()) element.atomic_weight else null
+        val discoveryYear = if (element.discovery_year.isNotBlank()) element.discovery_year else null
+        val enPauling = if (element.en_pauling.isNotBlank()) element.en_pauling else null
         val vdwRadius = if (element.vdw_radius.isNotBlank()) element.vdw_radius else null
 
         return Element(
@@ -32,9 +35,9 @@ object ElementMapper {
             description = element.description.nullIfBlank(),
             discoverers = element.discoverers.nullIfBlank(),
             discoveryLocation = element.discovery_location.nullIfBlank(),
-            discoveryYear = element.discovery_year.toIntOrNull(),
+            discoveryYear = discoveryYear?.let { Quantity(it, Unit.ONE) },
             electronicConfiguration = element.electronic_configuration,
-            enPauling = element.en_pauling.toFloatOrNull(),
+            enPauling = enPauling?.let { Quantity(it, Unit.ONE) },
             isRadioactive = element.is_radioactive.toBoolean(),
             name = elementLangEntity.name,
             nameOrigin = elementLangEntity.name_origin.nullIfBlank(),
