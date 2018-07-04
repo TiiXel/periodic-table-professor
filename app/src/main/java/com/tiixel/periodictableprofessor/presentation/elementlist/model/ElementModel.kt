@@ -33,6 +33,7 @@ data class ElementModel(
                 OneLineDataPoint.ATOMIC_RADIUS -> element.atomicRadius?.siValue()
                 OneLineDataPoint.ATOMIC_WEIGHT -> element.atomicWeight?.siValue()
                 OneLineDataPoint.DISCOVERY_YEAR -> element.discoveryYear?.toFloat()
+                OneLineDataPoint.EN_PAULING -> element.enPauling
                 OneLineDataPoint.VDW_RADIUS -> element.vdwRadius?.siValue()
                 else -> null
             } ?: Float.MIN_VALUE
