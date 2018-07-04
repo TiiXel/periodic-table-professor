@@ -1,6 +1,7 @@
 package com.tiixel.periodictableprofessor.presentation.elementlist.model
 
 import com.tiixel.periodictableprofessor.domain.Element
+import com.tiixel.periodictableprofessor.domain.Quantity
 
 data class ElementModel(
     val atomicNumber: Byte,
@@ -8,49 +9,58 @@ data class ElementModel(
     val column: Byte,
     val row: Byte,
     val dataString: String?,
-    val dataValue: Float?
+    val dataPercent: Float?
 ) {
 
     companion object {
 
         fun listFromDomain(elements: List<Element>, dataPoint: OneLineDataPoint?): List<ElementModel> {
-            return elements.map {
+
+            val map = elements.map { it to it.getData(dataPoint) }.sortedBy { it.second?.siValue() }
+
+            val min = map.firstOrNull { it.second != null }?.second?.siValue()
+            val max = map.lastOrNull { it.second != null }?.second?.siValue()
+
+            val noScale = (min == null && max == null)
+
+            return map.map {
                 ElementModel(
-                    atomicNumber = it.atomicNumber,
-                    symbol = it.symbol,
-                    column = it.tableColumn,
-                    row = it.tableRow,
-                    dataString = if (dataPoint != null) getData(it, dataPoint) else null,
-                    dataValue = if (dataPoint != null) getDataValue(it, dataPoint) else null
+                    atomicNumber = it.first.atomicNumber,
+                    symbol = it.first.symbol,
+                    column = it.first.tableColumn,
+                    row = it.first.tableRow,
+                    dataString = it.first.getDataString(dataPoint),
+                    dataPercent = if (!noScale) it.second?.siValue()?.let { (it - min!!) / (max!! - min!!) } else null
                 )
-            }.sortedBy { it.dataValue }
+            }
         }
 
-        private fun getDataValue(element: Element, dataPoint: OneLineDataPoint): Float {
+        private fun Element.getData(dataPoint: OneLineDataPoint?): Quantity? {
             return when (dataPoint) {
-                OneLineDataPoint.ABUNDANCE_CRUST -> element.abundanceCrust?.siValue()
-                OneLineDataPoint.ABUNDANCE_SEA -> element.abundanceSea?.siValue()
-                OneLineDataPoint.ATOMIC_RADIUS -> element.atomicRadius?.siValue()
-                OneLineDataPoint.ATOMIC_WEIGHT -> element.atomicWeight?.siValue()
-                OneLineDataPoint.DISCOVERY_YEAR -> element.discoveryYear?.toFloat()
-                OneLineDataPoint.EN_PAULING -> element.enPauling
-                OneLineDataPoint.VDW_RADIUS -> element.vdwRadius?.siValue()
+                OneLineDataPoint.ABUNDANCE_CRUST -> abundanceCrust
+                OneLineDataPoint.ABUNDANCE_SEA -> abundanceSea
+                OneLineDataPoint.ATOMIC_RADIUS -> atomicRadius
+                OneLineDataPoint.ATOMIC_WEIGHT -> atomicWeight
+                OneLineDataPoint.DISCOVERY_YEAR -> discoveryYear
+                OneLineDataPoint.EN_PAULING -> enPauling
+                OneLineDataPoint.VDW_RADIUS -> vdwRadius
                 else -> null
-            } ?: Float.MIN_VALUE
+            }
         }
 
-        private fun getData(element: Element, dataPoint: OneLineDataPoint): String {
+        private fun Element.getDataString(dataPoint: OneLineDataPoint?): String {
             return when (dataPoint) {
-                OneLineDataPoint.ABUNDANCE_CRUST -> element.abundanceCrust?.toString()
-                OneLineDataPoint.ABUNDANCE_SEA -> element.abundanceSea?.toString()
-                OneLineDataPoint.ATOMIC_RADIUS -> element.atomicRadius?.toString()
-                OneLineDataPoint.ATOMIC_WEIGHT -> element.atomicWeight?.toString()
-                OneLineDataPoint.DISCOVERY_LOCATION -> element.discoveryLocation
-                OneLineDataPoint.DISCOVERY_YEAR -> element.discoveryYear?.toString()
-                OneLineDataPoint.ELECTRONIC_CONFIGURATION -> element.electronicConfiguration
-                OneLineDataPoint.EN_PAULING -> element.enPauling?.toString()
-                OneLineDataPoint.NAME -> element.name
-                OneLineDataPoint.VDW_RADIUS -> element.vdwRadius?.toString()
+                OneLineDataPoint.ABUNDANCE_CRUST -> abundanceCrust?.toString()
+                OneLineDataPoint.ABUNDANCE_SEA -> abundanceSea?.toString()
+                OneLineDataPoint.ATOMIC_RADIUS -> atomicRadius?.toString()
+                OneLineDataPoint.ATOMIC_WEIGHT -> atomicWeight?.toString()
+                OneLineDataPoint.DISCOVERY_LOCATION -> discoveryLocation
+                OneLineDataPoint.DISCOVERY_YEAR -> discoveryYear?.toString()
+                OneLineDataPoint.ELECTRONIC_CONFIGURATION -> electronicConfiguration
+                OneLineDataPoint.EN_PAULING -> enPauling?.toString()
+                OneLineDataPoint.NAME -> name
+                OneLineDataPoint.VDW_RADIUS -> vdwRadius?.toString()
+                else -> null
             } ?: ""
         }
 
