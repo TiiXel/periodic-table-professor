@@ -7,7 +7,8 @@ data class ElementModel(
     val symbol: String,
     val column: Byte,
     val row: Byte,
-    val data: String?
+    val dataString: String?,
+    val dataValue: Float?
 ) {
 
     companion object {
@@ -19,24 +20,38 @@ data class ElementModel(
                     symbol = it.symbol,
                     column = it.tableColumn,
                     row = it.tableRow,
-                    data = if (dataPoint != null) getData(it, dataPoint) else null
+                    dataString = if (dataPoint != null) getData(it, dataPoint) else null,
+                    dataValue = if (dataPoint != null) getDataValue(it, dataPoint) else null
                 )
-            }.sortedBy { it.data?.toFloatOrNull() ?: Float.MIN_VALUE }
+            }.sortedBy { it.dataValue }
+        }
+
+        private fun getDataValue(element: Element, dataPoint: OneLineDataPoint): Float {
+            return when (dataPoint) {
+                OneLineDataPoint.ABUNDANCE_CRUST -> element.abundanceCrust?.siValue()
+                OneLineDataPoint.ABUNDANCE_SEA -> element.abundanceSea?.siValue()
+                OneLineDataPoint.ATOMIC_RADIUS -> element.atomicRadius?.siValue()
+                OneLineDataPoint.ATOMIC_WEIGHT -> element.atomicWeight?.siValue()
+                OneLineDataPoint.DISCOVERY_YEAR -> element.discoveryYear?.toFloat()
+                OneLineDataPoint.EN_PAULING -> element.enPauling
+                OneLineDataPoint.VDW_RADIUS -> element.vdwRadius?.siValue()
+                else -> null
+            } ?: Float.MIN_VALUE
         }
 
         private fun getData(element: Element, dataPoint: OneLineDataPoint): String {
             return when (dataPoint) {
-                OneLineDataPoint.ABUNDANCE_CRUST -> element.abundanceCrust?.toString() ?: ""
-                OneLineDataPoint.ABUNDANCE_SEA -> element.abundanceSea?.toString() ?: ""
-                OneLineDataPoint.ATOMIC_RADIUS -> element.atomicRadius?.toString() ?: ""
-                OneLineDataPoint.ATOMIC_WEIGHT -> element.atomicWeight?.toString() ?: ""
-                OneLineDataPoint.DISCOVERY_LOCATION -> element.discoveryLocation ?: ""
-                OneLineDataPoint.DISCOVERY_YEAR -> element.discoveryYear?.toString() ?: ""
+                OneLineDataPoint.ABUNDANCE_CRUST -> element.abundanceCrust?.toString()
+                OneLineDataPoint.ABUNDANCE_SEA -> element.abundanceSea?.toString()
+                OneLineDataPoint.ATOMIC_RADIUS -> element.atomicRadius?.toString()
+                OneLineDataPoint.ATOMIC_WEIGHT -> element.atomicWeight?.toString()
+                OneLineDataPoint.DISCOVERY_LOCATION -> element.discoveryLocation
+                OneLineDataPoint.DISCOVERY_YEAR -> element.discoveryYear?.toString()
                 OneLineDataPoint.ELECTRONIC_CONFIGURATION -> element.electronicConfiguration
-                OneLineDataPoint.EN_PAULING -> element.enPauling?.toString() ?: ""
-                OneLineDataPoint.NAME -> element.name ?: ""
-                OneLineDataPoint.VDW_RADIUS -> element.vdwRadius?.toString() ?: ""
-            }
+                OneLineDataPoint.EN_PAULING -> element.enPauling?.toString()
+                OneLineDataPoint.NAME -> element.name
+                OneLineDataPoint.VDW_RADIUS -> element.vdwRadius?.toString()
+            } ?: ""
         }
 
         enum class OneLineDataPoint {

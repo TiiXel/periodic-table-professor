@@ -1,5 +1,6 @@
 package com.tiixel.periodictableprofessor.dagger.module
 
+import com.tiixel.periodictableprofessor.ui.element.ElementActivity
 import com.tiixel.periodictableprofessor.ui.elementlist.ElementTableActivity
 import com.tiixel.periodictableprofessor.ui.home.HomeActivity
 import com.tiixel.periodictableprofessor.ui.review.ReviewActivity
@@ -18,4 +19,6 @@ abstract class ActivityModule {
     @ContributesAndroidInjector
     internal abstract fun contributeLearnActivity(): ReviewActivity
 
+    @ContributesAndroidInjector
+    internal abstract fun contributeElementActivity(): ElementActivity
 }

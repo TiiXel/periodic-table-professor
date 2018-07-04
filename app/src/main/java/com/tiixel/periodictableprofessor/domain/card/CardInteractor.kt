@@ -24,6 +24,8 @@ interface CardInteractor {
      */
     fun getNextCardForReview(dueSoonOnly: Boolean = true): Single<Pair<Card, Card.Companion.Face>>
 
+    fun getCard(element: Byte): Single<Card>
+
     fun getNextReviewDate(): Maybe<Date>
 
     fun countCardsDueToday(reference: Date): Single<Int>
