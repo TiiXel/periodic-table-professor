@@ -1,8 +1,7 @@
 package com.tiixel.periodictableprofessor.presentation.review
 
-import com.tiixel.periodictableprofessor.domain.card.interactor.CardInteractor
 import com.tiixel.periodictableprofessor.domain.element.interactor.ElementInteractor
-import com.tiixel.periodictableprofessor.presentation.review.model.CountsModel
+import com.tiixel.periodictableprofessor.domain.review.interactor.ReviewInteractor
 import com.tiixel.periodictableprofessor.util.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
@@ -14,54 +13,52 @@ import javax.inject.Inject
 
 class ReviewActionProcessor @Inject constructor(
     private val elementInteractor: ElementInteractor,
-    private val cardInteractor: CardInteractor,
+    private val reviewInteractor: ReviewInteractor,
     private val schedulerProvider: BaseSchedulerProvider
 ) {
 
-    private val loadNextCardProcessor = ObservableTransformer<ReviewAction.LoadNextCard, ReviewResult> { actions ->
+    private val loadReviewableProcessor = ObservableTransformer<ReviewAction.LoadNext, ReviewResult> { actions ->
         actions.switchMap { action ->
             when (action.newCard) {
-                true -> cardInteractor.getNewCardForReview()
-                false -> cardInteractor.getNextCardForReview(action.dueSoonOnly)
+                true -> reviewInteractor.getReviewForNew()
+                false -> reviewInteractor.getReviewForNext(action.dueSoonOnly)
             }.flatMap { elementInteractor.getElement(it.item.itemId).zipWith(Single.just(it.face)) }
                 .toObservable()
-                .map { ReviewResult.LoadNextCardResult.Success(it.first, it.second) }
-                .cast(ReviewResult.LoadNextCardResult::class.java)
-                .onErrorReturn { ReviewResult.LoadNextCardResult.Failure(it) }
+                .map { ReviewResult.LoadNextReviewResult.Success(it.first, it.second) }
+                .cast(ReviewResult.LoadNextReviewResult::class.java)
+                .onErrorReturn { ReviewResult.LoadNextReviewResult.Failure(it) }
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .startWith(ReviewResult.LoadNextCardResult.InFlight)
+                .startWith(ReviewResult.LoadNextReviewResult.InFlight)
         }
     }
 
-    private val reviewCardProcessor = ObservableTransformer<ReviewAction.ReviewCard, ReviewResult> { actions ->
+    private val reviewProcessor = ObservableTransformer<ReviewAction.Review, ReviewResult> { actions ->
         actions.flatMap { action ->
-            cardInteractor.reviewCard(action.freshReview)
-                .toObservable<ReviewResult.ReviewCardResult>()
-                .map { ReviewResult.ReviewCardResult.Success }
-                .cast(ReviewResult.ReviewCardResult::class.java)
-                .onErrorReturn { ReviewResult.ReviewCardResult.Failure(it) }
+            reviewInteractor.review(action.freshReview)
+                .toObservable<ReviewResult.Review_Result>()
+                .map { ReviewResult.Review_Result.Success }
+                .cast(ReviewResult.Review_Result::class.java)
+                .onErrorReturn { ReviewResult.Review_Result.Failure(it) }
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .startWith(ReviewResult.ReviewCardResult.InFlight)
+                .startWith(ReviewResult.Review_Result.InFlight)
         }
     }
 
     private val getCountsProcessor = ObservableTransformer<ReviewAction.GetCounts, ReviewResult> { actions ->
         actions.flatMap { _ ->
-            cardInteractor.countCardsDueSoon(Date())
-                .zipWith(cardInteractor.countCardsDueToday(Date()), { w, v -> CountsModel(dueSoon = w, dueToday = v) })
-                .zipWith(cardInteractor.countCardsNewOnDay(Date()), { model, v -> model.copy(newToday = v) })
+            reviewInteractor.countReviewablesNewOnDay(Date())
+                .zipWith(reviewInteractor.countReviewsDueSoon(Date()))
+                .zipWith(reviewInteractor.countReviewsDueOnDay(Date()))
+                .zipWith(reviewInteractor.getNextReviewDate())
                 .toObservable()
-                .zipWith(cardInteractor.getNextReviewDate().toObservable().materialize(), { model, v ->
-                    model.copy(nextReviewTimer = v.value)
-                })
                 .map {
                     ReviewResult.GetCountsResult.Success(
-                        dueSoon = it.dueSoon,
-                        dueToday = it.dueToday,
-                        new = it.newToday,
-                        nextReviewTimer = timer(it.nextReviewTimer, Date())
+                        new = it.first.first.first,
+                        dueSoon = it.first.first.second,
+                        dueToday = it.first.second,
+                        nextReviewTimer = timer(it.second, Date())
                     )
                 }
                 .cast(ReviewResult.GetCountsResult::class.java)
@@ -72,33 +69,16 @@ class ReviewActionProcessor @Inject constructor(
         }
     }
 
-    private val checkCardProcessor = ObservableTransformer<ReviewAction.CheckCard, ReviewResult> { actions ->
-        actions.flatMap {
-            Observable.just(ReviewResult.CheckCardResult)
-        }
+    private val checkCardProcessor = ObservableTransformer<ReviewAction.Check, ReviewResult> { actions ->
+        actions.flatMap { Observable.just(ReviewResult.CheckResult) }
     }
 
     internal val actionProcessor = ObservableTransformer<ReviewAction, ReviewResult> { action ->
         action.publish { shared ->
-            shared.ofType(ReviewAction.LoadNextCard::class.java)
-                .compose(loadNextCardProcessor)
-                .mergeWith(
-                    shared.ofType(ReviewAction.ReviewCard::class.java).compose(reviewCardProcessor)
-                )
-                .mergeWith(
-                    shared.ofType(ReviewAction.CheckCard::class.java).compose(checkCardProcessor)
-                )
-                .mergeWith(
-                    shared.ofType(ReviewAction.GetCounts::class.java).compose(getCountsProcessor)
-                )
-                .mergeWith(shared.filter { action ->
-                    action !is ReviewAction.LoadNextCard
-                        && action !is ReviewAction.ReviewCard
-                        && action !== ReviewAction.CheckCard
-                        && action !== ReviewAction.GetCounts
-                }.flatMap { action ->
-                    Observable.error<ReviewResult>(IllegalArgumentException("Unknown action type: $action"))
-                })
+            shared.ofType(ReviewAction.LoadNext::class.java).compose(loadReviewableProcessor)
+                .mergeWith(shared.ofType(ReviewAction.Review::class.java).compose(reviewProcessor))
+                .mergeWith(shared.ofType(ReviewAction.Check::class.java).compose(checkCardProcessor))
+                .mergeWith(shared.ofType(ReviewAction.GetCounts::class.java).compose(getCountsProcessor))
         }
     }
 

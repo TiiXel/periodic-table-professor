@@ -1,7 +1,7 @@
 package com.tiixel.periodictableprofessor.presentation.element
 
-import com.tiixel.periodictableprofessor.domain.card.interactor.CardInteractor
 import com.tiixel.periodictableprofessor.domain.element.interactor.ElementInteractor
+import com.tiixel.periodictableprofessor.domain.review.interactor.ReviewInteractor
 import com.tiixel.periodictableprofessor.presentation.element.model.ElementModel
 import com.tiixel.periodictableprofessor.util.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class ElementActionProcessor @Inject constructor(
     private val elementInteractor: ElementInteractor,
-    private val cardInteractor: CardInteractor,
+    private val reviewInteractor: ReviewInteractor,
     private val schedulerProvider: BaseSchedulerProvider
 ) {
 

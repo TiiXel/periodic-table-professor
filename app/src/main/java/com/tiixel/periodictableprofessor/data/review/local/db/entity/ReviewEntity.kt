@@ -3,7 +3,7 @@ package com.tiixel.periodictableprofessor.data.review.local.db.entity
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import com.tiixel.periodictableprofessor.data.review.local.db.REVIEW_LOG_TABLE_NAME
-import com.tiixel.periodictableprofessor.datarepository.card.generic.GenericReview
+import com.tiixel.periodictableprofessor.datarepository.review.generic.GenericReview
 import java.util.Date
 
 @Entity(tableName = REVIEW_LOG_TABLE_NAME)

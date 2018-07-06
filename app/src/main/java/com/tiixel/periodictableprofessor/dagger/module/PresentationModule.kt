@@ -30,7 +30,7 @@ internal abstract class PresentationModule {
     @Binds
     @IntoMap
     @ViewModelKey(ReviewViewModel::class)
-    abstract fun bindLearnViewModel(viewModel: ReviewViewModel): ViewModel
+    abstract fun bindReviewViewModel(viewModel: ReviewViewModel): ViewModel
 
     @Binds
     @IntoMap

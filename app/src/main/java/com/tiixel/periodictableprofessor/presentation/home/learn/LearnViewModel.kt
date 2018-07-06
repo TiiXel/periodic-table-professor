@@ -55,7 +55,7 @@ class LearnViewModel @Inject constructor(
 
         private val reducer = BiFunction { previousState: LearnViewState, result: ReviewResult ->
             when (result) {
-                is ReviewResult.LoadNextCardResult -> {
+                is ReviewResult.LoadNextReviewResult -> {
                     previousState.copy()
                 }
                 is ReviewResult.GetCountsResult -> {

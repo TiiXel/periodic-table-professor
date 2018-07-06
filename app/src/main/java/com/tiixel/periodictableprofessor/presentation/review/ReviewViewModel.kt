@@ -4,9 +4,9 @@ import android.arch.lifecycle.ViewModel
 import com.tiixel.periodictableprofessor.domain.Review
 import com.tiixel.periodictableprofessor.domain.Reviewable
 import com.tiixel.periodictableprofessor.domain.ReviewableFace
-import com.tiixel.periodictableprofessor.domain.exception.NoCardsAreNewException
-import com.tiixel.periodictableprofessor.domain.exception.NoCardsDueSoonException
+import com.tiixel.periodictableprofessor.domain.exception.NoNewReviewException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewException
+import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewSoonException
 import com.tiixel.periodictableprofessor.presentation.base.MviViewModel
 import com.tiixel.periodictableprofessor.presentation.review.mapper.ElementMapper
 import com.tiixel.periodictableprofessor.util.extensions.notOfType
@@ -52,16 +52,16 @@ class ReviewViewModel @Inject constructor(
 
     private fun actionFromIntent(intent: ReviewIntent): ReviewAction {
         return when (intent) {
-            is ReviewIntent.InitialIntent -> ReviewAction.LoadNextCard(intent.newCard, intent.dueSoonOnly)
-            is ReviewIntent.LoadNextCardIntent -> ReviewAction.LoadNextCard(intent.newCard, intent.dueSoonOnly)
-            is ReviewIntent.ReviewCardIntent -> ReviewAction.ReviewCard(
+            is ReviewIntent.InitialIntent -> ReviewAction.LoadNext(intent.newCard, intent.dueSoonOnly)
+            is ReviewIntent.LoadNextIntent -> ReviewAction.LoadNext(intent.newCard, intent.dueSoonOnly)
+            is ReviewIntent.Review_Intent -> ReviewAction.Review(
                 Review.FreshReview(
                     item = Reviewable(intent.element),
                     face = intent.face,
                     performance = intent.performance
                 )
             )
-            is ReviewIntent.CheckCardIntent -> ReviewAction.CheckCard
+            is ReviewIntent.CheckIntent -> ReviewAction.Check
         }
     }
 
@@ -69,9 +69,9 @@ class ReviewViewModel @Inject constructor(
 
         private val reducer = BiFunction { previousState: ReviewViewState, result: ReviewResult ->
             when (result) {
-                is ReviewResult.LoadNextCardResult -> {
+                is ReviewResult.LoadNextReviewResult -> {
                     when (result) {
-                        is ReviewResult.LoadNextCardResult.Success -> {
+                        is ReviewResult.LoadNextReviewResult.Success -> {
                             previousState.copy(
                                 loadingInProgress = false,
                                 loadingFailedCause = null,
@@ -86,13 +86,13 @@ class ReviewViewModel @Inject constructor(
                                 isTablePositionVisible = false
                             )
                         }
-                        is ReviewResult.LoadNextCardResult.Failure -> {
+                        is ReviewResult.LoadNextReviewResult.Failure -> {
                             when (result.error) {
                                 is NoNextReviewException -> {
                                 }
-                                is NoCardsAreNewException -> {
+                                is NoNewReviewException -> {
                                 }
-                                is NoCardsDueSoonException -> {
+                                is NoNextReviewSoonException -> {
                                 }
                                 else -> throw result.error
                             }
@@ -103,25 +103,25 @@ class ReviewViewModel @Inject constructor(
                                 showCheckButtonOverPerformance = false
                             )
                         }
-                        is ReviewResult.LoadNextCardResult.InFlight -> {
+                        is ReviewResult.LoadNextReviewResult.InFlight -> {
                             previousState.copy(
                                 loadingInProgress = true, showCheckButtonOverPerformance = true
                             )
                         }
                     }
                 }
-                is ReviewResult.ReviewCardResult -> {
+                is ReviewResult.Review_Result -> {
                     when (result) {
-                        is ReviewResult.ReviewCardResult.Success -> {
+                        is ReviewResult.Review_Result.Success -> {
                             previousState.copy(
                                 reviewingFailed = false
                             )
                         }
-                        is ReviewResult.ReviewCardResult.Failure -> {
+                        is ReviewResult.Review_Result.Failure -> {
                             previousState.copy(reviewingFailed = true)
                             throw result.error
                         }
-                        is ReviewResult.ReviewCardResult.InFlight -> {
+                        is ReviewResult.Review_Result.InFlight -> {
                             previousState.copy(showCheckButtonOverPerformance = false)
                         }
                     }
@@ -149,7 +149,7 @@ class ReviewViewModel @Inject constructor(
                         }
                     }
                 }
-                is ReviewResult.CheckCardResult -> {
+                is ReviewResult.CheckResult -> {
                     previousState.copy(
                         showCheckButtonOverPerformance = false,
                         isNumberVisible = true,

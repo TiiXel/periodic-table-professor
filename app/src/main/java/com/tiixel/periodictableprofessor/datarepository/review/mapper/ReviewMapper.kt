@@ -1,6 +1,6 @@
-package com.tiixel.periodictableprofessor.datarepository.card.mapper
+package com.tiixel.periodictableprofessor.datarepository.review.mapper
 
-import com.tiixel.periodictableprofessor.datarepository.card.generic.GenericReview
+import com.tiixel.periodictableprofessor.datarepository.review.generic.GenericReview
 import com.tiixel.periodictableprofessor.domain.Review
 import com.tiixel.periodictableprofessor.domain.ReviewPerformance
 import com.tiixel.periodictableprofessor.domain.Reviewable

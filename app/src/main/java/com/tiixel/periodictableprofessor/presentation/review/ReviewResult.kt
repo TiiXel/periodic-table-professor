@@ -6,22 +6,22 @@ import com.tiixel.periodictableprofessor.presentation.base.MviResult
 
 sealed class ReviewResult : MviResult {
 
-    sealed class LoadNextCardResult : ReviewResult() {
+    sealed class LoadNextReviewResult : ReviewResult() {
 
-        data class Success(val element: Element, val face: ReviewableFace) : LoadNextCardResult()
+        data class Success(val element: Element, val face: ReviewableFace) : LoadNextReviewResult()
 
-        data class Failure(val error: Throwable) : LoadNextCardResult()
+        data class Failure(val error: Throwable) : LoadNextReviewResult()
 
-        object InFlight : LoadNextCardResult()
+        object InFlight : LoadNextReviewResult()
     }
 
-    sealed class ReviewCardResult : ReviewResult() {
+    sealed class Review_Result : ReviewResult() {
 
-        object Success : ReviewCardResult()
+        object Success : Review_Result()
 
-        data class Failure(val error: Throwable) : ReviewCardResult()
+        data class Failure(val error: Throwable) : Review_Result()
 
-        object InFlight : ReviewCardResult()
+        object InFlight : Review_Result()
     }
 
     sealed class GetCountsResult : ReviewResult() {
@@ -34,5 +34,5 @@ sealed class ReviewResult : MviResult {
         object InFlight : GetCountsResult()
     }
 
-    object CheckCardResult : ReviewResult()
+    object CheckResult : ReviewResult()
 }

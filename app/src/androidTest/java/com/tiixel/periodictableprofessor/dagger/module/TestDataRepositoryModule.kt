@@ -1,8 +1,8 @@
 package com.tiixel.periodictableprofessor.dagger.module
 
 import com.nhaarman.mockito_kotlin.mock
-import com.tiixel.periodictableprofessor.domain.card.contract.CardRepository
 import com.tiixel.periodictableprofessor.domain.element.contract.ElementRepository
+import com.tiixel.periodictableprofessor.domain.review.contract.ReviewRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -16,5 +16,5 @@ class TestDataRepositoryModule {
 
     @Provides
     @Singleton
-    fun provideReviewRepository(): CardRepository = mock()
+    fun provideReviewRepository(): ReviewRepository = mock()
 }

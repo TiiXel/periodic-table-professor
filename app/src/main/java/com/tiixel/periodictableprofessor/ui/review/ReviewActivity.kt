@@ -8,9 +8,9 @@ import android.view.View
 import com.tiixel.periodictableprofessor.R
 import com.tiixel.periodictableprofessor.domain.ReviewPerformance
 import com.tiixel.periodictableprofessor.domain.ReviewableFace
-import com.tiixel.periodictableprofessor.domain.exception.NoCardsAreNewException
-import com.tiixel.periodictableprofessor.domain.exception.NoCardsDueSoonException
+import com.tiixel.periodictableprofessor.domain.exception.NoNewReviewException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewException
+import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewSoonException
 import com.tiixel.periodictableprofessor.presentation.base.MviView
 import com.tiixel.periodictableprofessor.presentation.review.ReviewIntent
 import com.tiixel.periodictableprofessor.presentation.review.ReviewViewModel
@@ -28,9 +28,9 @@ import javax.inject.Inject
 class ReviewActivity : AppCompatActivity(), MviView<ReviewIntent, ReviewViewState> {
 
     // Intent publishers
-    private val loadNextCardIntentPublisher = PublishSubject.create<ReviewIntent.LoadNextCardIntent>()
-    private val reviewCardIntentPublisher = PublishSubject.create<ReviewIntent.ReviewCardIntent>()
-    private val checkCardIntentPublisher = PublishSubject.create<ReviewIntent.CheckCardIntent>()
+    private val loadNextIntentPublisher = PublishSubject.create<ReviewIntent.LoadNextIntent>()
+    private val reviewIntentPublisher = PublishSubject.create<ReviewIntent.Review_Intent>()
+    private val checkIntentPublisher = PublishSubject.create<ReviewIntent.CheckIntent>()
 
     // Used to manage the data flow lifecycle and avoid memory leak
     private val disposable = CompositeDisposable()
@@ -88,9 +88,9 @@ class ReviewActivity : AppCompatActivity(), MviView<ReviewIntent, ReviewViewStat
     override fun intents(): Observable<ReviewIntent> {
         return Observable.merge(
             Observable.just(ReviewIntent.InitialIntent(newCard = reviewNewCards, dueSoonOnly = reviewDueTodayOnly)),
-            loadNextCardIntentPublisher,
-            reviewCardIntentPublisher,
-            checkCardIntentPublisher
+            loadNextIntentPublisher,
+            reviewIntentPublisher,
+            checkIntentPublisher
         )
     }
 
@@ -124,7 +124,7 @@ class ReviewActivity : AppCompatActivity(), MviView<ReviewIntent, ReviewViewStat
                     ErrorButton(getString(R.string.error_message_all_cards_are_new_button), loadNewCard)
                 )
             }
-            is NoCardsDueSoonException -> {
+            is NoNextReviewSoonException -> {
                 showError(
                     getString(
                         R.string.error_message_no_cards_due_soon,
@@ -135,7 +135,7 @@ class ReviewActivity : AppCompatActivity(), MviView<ReviewIntent, ReviewViewStat
                     ErrorButton(getString(R.string.error_message_no_cards_due_soon_button_reload), reload)
                 )
             }
-            is NoCardsAreNewException -> {
+            is NoNewReviewException -> {
                 showError(getString(R.string.error_message_no_cards_are_new))
             }
             else -> {
@@ -235,19 +235,19 @@ class ReviewActivity : AppCompatActivity(), MviView<ReviewIntent, ReviewViewStat
     //<editor-fold desc="Intent publisher methods">
     private fun loadNextCard(forceNewCard: Boolean = false) {
         val intent =
-            ReviewIntent.LoadNextCardIntent(newCard = reviewNewCards || forceNewCard, dueSoonOnly = reviewDueTodayOnly)
-        loadNextCardIntentPublisher.onNext(intent)
+            ReviewIntent.LoadNextIntent(newCard = reviewNewCards || forceNewCard, dueSoonOnly = reviewDueTodayOnly)
+        loadNextIntentPublisher.onNext(intent)
     }
 
     private fun checkCard() {
-        val intent = ReviewIntent.CheckCardIntent
-        checkCardIntentPublisher.onNext(intent)
+        val intent = ReviewIntent.CheckIntent
+        checkIntentPublisher.onNext(intent)
     }
 
     private fun reviewCard(performance: ReviewPerformance) {
         viewState.element?.let {
-            val intent = ReviewIntent.ReviewCardIntent(it.number.toByte(), ReviewableFace.SYMBOL, performance)
-            reviewCardIntentPublisher.onNext(intent)
+            val intent = ReviewIntent.Review_Intent(it.number.toByte(), ReviewableFace.SYMBOL, performance)
+            reviewIntentPublisher.onNext(intent)
         } ?: throw RuntimeException("You cannot review a null card.")
         loadNextCard()
     }

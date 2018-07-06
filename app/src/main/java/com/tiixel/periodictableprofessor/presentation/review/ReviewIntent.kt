@@ -8,9 +8,9 @@ sealed class ReviewIntent : MviIntent {
 
     data class InitialIntent(val newCard: Boolean, val dueSoonOnly: Boolean) : ReviewIntent()
 
-    data class LoadNextCardIntent(val newCard: Boolean, val dueSoonOnly: Boolean) : ReviewIntent()
+    data class LoadNextIntent(val newCard: Boolean, val dueSoonOnly: Boolean) : ReviewIntent()
 
-    data class ReviewCardIntent(val element: Byte, val face: ReviewableFace, val performance: ReviewPerformance) : ReviewIntent()
+    data class Review_Intent(val element: Byte, val face: ReviewableFace, val performance: ReviewPerformance) : ReviewIntent()
 
-    object CheckCardIntent : ReviewIntent()
+    object CheckIntent : ReviewIntent()
 }

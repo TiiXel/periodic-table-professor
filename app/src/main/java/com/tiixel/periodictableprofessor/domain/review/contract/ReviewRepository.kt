@@ -1,10 +1,10 @@
-package com.tiixel.periodictableprofessor.domain.card.contract
+package com.tiixel.periodictableprofessor.domain.review.contract
 
 import com.tiixel.periodictableprofessor.domain.Review
 import io.reactivex.Completable
 import io.reactivex.Single
 
-interface CardRepository {
+interface ReviewRepository {
 
     fun getReviewableIds(): Single<List<Byte>>
 
