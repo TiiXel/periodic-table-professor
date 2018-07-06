@@ -14,6 +14,30 @@ class MnemonicMixedDataSource @Inject constructor(
     private val jsonAssets: JsonAssets
 ) : MnemonicLocalDataSource {
 
+    override fun getMnemonics(): Single<List<StoredMnemonic>> {
+        return Single.defer {
+            val pictures = assets.getPictures()
+            val gson = Gson()
+            val phrasesJson = jsonAssets.mnemonicPhraseJson()
+            val phrases =
+                gson.fromJson<Array<MnemonicPhraseEntity>>(phrasesJson, Array<MnemonicPhraseEntity>::class.java)
+                    .map { it.atomic_number to it }.toMap()
+
+            val mnemonics = emptyMap<Byte, StoredMnemonic>().toMutableMap()
+
+            pictures.forEach {
+                mnemonics.put(it.key, StoredMnemonic(it.key, null, it.value))
+            }
+
+            phrases.forEach {
+                val m = mnemonics[it.key] ?: StoredMnemonic(it.key, null, null)
+                mnemonics.put(it.key, m.copy(mnemonicPhrase = it.value.phrase))
+            }
+
+            Single.just(mnemonics.values.toList())
+        }
+    }
+
     override fun getMnemonic(element: Byte): Single<StoredMnemonic> {
         return Single.defer {
             val picture = assets.getPicture(element)

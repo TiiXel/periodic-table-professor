@@ -18,7 +18,10 @@ data class Element(
     val sources: String?,
     val symbol: String,
     val uses: String?,
-    val vdwRadius: Quantity?
+    val vdwRadius: Quantity?,
+    val mnemonicPhrase: String?,
+    val mnemonicPicture: ByteArray?,
+    val mnemonicUserNote: String?
 ) {
 
     val tableColumn: Byte = tableColumnOf(atomicNumber)

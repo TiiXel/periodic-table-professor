@@ -8,7 +8,7 @@ data class ReviewData(
     private val _difficulty: Float,
     val reviewDate: Date,
     val nextInterval: Long,
-    val performance: Card.Companion.Performance? = null
+    val performance: ReviewPerformance? = null
 ) {
     val difficulty: Float = _difficulty ?: 0.3f
     val nextDateOverdue: Float?

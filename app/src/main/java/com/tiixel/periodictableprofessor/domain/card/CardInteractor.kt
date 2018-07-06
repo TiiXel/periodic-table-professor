@@ -1,6 +1,8 @@
 package com.tiixel.periodictableprofessor.domain.card
 
-import com.tiixel.periodictableprofessor.domain.Card
+import com.tiixel.periodictableprofessor.domain.Element
+import com.tiixel.periodictableprofessor.domain.ReviewPerformance
+import com.tiixel.periodictableprofessor.domain.ReviewableFace
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsAreNewException
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsDueSoonException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewException
@@ -14,16 +16,14 @@ interface CardInteractor {
      * May pass the following exceptions downstream :
      * - [NoCardsAreNewException]
      */
-    fun getNewCardForReview(): Single<Pair<Card, Card.Companion.Face>>
+    fun getNewCardForReview(): Single<Pair<Element, ReviewableFace>>
 
     /**
      * May pass the following exceptions downstream :
      * - [NoNextReviewException]
      * - [NoCardsDueSoonException]
      */
-    fun getNextCardForReview(dueSoonOnly: Boolean = true): Single<Pair<Card, Card.Companion.Face>>
-
-    fun getCard(element: Byte): Single<Card>
+    fun getNextCardForReview(dueSoonOnly: Boolean = true): Single<Pair<Element, ReviewableFace>>
 
     fun getNextReviewDate(): Single<Date>
 
@@ -33,7 +33,5 @@ interface CardInteractor {
 
     fun countCardsNewOnDay(day: Date): Single<Int>
 
-    fun reviewCard(element: Byte, performance: Card.Companion.Performance, time: Date = Date()): Completable
-
-    fun editCard(card: Card): Completable
+    fun reviewCard(element: Byte, performance: ReviewPerformance, time: Date = Date()): Completable
 }

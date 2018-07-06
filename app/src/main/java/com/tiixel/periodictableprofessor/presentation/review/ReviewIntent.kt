@@ -1,6 +1,6 @@
 package com.tiixel.periodictableprofessor.presentation.review
 
-import com.tiixel.periodictableprofessor.domain.Card
+import com.tiixel.periodictableprofessor.domain.ReviewPerformance
 import com.tiixel.periodictableprofessor.presentation.base.MviIntent
 
 sealed class ReviewIntent : MviIntent {
@@ -9,7 +9,7 @@ sealed class ReviewIntent : MviIntent {
 
     data class LoadNextCardIntent(val newCard: Boolean, val dueSoonOnly: Boolean) : ReviewIntent()
 
-    data class ReviewCardIntent(val element: Byte, val performance: Card.Companion.Performance) : ReviewIntent()
+    data class ReviewCardIntent(val element: Byte, val performance: ReviewPerformance) : ReviewIntent()
 
     object CheckCardIntent : ReviewIntent()
 }

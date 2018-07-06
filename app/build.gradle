@@ -22,6 +22,8 @@ android {
         versionName generateVersionName()
 
         testInstrumentationRunner "com.tiixel.periodictableprofessor.test.TestRunner"
+
+        multiDexEnabled true
     }
 
     compileOptions {
@@ -88,6 +90,7 @@ dependencies {
     implementation 'com.tspoon.traceur:traceur:1.0.1'
     implementation 'org.apache.commons:commons-lang3:3.4'
     implementation 'ru.noties:markwon:1.0.4'
+    implementation 'com.android.support:multidex:1.0.3'
     kapt "android.arch.lifecycle:common-java8:1.1.1"
     kapt "android.arch.persistence.room:compiler:1.1.0"
     kapt "com.google.dagger:dagger-android-processor:2.14.1"

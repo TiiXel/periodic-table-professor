@@ -2,7 +2,8 @@ package com.tiixel.periodictableprofessor.presentation.review.model
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import com.tiixel.periodictableprofessor.domain.Card
+import com.tiixel.periodictableprofessor.domain.Element
+import com.tiixel.periodictableprofessor.domain.ReviewableFace
 
 data class CardModel(
     val number: String,
@@ -23,29 +24,27 @@ data class CardModel(
 
     companion object {
 
-        fun mapFromDomain(card: Card, face: Card.Companion.Face, revealed: Boolean = false): CardModel {
+        fun mapFromDomain(element: Element, face: ReviewableFace, revealed: Boolean = false): CardModel {
             return CardModel(
-                number = card.element.atomicNumber.toString(),
-                symbol = card.element.symbol,
-                name = card.element.name,
-                mnemonicPicture = card.mnemonic?.let {
-                    it.picture.let {
+                number = element.atomicNumber.toString(),
+                symbol = element.symbol,
+                name = element.name,
+                mnemonicPicture = element.mnemonicPicture?.let {
                         BitmapFactory.decodeByteArray(
                             it,
                             0,
                             it.size
                         )
-                    }
-                },
-                mnemonicPhrase = card.mnemonic?.phrase ?: "",
-                column = card.element.tableColumn,
-                row = card.element.tableRow,
-                userNote = card.userNote?.userNote ?: "",
-                visibleNumber = revealed || face == Card.Companion.Face.NUMBER,
-                visibleSymbol = revealed || face == Card.Companion.Face.SYMBOL,
+                    },
+                mnemonicPhrase = element.mnemonicPhrase ?: "",
+                column = element.tableColumn,
+                row = element.tableRow,
+                userNote = element.mnemonicUserNote ?: "",
+                visibleNumber = revealed || face == ReviewableFace.NUMBER,
+                visibleSymbol = revealed || face == ReviewableFace.SYMBOL,
                 visibleMnemonicPhrase = revealed,
-                visibleMnemonicPicture = revealed || face == Card.Companion.Face.PICTURE,
-                visibleName = revealed || face == Card.Companion.Face.NAME,
+                visibleMnemonicPicture = revealed || face == ReviewableFace.PICTURE,
+                visibleName = revealed || face == ReviewableFace.NAME,
                 visibleUserNote = revealed
             )
         }

@@ -6,7 +6,6 @@ import com.tiixel.periodictableprofessor.presentation.element.model.ElementModel
 import com.tiixel.periodictableprofessor.util.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
-import io.reactivex.rxkotlin.zipWith
 import javax.inject.Inject
 
 class ElementActionProcessor @Inject constructor(
@@ -19,9 +18,8 @@ class ElementActionProcessor @Inject constructor(
         ObservableTransformer<ElementAction.LoadElement, ElementResult> { actions ->
             actions.flatMap { action ->
                 elementInteractor.getElement(action.element)
-                    .zipWith(cardInteractor.getCard(action.element))
                     .toObservable()
-                    .map { ElementModel.fromDomain(it.first, it.second) }
+                    .map { ElementModel.fromDomain(it) }
                     .map { ElementResult.LoadElementResult.Success(it) }
                     .cast(ElementResult.LoadElementResult::class.java)
                     .onErrorReturn { ElementResult.LoadElementResult.Failure(it) }

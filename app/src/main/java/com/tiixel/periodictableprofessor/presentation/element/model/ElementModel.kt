@@ -2,7 +2,6 @@ package com.tiixel.periodictableprofessor.presentation.element.model
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import com.tiixel.periodictableprofessor.domain.Card
 import com.tiixel.periodictableprofessor.domain.Element
 
 data class ElementModel(
@@ -30,7 +29,7 @@ data class ElementModel(
 
     companion object {
 
-        fun fromDomain(element: Element, card: Card): ElementModel {
+        fun fromDomain(element: Element): ElementModel {
             return ElementModel(
                 abundanceCrust = element.abundanceCrust?.toString(),
                 abundanceSea = element.abundanceSea?.toString(),
@@ -50,15 +49,13 @@ data class ElementModel(
                 symbol = element.symbol,
                 uses = element.uses,
                 vdwRadius = element.vdwRadius?.toString(),
-                mnemonicPhrase = card.mnemonic?.phrase,
-                mnemonicPicture = card.mnemonic?.let {
-                    it.picture.let {
-                        BitmapFactory.decodeByteArray(
-                            it,
-                            0,
-                            it.size
-                        )
-                    }
+                mnemonicPhrase = element.mnemonicPhrase,
+                mnemonicPicture = element.mnemonicPicture?.let {
+                    BitmapFactory.decodeByteArray(
+                        it,
+                        0,
+                        it.size
+                    )
                 }
             )
         }

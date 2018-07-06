@@ -2,7 +2,7 @@ package com.tiixel.periodictableprofessor.data.element.local.gson.mapper
 
 import com.tiixel.periodictableprofessor.data.element.local.gson.entity.ElementEntity
 import com.tiixel.periodictableprofessor.data.element.local.gson.entity.ElementLangEntity
-import com.tiixel.periodictableprofessor.domain.Element
+import com.tiixel.periodictableprofessor.datasource.element.generic.StoredElement
 import com.tiixel.periodictableprofessor.domain.Quantity
 import com.tiixel.periodictableprofessor.util.extensions.nullIfBlank
 import javax.measure.unit.NonSI
@@ -16,7 +16,7 @@ import javax.measure.unit.Unit
 
 object ElementMapper {
 
-    fun toDomain(element: ElementEntity, elementLangEntity: ElementLangEntity): Element {
+    fun toGeneric(element: ElementEntity, elementLangEntity: ElementLangEntity): StoredElement {
 
         val abundanceCrust = if (element.abundance_crust.isNotBlank()) element.abundance_crust else null
         val abundanceSea = if (element.abundance_sea.isNotBlank()) element.abundance_sea else null
@@ -26,7 +26,7 @@ object ElementMapper {
         val enPauling = if (element.en_pauling.isNotBlank()) element.en_pauling else null
         val vdwRadius = if (element.vdw_radius.isNotBlank()) element.vdw_radius else null
 
-        return Element(
+        return StoredElement(
             abundanceCrust = abundanceCrust?.let { Quantity(it, MILLI(GRAM).divide(KILOGRAM)) },
             abundanceSea = abundanceSea?.let { Quantity(it, MILLI(GRAM).divide(LITRE)) },
             atomicNumber = element.atomic_number,

@@ -1,7 +1,9 @@
 package com.tiixel.periodictableprofessor.domain.card
 
-import com.tiixel.periodictableprofessor.domain.Card
+import com.tiixel.periodictableprofessor.domain.Element
 import com.tiixel.periodictableprofessor.domain.ReviewData
+import com.tiixel.periodictableprofessor.domain.ReviewPerformance
+import com.tiixel.periodictableprofessor.domain.ReviewableFace
 import com.tiixel.periodictableprofessor.domain.algorithm.Sm2Plus
 import com.tiixel.periodictableprofessor.domain.element.ElementRepository
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsAreNewException
@@ -35,15 +37,14 @@ class CardInteractorImpl @Inject constructor(
         }
     }
 
-    override fun getNewCardForReview(): Single<Pair<Card, Card.Companion.Face>> {
+    override fun getNewCardForReview(): Single<Pair<Element, ReviewableFace>> {
         // TODO: Check that logs is shorter than mnemonic list
         return elementRepository.getElements()
             // Get all atomic numbers
-            .map { it.map { it.atomicNumber } }
             // Keep atomic numbers NOT present in logs (ie never seen ones)
             .zipWith(getLastReviews(), { elements, logs ->
                 elements.map { element ->
-                    if (element !in logs.keys) return@map element else return@map null
+                    if (element.atomicNumber !in logs.keys) return@map element else return@map null
                 }.filterNotNull()
             })
             // Return error if no cards are never seen
@@ -51,10 +52,8 @@ class CardInteractorImpl @Inject constructor(
             .switchIfEmpty(Single.error(NoCardsAreNewException))
             // Select one random atomic number among never seen ones
             .map { it.toList().shuffled().first() }
-            // Get the card
-            .flatMap { cardRepository.getCard(it) }
             // Retry when mnemonic is null
-            .filter { it.mnemonic != null }
+            .filter { it.mnemonicPhrase != null && it.mnemonicPicture != null }
             .switchIfEmpty(Single.error(NoMnemonicForThisElementException))
             .retryWhen {
                 it.flatMap<Boolean> {
@@ -65,10 +64,10 @@ class CardInteractorImpl @Inject constructor(
                 }
             }
             // Select face
-            .map { Pair(it, Card.Companion.Face.PICTURE) }
+            .map { Pair(it, ReviewableFace.PICTURE) }
     }
 
-    override fun getNextCardForReview(dueSoonOnly: Boolean): Single<Pair<Card, Card.Companion.Face>> {
+    override fun getNextCardForReview(dueSoonOnly: Boolean): Single<Pair<Element, ReviewableFace>> {
         return getLastReviews()
             .filter { it.isNotEmpty() }
             .switchIfEmpty(Single.error(NoNextReviewException))
@@ -83,18 +82,16 @@ class CardInteractorImpl @Inject constructor(
             .filter { it.isNotEmpty() }
             .switchIfEmpty(Single.error(NoCardsDueSoonException))
             .map { it.sortedBy { it.nextDateOverdue }.last() }
-            .flatMap { cardRepository.getCard(it.element).zipWith(Single.just(it.isKnown)) }
+            .zipWith(elementRepository.getElements()) { reviewData, elements ->
+                elements.first { it.atomicNumber == reviewData.element } to reviewData
+            }
             .map {
-                if (it.second) {
-                    Pair(it.first, Card.Companion.Face.values()[Random().nextInt(Card.Companion.Face.values().size)])
+                if (it.second.isKnown) {
+                    Pair(it.first, ReviewableFace.values()[Random().nextInt(ReviewableFace.values().size)])
                 } else {
-                    Pair(it.first, Card.Companion.Face.PICTURE)
+                    Pair(it.first, ReviewableFace.PICTURE)
                 }
             }
-    }
-
-    override fun getCard(element: Byte): Single<Card> {
-        return cardRepository.getCard(element)
     }
 
     override fun getNextReviewDate(): Single<Date> {
@@ -125,7 +122,7 @@ class CardInteractorImpl @Inject constructor(
             .map { logs -> logs.size }
     }
 
-    override fun reviewCard(element: Byte, performance: Card.Companion.Performance, time: Date): Completable {
+    override fun reviewCard(element: Byte, performance: ReviewPerformance, time: Date): Completable {
         return getLastReviews()
             .flatMapMaybe {
                 if (it.containsKey(element))
@@ -138,9 +135,5 @@ class CardInteractorImpl @Inject constructor(
             .defaultIfEmpty(Sm2Plus.defaultReview(element, time))
             .doOnSuccess { lastReviews?.put(it.element, it) }
             .flatMapCompletable { cardRepository.logReview(it) }
-    }
-
-    override fun editCard(card: Card): Completable {
-        TODO()
     }
 }

@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.tiixel.periodictableprofessor.R
-import com.tiixel.periodictableprofessor.domain.Card
+import com.tiixel.periodictableprofessor.domain.ReviewPerformance
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsAreNewException
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsDueSoonException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewException
@@ -201,16 +201,16 @@ class ReviewActivity : AppCompatActivity(), MviView<ReviewIntent, ReviewViewStat
             checkCard()
         }
         review_button_easy.setOnClickListener {
-            reviewCard(Card.Companion.Performance.EASY)
+            reviewCard(ReviewPerformance.EASY)
         }
         review_button_medium.setOnClickListener {
-            reviewCard(Card.Companion.Performance.MEDIUM)
+            reviewCard(ReviewPerformance.MEDIUM)
         }
         review_button_hard.setOnClickListener {
-            reviewCard(Card.Companion.Performance.HARD)
+            reviewCard(ReviewPerformance.HARD)
         }
         review_button_failed.setOnClickListener {
-            reviewCard(Card.Companion.Performance.FAILED)
+            reviewCard(ReviewPerformance.FAILED)
         }
     }
 
@@ -244,7 +244,7 @@ class ReviewActivity : AppCompatActivity(), MviView<ReviewIntent, ReviewViewStat
         checkCardIntentPublisher.onNext(intent)
     }
 
-    private fun reviewCard(performance: Card.Companion.Performance) {
+    private fun reviewCard(performance: ReviewPerformance) {
         viewState.card?.let {
             val intent = ReviewIntent.ReviewCardIntent(it.number.toByte(), performance)
             reviewCardIntentPublisher.onNext(intent)

@@ -1,7 +1,7 @@
 package com.tiixel.periodictableprofessor.datasource.card.generic
 
-import com.tiixel.periodictableprofessor.domain.Card
 import com.tiixel.periodictableprofessor.domain.ReviewData
+import com.tiixel.periodictableprofessor.domain.ReviewPerformance
 import java.util.Date
 
 data class StoredReviewData(
@@ -30,7 +30,7 @@ data class StoredReviewData(
                 nextInterval = generic.nextInterval,
                 reviewDate = generic.reviewDate,
                 _difficulty = generic.difficulty,
-                performance = generic.performance?.let { Card.Companion.Performance.values()[it] }
+                performance = generic.performance?.let { ReviewPerformance.values()[it] }
             )
         }
     }
