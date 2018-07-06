@@ -1,11 +1,10 @@
 package com.tiixel.periodictableprofessor.domain.card
 
 import com.tiixel.periodictableprofessor.domain.Card
-import com.tiixel.periodictableprofessor.domain.exception.AllCardsAreNewException
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsAreNewException
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsDueSoonException
+import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewException
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import io.reactivex.Single
 import java.util.Date
 
@@ -19,14 +18,14 @@ interface CardInteractor {
 
     /**
      * May pass the following exceptions downstream :
-     * - [AllCardsAreNewException]
+     * - [NoNextReviewException]
      * - [NoCardsDueSoonException]
      */
     fun getNextCardForReview(dueSoonOnly: Boolean = true): Single<Pair<Card, Card.Companion.Face>>
 
     fun getCard(element: Byte): Single<Card>
 
-    fun getNextReviewDate(): Maybe<Date>
+    fun getNextReviewDate(): Single<Date>
 
     fun countCardsDueToday(reference: Date): Single<Int>
 

@@ -7,9 +7,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.tiixel.periodictableprofessor.R
 import com.tiixel.periodictableprofessor.domain.Card
-import com.tiixel.periodictableprofessor.domain.exception.AllCardsAreNewException
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsAreNewException
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsDueSoonException
+import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewException
 import com.tiixel.periodictableprofessor.presentation.base.MviView
 import com.tiixel.periodictableprofessor.presentation.review.ReviewIntent
 import com.tiixel.periodictableprofessor.presentation.review.ReviewViewModel
@@ -117,7 +117,7 @@ class ReviewActivity : AppCompatActivity(), MviView<ReviewIntent, ReviewViewStat
                 review_buttons.visibility = View.VISIBLE
                 hideError()
             }
-            is AllCardsAreNewException -> {
+            is NoNextReviewException -> {
                 showError(
                     getString(R.string.error_message_all_cards_are_new),
                     ErrorButton(getString(R.string.error_message_all_cards_are_new_button), loadNewCard)

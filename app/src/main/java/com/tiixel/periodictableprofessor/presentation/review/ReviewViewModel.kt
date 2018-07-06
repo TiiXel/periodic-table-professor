@@ -1,9 +1,9 @@
 package com.tiixel.periodictableprofessor.presentation.review
 
 import android.arch.lifecycle.ViewModel
-import com.tiixel.periodictableprofessor.domain.exception.AllCardsAreNewException
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsAreNewException
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsDueSoonException
+import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewException
 import com.tiixel.periodictableprofessor.presentation.base.MviViewModel
 import com.tiixel.periodictableprofessor.presentation.review.model.CardModel
 import com.tiixel.periodictableprofessor.util.extensions.notOfType
@@ -75,7 +75,7 @@ class ReviewViewModel @Inject constructor(
                         }
                         is ReviewResult.LoadNextCardResult.Failure -> {
                             when (result.error) {
-                                is AllCardsAreNewException -> {
+                                is NoNextReviewException -> {
                                 }
                                 is NoCardsAreNewException -> {
                                 }

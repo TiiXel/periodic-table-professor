@@ -4,10 +4,10 @@ import com.tiixel.periodictableprofessor.domain.Card
 import com.tiixel.periodictableprofessor.domain.ReviewData
 import com.tiixel.periodictableprofessor.domain.algorithm.Sm2Plus
 import com.tiixel.periodictableprofessor.domain.element.ElementRepository
-import com.tiixel.periodictableprofessor.domain.exception.AllCardsAreNewException
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsAreNewException
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsDueSoonException
 import com.tiixel.periodictableprofessor.domain.exception.NoMnemonicForThisElementException
+import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewException
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -71,7 +71,7 @@ class CardInteractorImpl @Inject constructor(
     override fun getNextCardForReview(dueSoonOnly: Boolean): Single<Pair<Card, Card.Companion.Face>> {
         return getLastReviews()
             .filter { it.isNotEmpty() }
-            .switchIfEmpty(Single.error(AllCardsAreNewException))
+            .switchIfEmpty(Single.error(NoNextReviewException))
             .map { it.values }
             .map {
                 if (dueSoonOnly) {
@@ -97,13 +97,12 @@ class CardInteractorImpl @Inject constructor(
         return cardRepository.getCard(element)
     }
 
-    override fun getNextReviewDate(): Maybe<Date> {
+    override fun getNextReviewDate(): Single<Date> {
         return getLastReviews()
             .filter { it.isNotEmpty() }
-            .flatMap {
-                val next = it.values.sortedBy { it.nextDateOverdue }.lastOrNull { !it.isDueSoon(Date()) }
-                if (next == null) Maybe.empty()
-                else Maybe.just(next)
+            .switchIfEmpty(Single.error(NoNextReviewException))
+            .map {
+                it.values.sortedBy { it.nextDateOverdue }.lastOrNull { !it.isDueSoon(Date()) }
             }
             .map { it.nextDate }
     }
