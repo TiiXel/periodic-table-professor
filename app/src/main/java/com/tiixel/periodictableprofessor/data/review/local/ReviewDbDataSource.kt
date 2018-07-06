@@ -2,7 +2,7 @@ package com.tiixel.periodictableprofessor.data.review.local
 
 import com.tiixel.periodictableprofessor.data.LocalDatabase
 import com.tiixel.periodictableprofessor.data.review.local.db.entity.ReviewDataEntity
-import com.tiixel.periodictableprofessor.datarepository.card.ReviewLocalDataSource
+import com.tiixel.periodictableprofessor.datarepository.card.contract.ReviewLocalDataSource
 import com.tiixel.periodictableprofessor.datarepository.card.generic.GenericReviewData
 import io.reactivex.Completable
 import io.reactivex.Single

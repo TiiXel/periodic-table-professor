@@ -1,4 +1,4 @@
-package com.tiixel.periodictableprofessor.datarepository.card
+package com.tiixel.periodictableprofessor.datarepository.card.contract
 
 import com.tiixel.periodictableprofessor.datarepository.card.generic.GenericReviewData
 import io.reactivex.Completable

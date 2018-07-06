@@ -1,4 +1,4 @@
-package com.tiixel.periodictableprofessor.domain.card
+package com.tiixel.periodictableprofessor.domain.card.interactor
 
 import com.tiixel.periodictableprofessor.domain.Element
 import com.tiixel.periodictableprofessor.domain.ReviewPerformance

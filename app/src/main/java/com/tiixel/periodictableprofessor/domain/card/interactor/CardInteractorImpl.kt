@@ -1,11 +1,12 @@
-package com.tiixel.periodictableprofessor.domain.card
+package com.tiixel.periodictableprofessor.domain.card.interactor
 
 import com.tiixel.periodictableprofessor.domain.Element
 import com.tiixel.periodictableprofessor.domain.ReviewData
 import com.tiixel.periodictableprofessor.domain.ReviewPerformance
 import com.tiixel.periodictableprofessor.domain.ReviewableFace
 import com.tiixel.periodictableprofessor.domain.algorithm.Sm2Plus
-import com.tiixel.periodictableprofessor.domain.element.ElementRepository
+import com.tiixel.periodictableprofessor.domain.card.contract.CardRepository
+import com.tiixel.periodictableprofessor.domain.element.contract.ElementRepository
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsAreNewException
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsDueSoonException
 import com.tiixel.periodictableprofessor.domain.exception.NoMnemonicForThisElementException

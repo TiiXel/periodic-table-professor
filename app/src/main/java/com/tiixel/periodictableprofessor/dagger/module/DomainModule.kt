@@ -1,9 +1,9 @@
 package com.tiixel.periodictableprofessor.dagger.module
 
-import com.tiixel.periodictableprofessor.domain.card.CardInteractor
-import com.tiixel.periodictableprofessor.domain.card.CardInteractorImpl
-import com.tiixel.periodictableprofessor.domain.element.ElementInteractor
-import com.tiixel.periodictableprofessor.domain.element.ElementInteractorImpl
+import com.tiixel.periodictableprofessor.domain.card.interactor.CardInteractor
+import com.tiixel.periodictableprofessor.domain.card.interactor.CardInteractorImpl
+import com.tiixel.periodictableprofessor.domain.element.interactor.ElementInteractor
+import com.tiixel.periodictableprofessor.domain.element.interactor.ElementInteractorImpl
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton

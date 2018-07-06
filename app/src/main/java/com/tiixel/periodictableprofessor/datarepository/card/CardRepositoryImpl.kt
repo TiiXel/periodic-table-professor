@@ -1,8 +1,9 @@
 package com.tiixel.periodictableprofessor.datarepository.card
 
+import com.tiixel.periodictableprofessor.datarepository.card.contract.ReviewLocalDataSource
 import com.tiixel.periodictableprofessor.datarepository.card.generic.GenericReviewData
 import com.tiixel.periodictableprofessor.domain.ReviewData
-import com.tiixel.periodictableprofessor.domain.card.CardRepository
+import com.tiixel.periodictableprofessor.domain.card.contract.CardRepository
 import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject

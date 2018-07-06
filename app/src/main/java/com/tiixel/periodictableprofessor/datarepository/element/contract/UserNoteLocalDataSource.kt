@@ -1,4 +1,4 @@
-package com.tiixel.periodictableprofessor.datarepository.element
+package com.tiixel.periodictableprofessor.datarepository.element.contract
 
 import com.tiixel.periodictableprofessor.datarepository.element.generic.GenericUserNote
 import io.reactivex.Completable

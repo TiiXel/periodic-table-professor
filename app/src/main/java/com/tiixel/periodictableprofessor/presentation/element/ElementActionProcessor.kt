@@ -1,7 +1,7 @@
 package com.tiixel.periodictableprofessor.presentation.element
 
-import com.tiixel.periodictableprofessor.domain.card.CardInteractor
-import com.tiixel.periodictableprofessor.domain.element.ElementInteractor
+import com.tiixel.periodictableprofessor.domain.card.interactor.CardInteractor
+import com.tiixel.periodictableprofessor.domain.element.interactor.ElementInteractor
 import com.tiixel.periodictableprofessor.presentation.element.model.ElementModel
 import com.tiixel.periodictableprofessor.util.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable

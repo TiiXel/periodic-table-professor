@@ -1,7 +1,7 @@
 package com.tiixel.periodictableprofessor.data.note.local.db
 
 import com.tiixel.periodictableprofessor.data.LocalDatabase
-import com.tiixel.periodictableprofessor.datarepository.element.UserNoteLocalDataSource
+import com.tiixel.periodictableprofessor.datarepository.element.contract.UserNoteLocalDataSource
 import com.tiixel.periodictableprofessor.datarepository.element.generic.GenericUserNote
 import io.reactivex.Completable
 import io.reactivex.Single

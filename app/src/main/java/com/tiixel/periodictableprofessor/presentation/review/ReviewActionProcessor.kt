@@ -1,6 +1,6 @@
 package com.tiixel.periodictableprofessor.presentation.review
 
-import com.tiixel.periodictableprofessor.domain.card.CardInteractor
+import com.tiixel.periodictableprofessor.domain.card.interactor.CardInteractor
 import com.tiixel.periodictableprofessor.presentation.review.model.CardModel
 import com.tiixel.periodictableprofessor.presentation.review.model.CountsModel
 import com.tiixel.periodictableprofessor.util.schedulers.BaseSchedulerProvider

@@ -2,8 +2,8 @@ package com.tiixel.periodictableprofessor.dagger.module
 
 import com.tiixel.periodictableprofessor.datarepository.card.CardRepositoryImpl
 import com.tiixel.periodictableprofessor.datarepository.element.ElementRepositoryImpl
-import com.tiixel.periodictableprofessor.domain.card.CardRepository
-import com.tiixel.periodictableprofessor.domain.element.ElementRepository
+import com.tiixel.periodictableprofessor.domain.card.contract.CardRepository
+import com.tiixel.periodictableprofessor.domain.element.contract.ElementRepository
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton

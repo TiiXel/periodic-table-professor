@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.tiixel.periodictableprofessor.data.JsonAssets
 import com.tiixel.periodictableprofessor.data.mnemonic.local.asset.MnemonicPictureLoader
 import com.tiixel.periodictableprofessor.data.mnemonic.local.gson.entity.MnemonicPhraseEntity
-import com.tiixel.periodictableprofessor.datarepository.element.MnemonicLocalDataSource
+import com.tiixel.periodictableprofessor.datarepository.element.contract.MnemonicLocalDataSource
 import com.tiixel.periodictableprofessor.datarepository.element.generic.GenericMnemonic
 import io.reactivex.Single
 import javax.inject.Inject

@@ -5,7 +5,7 @@ import com.tiixel.periodictableprofessor.data.JsonAssets
 import com.tiixel.periodictableprofessor.data.element.local.gson.entity.ElementEntity
 import com.tiixel.periodictableprofessor.data.element.local.gson.entity.ElementLangEntity
 import com.tiixel.periodictableprofessor.data.element.local.gson.mapper.ElementMapper
-import com.tiixel.periodictableprofessor.datarepository.element.ElementLocalDataSource
+import com.tiixel.periodictableprofessor.datarepository.element.contract.ElementLocalDataSource
 import com.tiixel.periodictableprofessor.datarepository.element.generic.GenericElement
 import io.reactivex.Single
 import javax.inject.Inject
