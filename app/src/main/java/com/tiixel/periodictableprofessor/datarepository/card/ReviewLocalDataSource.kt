@@ -1,6 +1,6 @@
-package com.tiixel.periodictableprofessor.datasource.card
+package com.tiixel.periodictableprofessor.datarepository.card
 
-import com.tiixel.periodictableprofessor.datasource.card.generic.StoredReviewData
+import com.tiixel.periodictableprofessor.datarepository.card.generic.StoredReviewData
 import io.reactivex.Completable
 import io.reactivex.Single
 

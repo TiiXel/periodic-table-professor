@@ -1,8 +1,8 @@
 package com.tiixel.periodictableprofessor.data.note.local.db
 
 import com.tiixel.periodictableprofessor.data.LocalDatabase
-import com.tiixel.periodictableprofessor.datasource.card.UserNoteLocalDataSource
-import com.tiixel.periodictableprofessor.datasource.card.generic.StoredUserNote
+import com.tiixel.periodictableprofessor.datarepository.card.UserNoteLocalDataSource
+import com.tiixel.periodictableprofessor.datarepository.card.generic.StoredUserNote
 import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject

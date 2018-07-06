@@ -1,4 +1,4 @@
-package com.tiixel.periodictableprofessor.datasource.card.generic
+package com.tiixel.periodictableprofessor.datarepository.card.generic
 
 
 data class StoredMnemonic(

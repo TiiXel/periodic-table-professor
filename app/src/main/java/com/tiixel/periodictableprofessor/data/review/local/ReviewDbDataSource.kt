@@ -2,8 +2,8 @@ package com.tiixel.periodictableprofessor.data.review.local
 
 import com.tiixel.periodictableprofessor.data.LocalDatabase
 import com.tiixel.periodictableprofessor.data.review.local.db.entity.ReviewDataEntity
-import com.tiixel.periodictableprofessor.datasource.card.ReviewLocalDataSource
-import com.tiixel.periodictableprofessor.datasource.card.generic.StoredReviewData
+import com.tiixel.periodictableprofessor.datarepository.card.ReviewLocalDataSource
+import com.tiixel.periodictableprofessor.datarepository.card.generic.StoredReviewData
 import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject

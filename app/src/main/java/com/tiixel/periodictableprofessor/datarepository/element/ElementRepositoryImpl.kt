@@ -1,9 +1,9 @@
-package com.tiixel.periodictableprofessor.datasource.element
+package com.tiixel.periodictableprofessor.datarepository.element
 
-import com.tiixel.periodictableprofessor.datasource.card.MnemonicLocalDataSource
-import com.tiixel.periodictableprofessor.datasource.card.UserNoteLocalDataSource
-import com.tiixel.periodictableprofessor.datasource.element.generic.StoredElement
-import com.tiixel.periodictableprofessor.datasource.element.mapper.ElementMapper
+import com.tiixel.periodictableprofessor.datarepository.card.MnemonicLocalDataSource
+import com.tiixel.periodictableprofessor.datarepository.card.UserNoteLocalDataSource
+import com.tiixel.periodictableprofessor.datarepository.element.generic.StoredElement
+import com.tiixel.periodictableprofessor.datarepository.element.mapper.ElementMapper
 import com.tiixel.periodictableprofessor.domain.Element
 import com.tiixel.periodictableprofessor.domain.element.ElementRepository
 import io.reactivex.Single

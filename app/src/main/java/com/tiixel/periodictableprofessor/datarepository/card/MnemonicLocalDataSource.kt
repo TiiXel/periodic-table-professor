@@ -1,6 +1,6 @@
-package com.tiixel.periodictableprofessor.datasource.card
+package com.tiixel.periodictableprofessor.datarepository.card
 
-import com.tiixel.periodictableprofessor.datasource.card.generic.StoredMnemonic
+import com.tiixel.periodictableprofessor.datarepository.card.generic.StoredMnemonic
 import io.reactivex.Single
 
 interface MnemonicLocalDataSource {

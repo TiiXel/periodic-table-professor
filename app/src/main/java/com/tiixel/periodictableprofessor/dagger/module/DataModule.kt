@@ -8,10 +8,10 @@ import com.tiixel.periodictableprofessor.data.element.local.ElementGsonDataSourc
 import com.tiixel.periodictableprofessor.data.mnemonic.local.MnemonicMixedDataSource
 import com.tiixel.periodictableprofessor.data.note.local.db.UserNoteDbDataSource
 import com.tiixel.periodictableprofessor.data.review.local.ReviewDbDataSource
-import com.tiixel.periodictableprofessor.datasource.card.MnemonicLocalDataSource
-import com.tiixel.periodictableprofessor.datasource.card.ReviewLocalDataSource
-import com.tiixel.periodictableprofessor.datasource.card.UserNoteLocalDataSource
-import com.tiixel.periodictableprofessor.datasource.element.ElementLocalDataSource
+import com.tiixel.periodictableprofessor.datarepository.card.MnemonicLocalDataSource
+import com.tiixel.periodictableprofessor.datarepository.card.ReviewLocalDataSource
+import com.tiixel.periodictableprofessor.datarepository.card.UserNoteLocalDataSource
+import com.tiixel.periodictableprofessor.datarepository.element.ElementLocalDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

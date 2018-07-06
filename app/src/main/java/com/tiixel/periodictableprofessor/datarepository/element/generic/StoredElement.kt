@@ -1,4 +1,4 @@
-package com.tiixel.periodictableprofessor.datasource.element.generic
+package com.tiixel.periodictableprofessor.datarepository.element.generic
 
 import com.tiixel.periodictableprofessor.domain.Quantity
 

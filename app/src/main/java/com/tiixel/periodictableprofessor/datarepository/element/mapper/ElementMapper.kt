@@ -1,8 +1,8 @@
-package com.tiixel.periodictableprofessor.datasource.element.mapper
+package com.tiixel.periodictableprofessor.datarepository.element.mapper
 
-import com.tiixel.periodictableprofessor.datasource.card.generic.StoredMnemonic
-import com.tiixel.periodictableprofessor.datasource.card.generic.StoredUserNote
-import com.tiixel.periodictableprofessor.datasource.element.generic.StoredElement
+import com.tiixel.periodictableprofessor.datarepository.card.generic.StoredMnemonic
+import com.tiixel.periodictableprofessor.datarepository.card.generic.StoredUserNote
+import com.tiixel.periodictableprofessor.datarepository.element.generic.StoredElement
 import com.tiixel.periodictableprofessor.domain.Element
 
 object ElementMapper {
