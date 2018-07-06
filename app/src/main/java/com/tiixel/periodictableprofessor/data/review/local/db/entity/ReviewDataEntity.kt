@@ -3,7 +3,7 @@ package com.tiixel.periodictableprofessor.data.review.local.db.entity
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import com.tiixel.periodictableprofessor.data.review.local.db.REVIEW_LOG_TABLE_NAME
-import com.tiixel.periodictableprofessor.datarepository.card.generic.StoredReviewData
+import com.tiixel.periodictableprofessor.datarepository.card.generic.GenericReviewData
 import java.util.Date
 
 @Entity(tableName = REVIEW_LOG_TABLE_NAME)
@@ -18,8 +18,8 @@ data class ReviewDataEntity(
 
     companion object {
 
-        fun toGeneric(entity: ReviewDataEntity): StoredReviewData {
-            return StoredReviewData(
+        fun toGeneric(entity: ReviewDataEntity): GenericReviewData {
+            return GenericReviewData(
                 element = entity.element,
                 difficulty = entity.difficulty,
                 reviewDate = entity.review_date?.let { Date(it) },
@@ -28,7 +28,7 @@ data class ReviewDataEntity(
             )
         }
 
-        fun fromGeneric(generic: StoredReviewData): ReviewDataEntity {
+        fun fromGeneric(generic: GenericReviewData): ReviewDataEntity {
             return ReviewDataEntity(
                 element = generic.element,
                 difficulty = generic.difficulty,

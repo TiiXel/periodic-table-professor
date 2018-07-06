@@ -4,7 +4,7 @@ import com.tiixel.periodictableprofessor.domain.ReviewData
 import com.tiixel.periodictableprofessor.domain.ReviewPerformance
 import java.util.Date
 
-data class StoredReviewData(
+data class GenericReviewData(
     val element: Byte,
     val difficulty: Float,
     val reviewDate: Date,
@@ -14,8 +14,8 @@ data class StoredReviewData(
 
     companion object {
 
-        fun fromDomain(reviewData: ReviewData): StoredReviewData {
-            return StoredReviewData(
+        fun fromDomain(reviewData: ReviewData): GenericReviewData {
+            return GenericReviewData(
                 element = reviewData.element,
                 nextInterval = reviewData.nextInterval,
                 reviewDate = reviewData.reviewDate,
@@ -24,7 +24,7 @@ data class StoredReviewData(
             )
         }
 
-        fun toDomain(generic: StoredReviewData): ReviewData {
+        fun toDomain(generic: GenericReviewData): ReviewData {
             return ReviewData(
                 element = generic.element,
                 nextInterval = generic.nextInterval,

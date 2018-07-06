@@ -1,13 +1,13 @@
 package com.tiixel.periodictableprofessor.datarepository.element.mapper
 
-import com.tiixel.periodictableprofessor.datarepository.card.generic.StoredMnemonic
-import com.tiixel.periodictableprofessor.datarepository.card.generic.StoredUserNote
-import com.tiixel.periodictableprofessor.datarepository.element.generic.StoredElement
+import com.tiixel.periodictableprofessor.datarepository.card.generic.GenericMnemonic
+import com.tiixel.periodictableprofessor.datarepository.card.generic.GenericUserNote
+import com.tiixel.periodictableprofessor.datarepository.element.generic.GenericElement
 import com.tiixel.periodictableprofessor.domain.Element
 
 object ElementMapper {
 
-    fun toDomain(element: StoredElement, mnemonic: StoredMnemonic?, userNote: StoredUserNote?): Element {
+    fun toDomain(element: GenericElement, mnemonic: GenericMnemonic?, userNote: GenericUserNote?): Element {
 
         return Element(
             abundanceCrust = element.abundanceCrust,

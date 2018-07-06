@@ -2,7 +2,7 @@ package com.tiixel.periodictableprofessor.datarepository.element.generic
 
 import com.tiixel.periodictableprofessor.domain.Quantity
 
-data class StoredElement(
+data class GenericElement(
     val abundanceCrust: Quantity?,
     val abundanceSea: Quantity?,
     val atomicNumber: Byte,

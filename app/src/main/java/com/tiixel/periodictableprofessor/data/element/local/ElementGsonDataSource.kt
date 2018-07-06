@@ -6,7 +6,7 @@ import com.tiixel.periodictableprofessor.data.element.local.gson.entity.ElementE
 import com.tiixel.periodictableprofessor.data.element.local.gson.entity.ElementLangEntity
 import com.tiixel.periodictableprofessor.data.element.local.gson.mapper.ElementMapper
 import com.tiixel.periodictableprofessor.datarepository.element.ElementLocalDataSource
-import com.tiixel.periodictableprofessor.datarepository.element.generic.StoredElement
+import com.tiixel.periodictableprofessor.datarepository.element.generic.GenericElement
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -14,12 +14,12 @@ class ElementGsonDataSource @Inject constructor(
     private val jsonAssets: JsonAssets
 ) : ElementLocalDataSource {
 
-    override fun getElement(z: Int): Single<StoredElement> {
+    override fun getElement(z: Int): Single<GenericElement> {
         return getElements()
             .map { it.first { it.atomicNumber == z.toByte() } }
     }
 
-    override fun getElements(): Single<List<StoredElement>> {
+    override fun getElements(): Single<List<GenericElement>> {
         return Single.defer {
             val gson = Gson()
 

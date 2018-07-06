@@ -1,7 +1,7 @@
 package com.tiixel.periodictableprofessor.datarepository.card.generic
 
 
-data class StoredMnemonic(
+data class GenericMnemonic(
     val element: Byte,
     val mnemonicPhrase: String?,
     val mnemonicPicture: ByteArray?

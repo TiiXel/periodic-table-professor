@@ -1,11 +1,11 @@
 package com.tiixel.periodictableprofessor.datarepository.element
 
-import com.tiixel.periodictableprofessor.datarepository.element.generic.StoredElement
+import com.tiixel.periodictableprofessor.datarepository.element.generic.GenericElement
 import io.reactivex.Single
 
 interface ElementLocalDataSource {
 
-    fun getElement(z: Int): Single<StoredElement>
+    fun getElement(z: Int): Single<GenericElement>
 
-    fun getElements(): Single<List<StoredElement>>
+    fun getElements(): Single<List<GenericElement>>
 }

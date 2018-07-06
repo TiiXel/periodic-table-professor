@@ -2,7 +2,7 @@ package com.tiixel.periodictableprofessor.datarepository.element
 
 import com.tiixel.periodictableprofessor.datarepository.card.MnemonicLocalDataSource
 import com.tiixel.periodictableprofessor.datarepository.card.UserNoteLocalDataSource
-import com.tiixel.periodictableprofessor.datarepository.element.generic.StoredElement
+import com.tiixel.periodictableprofessor.datarepository.element.generic.GenericElement
 import com.tiixel.periodictableprofessor.datarepository.element.mapper.ElementMapper
 import com.tiixel.periodictableprofessor.domain.Element
 import com.tiixel.periodictableprofessor.domain.element.ElementRepository
@@ -16,7 +16,7 @@ class ElementRepositoryImpl @Inject constructor(
     private val userNoteLocalDataSource: UserNoteLocalDataSource
 ) : ElementRepository {
 
-    private var cachedElements: MutableMap<Byte, StoredElement> = emptyMap<Byte, StoredElement>().toMutableMap()
+    private var cachedElements: MutableMap<Byte, GenericElement> = emptyMap<Byte, GenericElement>().toMutableMap()
 
     override fun getElements(): Single<List<Element>> {
         return if (cachedElements.isNotEmpty()) {
