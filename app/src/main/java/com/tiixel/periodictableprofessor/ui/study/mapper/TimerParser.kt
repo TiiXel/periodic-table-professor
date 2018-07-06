@@ -1,4 +1,4 @@
-package com.tiixel.periodictableprofessor.ui.review.mapper
+package com.tiixel.periodictableprofessor.ui.study.mapper
 
 import android.content.Context
 

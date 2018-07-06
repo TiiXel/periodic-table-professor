@@ -1,4 +1,4 @@
-package com.tiixel.periodictableprofessor.presentation.review.model
+package com.tiixel.periodictableprofessor.presentation.study.model
 
 import android.graphics.Bitmap
 

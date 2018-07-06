@@ -1,4 +1,4 @@
-package com.tiixel.periodictableprofessor.presentation.review
+package com.tiixel.periodictableprofessor.presentation.study
 
 import android.arch.lifecycle.ViewModel
 import com.tiixel.periodictableprofessor.domain.Review
@@ -8,7 +8,7 @@ import com.tiixel.periodictableprofessor.domain.exception.NoNewReviewException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewSoonException
 import com.tiixel.periodictableprofessor.presentation.base.MviViewModel
-import com.tiixel.periodictableprofessor.presentation.review.mapper.ElementMapper
+import com.tiixel.periodictableprofessor.presentation.study.mapper.ElementMapper
 import com.tiixel.periodictableprofessor.util.extensions.notOfType
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
@@ -16,62 +16,62 @@ import io.reactivex.functions.BiFunction
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
-class ReviewViewModel @Inject constructor(
-    private val actionProcessor: ReviewActionProcessor
-) : ViewModel(), MviViewModel<ReviewIntent, ReviewViewState> {
+class StudyViewModel @Inject constructor(
+    private val actionProcessor: StudyActionProcessor
+) : ViewModel(), MviViewModel<StudyIntent, StudyViewState> {
 
-    private val intentsSubjects: PublishSubject<ReviewIntent> = PublishSubject.create()
-    private val statesObservable: Observable<ReviewViewState> = compose()
+    private val intentsSubjects: PublishSubject<StudyIntent> = PublishSubject.create()
+    private val statesObservable: Observable<StudyViewState> = compose()
 
-    private val intentFilter: ObservableTransformer<ReviewIntent, ReviewIntent>
+    private val intentFilter: ObservableTransformer<StudyIntent, StudyIntent>
         get() = ObservableTransformer { intents ->
             intents.publish { shared ->
                 Observable.merge(
-                    shared.ofType(ReviewIntent.InitialIntent::class.java).take(1),
-                    shared.notOfType(ReviewIntent.InitialIntent::class.java)
+                    shared.ofType(StudyIntent.InitialIntent::class.java).take(1),
+                    shared.notOfType(StudyIntent.InitialIntent::class.java)
                 )
             }
         }
 
-    override fun processIntents(intents: Observable<ReviewIntent>) {
+    override fun processIntents(intents: Observable<StudyIntent>) {
         intents.subscribe(intentsSubjects)
     }
 
-    override fun states(): Observable<ReviewViewState> = statesObservable
+    override fun states(): Observable<StudyViewState> = statesObservable
 
-    private fun compose(): Observable<ReviewViewState> {
+    private fun compose(): Observable<StudyViewState> {
         return intentsSubjects.compose(intentFilter)
             .map(this::actionFromIntent)
-            .concatMap { Observable.just(it, ReviewAction.GetCounts) }
+            .concatMap { Observable.just(it, StudyAction.GetCounts) }
             .compose(actionProcessor.actionProcessor)
-            .scan(ReviewViewState.init(), reducer)
+            .scan(StudyViewState.init(), reducer)
             .distinctUntilChanged()
             .replay(1)
             .autoConnect(0)
     }
 
-    private fun actionFromIntent(intent: ReviewIntent): ReviewAction {
+    private fun actionFromIntent(intent: StudyIntent): StudyAction {
         return when (intent) {
-            is ReviewIntent.InitialIntent -> ReviewAction.LoadNext(intent.newCard, intent.dueSoonOnly)
-            is ReviewIntent.LoadNextIntent -> ReviewAction.LoadNext(intent.newCard, intent.dueSoonOnly)
-            is ReviewIntent.Review_Intent -> ReviewAction.Review(
+            is StudyIntent.InitialIntent -> StudyAction.LoadNext(intent.newCard, intent.dueSoonOnly)
+            is StudyIntent.LoadNextIntent -> StudyAction.LoadNext(intent.newCard, intent.dueSoonOnly)
+            is StudyIntent.ReviewIntent -> StudyAction.Review(
                 Review.FreshReview(
                     item = Reviewable(intent.element),
                     face = intent.face,
                     performance = intent.performance
                 )
             )
-            is ReviewIntent.CheckIntent -> ReviewAction.Check
+            is StudyIntent.CheckIntent -> StudyAction.Check
         }
     }
 
     companion object {
 
-        private val reducer = BiFunction { previousState: ReviewViewState, result: ReviewResult ->
+        private val reducer = BiFunction { previousState: StudyViewState, result: StudyResult ->
             when (result) {
-                is ReviewResult.LoadNextReviewResult -> {
+                is StudyResult.LoadNextReviewResult -> {
                     when (result) {
-                        is ReviewResult.LoadNextReviewResult.Success -> {
+                        is StudyResult.LoadNextReviewResult.Success -> {
                             previousState.copy(
                                 loadingInProgress = false,
                                 loadingFailedCause = null,
@@ -86,7 +86,7 @@ class ReviewViewModel @Inject constructor(
                                 isTablePositionVisible = false
                             )
                         }
-                        is ReviewResult.LoadNextReviewResult.Failure -> {
+                        is StudyResult.LoadNextReviewResult.Failure -> {
                             when (result.error) {
                                 is NoNextReviewException -> {
                                 }
@@ -103,32 +103,32 @@ class ReviewViewModel @Inject constructor(
                                 showCheckButtonOverPerformance = false
                             )
                         }
-                        is ReviewResult.LoadNextReviewResult.InFlight -> {
+                        is StudyResult.LoadNextReviewResult.InFlight -> {
                             previousState.copy(
                                 loadingInProgress = true, showCheckButtonOverPerformance = true
                             )
                         }
                     }
                 }
-                is ReviewResult.Review_Result -> {
+                is StudyResult.ReviewResult -> {
                     when (result) {
-                        is ReviewResult.Review_Result.Success -> {
+                        is StudyResult.ReviewResult.Success -> {
                             previousState.copy(
                                 reviewingFailed = false
                             )
                         }
-                        is ReviewResult.Review_Result.Failure -> {
+                        is StudyResult.ReviewResult.Failure -> {
                             previousState.copy(reviewingFailed = true)
                             throw result.error
                         }
-                        is ReviewResult.Review_Result.InFlight -> {
+                        is StudyResult.ReviewResult.InFlight -> {
                             previousState.copy(showCheckButtonOverPerformance = false)
                         }
                     }
                 }
-                is ReviewResult.GetCountsResult -> {
+                is StudyResult.GetCountsResult -> {
                     when (result) {
-                        is ReviewResult.GetCountsResult.Success -> {
+                        is StudyResult.GetCountsResult.Success -> {
                             previousState.copy(
                                 newCardCount = result.new,
                                 dueSoonCount = result.dueSoon,
@@ -136,7 +136,7 @@ class ReviewViewModel @Inject constructor(
                                 nextReviewTimer = result.nextReviewTimer
                             )
                         }
-                        is ReviewResult.GetCountsResult.Failure -> {
+                        is StudyResult.GetCountsResult.Failure -> {
                             when (result.error) {
                                 is NoNextReviewException -> {
                                 }
@@ -144,12 +144,12 @@ class ReviewViewModel @Inject constructor(
                             }
                             previousState
                         }
-                        is ReviewResult.GetCountsResult.InFlight -> {
+                        is StudyResult.GetCountsResult.InFlight -> {
                             previousState
                         }
                     }
                 }
-                is ReviewResult.CheckResult -> {
+                is StudyResult.CheckResult -> {
                     previousState.copy(
                         showCheckButtonOverPerformance = false,
                         isNumberVisible = true,

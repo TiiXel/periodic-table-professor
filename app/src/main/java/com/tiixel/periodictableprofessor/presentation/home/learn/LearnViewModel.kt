@@ -2,9 +2,9 @@ package com.tiixel.periodictableprofessor.presentation.home.learn
 
 import android.arch.lifecycle.ViewModel
 import com.tiixel.periodictableprofessor.presentation.base.MviViewModel
-import com.tiixel.periodictableprofessor.presentation.review.ReviewAction
-import com.tiixel.periodictableprofessor.presentation.review.ReviewActionProcessor
-import com.tiixel.periodictableprofessor.presentation.review.ReviewResult
+import com.tiixel.periodictableprofessor.presentation.study.StudyAction
+import com.tiixel.periodictableprofessor.presentation.study.StudyActionProcessor
+import com.tiixel.periodictableprofessor.presentation.study.StudyResult
 import com.tiixel.periodictableprofessor.util.extensions.notOfType
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
@@ -13,7 +13,7 @@ import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 class LearnViewModel @Inject constructor(
-    private val actionProcessor: ReviewActionProcessor
+    private val actionProcessor: StudyActionProcessor
 ): ViewModel(), MviViewModel<LearnIntent, LearnViewState> {
 
     private val intentsSubject: PublishSubject<LearnIntent> = PublishSubject.create()
@@ -45,20 +45,20 @@ class LearnViewModel @Inject constructor(
             .autoConnect(0)
     }
 
-    private fun actionFromIntent(intent: LearnIntent): ReviewAction {
+    private fun actionFromIntent(intent: LearnIntent): StudyAction {
         return when (intent) {
-            is LearnIntent.InitialIntent -> ReviewAction.GetCounts
+            is LearnIntent.InitialIntent -> StudyAction.GetCounts
         }
     }
 
     companion object {
 
-        private val reducer = BiFunction { previousState: LearnViewState, result: ReviewResult ->
+        private val reducer = BiFunction { previousState: LearnViewState, result: StudyResult ->
             when (result) {
-                is ReviewResult.LoadNextReviewResult -> {
+                is StudyResult.LoadNextReviewResult -> {
                     previousState.copy()
                 }
-                is ReviewResult.GetCountsResult -> {
+                is StudyResult.GetCountsResult -> {
                     previousState.copy()
                 }
                 else -> {

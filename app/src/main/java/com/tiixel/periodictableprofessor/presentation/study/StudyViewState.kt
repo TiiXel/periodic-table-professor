@@ -1,9 +1,9 @@
-package com.tiixel.periodictableprofessor.presentation.review
+package com.tiixel.periodictableprofessor.presentation.study
 
 import com.tiixel.periodictableprofessor.presentation.base.MviViewState
-import com.tiixel.periodictableprofessor.presentation.review.model.ElementModel
+import com.tiixel.periodictableprofessor.presentation.study.model.ElementModel
 
-data class ReviewViewState(
+data class StudyViewState(
     val itemId: Byte?,
     val element: ElementModel?,
     val isNumberVisible: Boolean,
@@ -26,8 +26,8 @@ data class ReviewViewState(
 
     companion object {
 
-        fun init(): ReviewViewState {
-            return ReviewViewState(
+        fun init(): StudyViewState {
+            return StudyViewState(
                 itemId = null,
                 element = null,
                 isNumberVisible = false,

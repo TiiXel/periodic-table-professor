@@ -1,12 +1,12 @@
-package com.tiixel.periodictableprofessor.presentation.review
+package com.tiixel.periodictableprofessor.presentation.study
 
 import com.tiixel.periodictableprofessor.domain.Element
 import com.tiixel.periodictableprofessor.domain.ReviewableFace
 import com.tiixel.periodictableprofessor.presentation.base.MviResult
 
-sealed class ReviewResult : MviResult {
+sealed class StudyResult : MviResult {
 
-    sealed class LoadNextReviewResult : ReviewResult() {
+    sealed class LoadNextReviewResult : StudyResult() {
 
         data class Success(val element: Element, val face: ReviewableFace) : LoadNextReviewResult()
 
@@ -15,16 +15,16 @@ sealed class ReviewResult : MviResult {
         object InFlight : LoadNextReviewResult()
     }
 
-    sealed class Review_Result : ReviewResult() {
+    sealed class ReviewResult : StudyResult() {
 
-        object Success : Review_Result()
+        object Success : ReviewResult()
 
-        data class Failure(val error: Throwable) : Review_Result()
+        data class Failure(val error: Throwable) : ReviewResult()
 
-        object InFlight : Review_Result()
+        object InFlight : ReviewResult()
     }
 
-    sealed class GetCountsResult : ReviewResult() {
+    sealed class GetCountsResult : StudyResult() {
 
         data class Success(val new: Int, val dueSoon: Int, val dueToday: Int, val nextReviewTimer: List<Int>?) :
             GetCountsResult()
@@ -34,5 +34,5 @@ sealed class ReviewResult : MviResult {
         object InFlight : GetCountsResult()
     }
 
-    object CheckResult : ReviewResult()
+    object CheckResult : StudyResult()
 }

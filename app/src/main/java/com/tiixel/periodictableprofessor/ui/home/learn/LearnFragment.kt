@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.tiixel.periodictableprofessor.R
 import com.tiixel.periodictableprofessor.ui.elementlist.ElementTableActivity
-import com.tiixel.periodictableprofessor.ui.review.ReviewActivity
+import com.tiixel.periodictableprofessor.ui.study.StudyActivity
 import kotlinx.android.synthetic.main.home_fragment_learn.*
 
 class LearnFragment : Fragment() {
@@ -31,18 +31,18 @@ class LearnFragment : Fragment() {
         }
         home_fragment_learn_review_button.setOnClickListener {
             val bundle = Bundle()
-            bundle.putBoolean(ReviewActivity.Extra.DUE_TODAY_ONLY.key, true)
+            bundle.putBoolean(StudyActivity.Extra.DUE_TODAY_ONLY.key, true)
             startReviewActivity(bundle)
         }
         home_fragment_learn_cram_button.setOnClickListener {
             val bundle = Bundle()
-            bundle.putBoolean(ReviewActivity.Extra.DUE_TODAY_ONLY.key, false)
+            bundle.putBoolean(StudyActivity.Extra.DUE_TODAY_ONLY.key, false)
             startReviewActivity(bundle)
         }
     }
 
     private fun startReviewActivity(bundle: Bundle) {
-        val intent = Intent(context, ReviewActivity::class.java)
+        val intent = Intent(context, StudyActivity::class.java)
         intent.putExtras(bundle)
         startActivity(intent)
     }

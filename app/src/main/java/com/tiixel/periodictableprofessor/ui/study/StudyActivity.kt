@@ -1,4 +1,4 @@
-package com.tiixel.periodictableprofessor.ui.review
+package com.tiixel.periodictableprofessor.ui.study
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
@@ -12,35 +12,35 @@ import com.tiixel.periodictableprofessor.domain.exception.NoNewReviewException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewSoonException
 import com.tiixel.periodictableprofessor.presentation.base.MviView
-import com.tiixel.periodictableprofessor.presentation.review.ReviewIntent
-import com.tiixel.periodictableprofessor.presentation.review.ReviewViewModel
-import com.tiixel.periodictableprofessor.presentation.review.ReviewViewState
-import com.tiixel.periodictableprofessor.ui.review.mapper.TimerParser
+import com.tiixel.periodictableprofessor.presentation.study.StudyIntent
+import com.tiixel.periodictableprofessor.presentation.study.StudyViewModel
+import com.tiixel.periodictableprofessor.presentation.study.StudyViewState
+import com.tiixel.periodictableprofessor.ui.study.mapper.TimerParser
 import com.tiixel.periodictableprofessor.widget.error.ErrorButton
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.review_activity.*
+import kotlinx.android.synthetic.main.study_activity.*
 import ru.noties.markwon.Markwon
 import javax.inject.Inject
 
-class ReviewActivity : AppCompatActivity(), MviView<ReviewIntent, ReviewViewState> {
+class StudyActivity : AppCompatActivity(), MviView<StudyIntent, StudyViewState> {
 
     // Intent publishers
-    private val loadNextIntentPublisher = PublishSubject.create<ReviewIntent.LoadNextIntent>()
-    private val reviewIntentPublisher = PublishSubject.create<ReviewIntent.Review_Intent>()
-    private val checkIntentPublisher = PublishSubject.create<ReviewIntent.CheckIntent>()
+    private val loadNextIntentPublisher = PublishSubject.create<StudyIntent.LoadNextIntent>()
+    private val reviewIntentPublisher = PublishSubject.create<StudyIntent.ReviewIntent>()
+    private val checkIntentPublisher = PublishSubject.create<StudyIntent.CheckIntent>()
 
     // Used to manage the data flow lifecycle and avoid memory leak
     private val disposable = CompositeDisposable()
 
     // View model
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: ReviewViewModel
+    private lateinit var viewModel: StudyViewModel
 
     // View state
-    private lateinit var viewState: ReviewViewState
+    private lateinit var viewState: StudyViewState
 
     // Starting intent extra params
     enum class Extra(val key: String) {
@@ -54,7 +54,7 @@ class ReviewActivity : AppCompatActivity(), MviView<ReviewIntent, ReviewViewStat
     //<editor-fold desc="Life cycle methods">
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.review_activity)
+        setContentView(R.layout.study_activity)
         setSupportActionBar(toolbar)
         AndroidInjection.inject(this)
 
@@ -66,7 +66,7 @@ class ReviewActivity : AppCompatActivity(), MviView<ReviewIntent, ReviewViewStat
         reviewDueTodayOnly = intent?.extras?.getBoolean(Extra.DUE_TODAY_ONLY.key) ?: reviewDueTodayOnly
 
         viewModel = ViewModelProviders.of(this, viewModelFactory)
-            .get(ReviewViewModel::class.java)
+            .get(StudyViewModel::class.java)
 
         review_periodic_table.generateBlankCells()
 
@@ -85,16 +85,16 @@ class ReviewActivity : AppCompatActivity(), MviView<ReviewIntent, ReviewViewStat
     //</editor-fold>
 
     //<editor-fold desc="MVI methods">
-    override fun intents(): Observable<ReviewIntent> {
+    override fun intents(): Observable<StudyIntent> {
         return Observable.merge(
-            Observable.just(ReviewIntent.InitialIntent(newCard = reviewNewCards, dueSoonOnly = reviewDueTodayOnly)),
+            Observable.just(StudyIntent.InitialIntent(newCard = reviewNewCards, dueSoonOnly = reviewDueTodayOnly)),
             loadNextIntentPublisher,
             reviewIntentPublisher,
             checkIntentPublisher
         )
     }
 
-    override fun render(state: ReviewViewState) {
+    override fun render(state: StudyViewState) {
         viewState = state
 
         // Display quick statistics in header
@@ -235,18 +235,18 @@ class ReviewActivity : AppCompatActivity(), MviView<ReviewIntent, ReviewViewStat
     //<editor-fold desc="Intent publisher methods">
     private fun loadNextCard(forceNewCard: Boolean = false) {
         val intent =
-            ReviewIntent.LoadNextIntent(newCard = reviewNewCards || forceNewCard, dueSoonOnly = reviewDueTodayOnly)
+            StudyIntent.LoadNextIntent(newCard = reviewNewCards || forceNewCard, dueSoonOnly = reviewDueTodayOnly)
         loadNextIntentPublisher.onNext(intent)
     }
 
     private fun checkCard() {
-        val intent = ReviewIntent.CheckIntent
+        val intent = StudyIntent.CheckIntent
         checkIntentPublisher.onNext(intent)
     }
 
     private fun reviewCard(performance: ReviewPerformance) {
         viewState.element?.let {
-            val intent = ReviewIntent.Review_Intent(it.number.toByte(), ReviewableFace.SYMBOL, performance)
+            val intent = StudyIntent.ReviewIntent(it.number.toByte(), ReviewableFace.SYMBOL, performance)
             reviewIntentPublisher.onNext(intent)
         } ?: throw RuntimeException("You cannot review a null card.")
         loadNextCard()

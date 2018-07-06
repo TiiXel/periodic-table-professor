@@ -1,4 +1,4 @@
-package com.tiixel.periodictableprofessor.presentation.review
+package com.tiixel.periodictableprofessor.presentation.study
 
 import com.tiixel.periodictableprofessor.domain.element.interactor.ElementInteractor
 import com.tiixel.periodictableprofessor.domain.review.interactor.ReviewInteractor
@@ -11,42 +11,42 @@ import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class ReviewActionProcessor @Inject constructor(
+class StudyActionProcessor @Inject constructor(
     private val elementInteractor: ElementInteractor,
     private val reviewInteractor: ReviewInteractor,
     private val schedulerProvider: BaseSchedulerProvider
 ) {
 
-    private val loadReviewableProcessor = ObservableTransformer<ReviewAction.LoadNext, ReviewResult> { actions ->
+    private val loadReviewableProcessor = ObservableTransformer<StudyAction.LoadNext, StudyResult> { actions ->
         actions.switchMap { action ->
             when (action.newCard) {
                 true -> reviewInteractor.getReviewForNew()
                 false -> reviewInteractor.getReviewForNext(action.dueSoonOnly)
             }.flatMap { elementInteractor.getElement(it.item.itemId).zipWith(Single.just(it.face)) }
                 .toObservable()
-                .map { ReviewResult.LoadNextReviewResult.Success(it.first, it.second) }
-                .cast(ReviewResult.LoadNextReviewResult::class.java)
-                .onErrorReturn { ReviewResult.LoadNextReviewResult.Failure(it) }
+                .map { StudyResult.LoadNextReviewResult.Success(it.first, it.second) }
+                .cast(StudyResult.LoadNextReviewResult::class.java)
+                .onErrorReturn { StudyResult.LoadNextReviewResult.Failure(it) }
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .startWith(ReviewResult.LoadNextReviewResult.InFlight)
+                .startWith(StudyResult.LoadNextReviewResult.InFlight)
         }
     }
 
-    private val reviewProcessor = ObservableTransformer<ReviewAction.Review, ReviewResult> { actions ->
+    private val reviewProcessor = ObservableTransformer<StudyAction.Review, StudyResult> { actions ->
         actions.flatMap { action ->
             reviewInteractor.review(action.freshReview)
-                .toObservable<ReviewResult.Review_Result>()
-                .map { ReviewResult.Review_Result.Success }
-                .cast(ReviewResult.Review_Result::class.java)
-                .onErrorReturn { ReviewResult.Review_Result.Failure(it) }
+                .toObservable<StudyResult.ReviewResult>()
+                .map { StudyResult.ReviewResult.Success }
+                .cast(StudyResult.ReviewResult::class.java)
+                .onErrorReturn { StudyResult.ReviewResult.Failure(it) }
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .startWith(ReviewResult.Review_Result.InFlight)
+                .startWith(StudyResult.ReviewResult.InFlight)
         }
     }
 
-    private val getCountsProcessor = ObservableTransformer<ReviewAction.GetCounts, ReviewResult> { actions ->
+    private val getCountsProcessor = ObservableTransformer<StudyAction.GetCounts, StudyResult> { actions ->
         actions.flatMap { _ ->
             reviewInteractor.countReviewablesNewOnDay(Date())
                 .zipWith(reviewInteractor.countReviewsDueSoon(Date()))
@@ -54,31 +54,31 @@ class ReviewActionProcessor @Inject constructor(
                 .zipWith(reviewInteractor.getNextReviewDate())
                 .toObservable()
                 .map {
-                    ReviewResult.GetCountsResult.Success(
+                    StudyResult.GetCountsResult.Success(
                         new = it.first.first.first,
                         dueSoon = it.first.first.second,
                         dueToday = it.first.second,
                         nextReviewTimer = timer(it.second, Date())
                     )
                 }
-                .cast(ReviewResult.GetCountsResult::class.java)
-                .onErrorReturn { ReviewResult.GetCountsResult.Failure(it) }
+                .cast(StudyResult.GetCountsResult::class.java)
+                .onErrorReturn { StudyResult.GetCountsResult.Failure(it) }
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .startWith(ReviewResult.GetCountsResult.InFlight)
+                .startWith(StudyResult.GetCountsResult.InFlight)
         }
     }
 
-    private val checkCardProcessor = ObservableTransformer<ReviewAction.Check, ReviewResult> { actions ->
-        actions.flatMap { Observable.just(ReviewResult.CheckResult) }
+    private val checkCardProcessor = ObservableTransformer<StudyAction.Check, StudyResult> { actions ->
+        actions.flatMap { Observable.just(StudyResult.CheckResult) }
     }
 
-    internal val actionProcessor = ObservableTransformer<ReviewAction, ReviewResult> { action ->
+    internal val actionProcessor = ObservableTransformer<StudyAction, StudyResult> { action ->
         action.publish { shared ->
-            shared.ofType(ReviewAction.LoadNext::class.java).compose(loadReviewableProcessor)
-                .mergeWith(shared.ofType(ReviewAction.Review::class.java).compose(reviewProcessor))
-                .mergeWith(shared.ofType(ReviewAction.Check::class.java).compose(checkCardProcessor))
-                .mergeWith(shared.ofType(ReviewAction.GetCounts::class.java).compose(getCountsProcessor))
+            shared.ofType(StudyAction.LoadNext::class.java).compose(loadReviewableProcessor)
+                .mergeWith(shared.ofType(StudyAction.Review::class.java).compose(reviewProcessor))
+                .mergeWith(shared.ofType(StudyAction.Check::class.java).compose(checkCardProcessor))
+                .mergeWith(shared.ofType(StudyAction.GetCounts::class.java).compose(getCountsProcessor))
         }
     }
 
