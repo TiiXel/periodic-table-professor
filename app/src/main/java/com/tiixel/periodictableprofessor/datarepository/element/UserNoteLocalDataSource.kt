@@ -1,6 +1,6 @@
-package com.tiixel.periodictableprofessor.datarepository.card
+package com.tiixel.periodictableprofessor.datarepository.element
 
-import com.tiixel.periodictableprofessor.datarepository.card.generic.GenericUserNote
+import com.tiixel.periodictableprofessor.datarepository.element.generic.GenericUserNote
 import io.reactivex.Completable
 import io.reactivex.Single
 

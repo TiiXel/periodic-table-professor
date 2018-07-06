@@ -1,7 +1,5 @@
 package com.tiixel.periodictableprofessor.datarepository.element
 
-import com.tiixel.periodictableprofessor.datarepository.card.MnemonicLocalDataSource
-import com.tiixel.periodictableprofessor.datarepository.card.UserNoteLocalDataSource
 import com.tiixel.periodictableprofessor.datarepository.element.generic.GenericElement
 import com.tiixel.periodictableprofessor.datarepository.element.mapper.ElementMapper
 import com.tiixel.periodictableprofessor.domain.Element

@@ -4,8 +4,8 @@ import com.google.gson.Gson
 import com.tiixel.periodictableprofessor.data.JsonAssets
 import com.tiixel.periodictableprofessor.data.mnemonic.local.asset.MnemonicPictureLoader
 import com.tiixel.periodictableprofessor.data.mnemonic.local.gson.entity.MnemonicPhraseEntity
-import com.tiixel.periodictableprofessor.datarepository.card.MnemonicLocalDataSource
-import com.tiixel.periodictableprofessor.datarepository.card.generic.GenericMnemonic
+import com.tiixel.periodictableprofessor.datarepository.element.MnemonicLocalDataSource
+import com.tiixel.periodictableprofessor.datarepository.element.generic.GenericMnemonic
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -26,11 +26,21 @@ class MnemonicMixedDataSource @Inject constructor(
             val mnemonics = emptyMap<Byte, GenericMnemonic>().toMutableMap()
 
             pictures.forEach {
-                mnemonics.put(it.key, GenericMnemonic(it.key, null, it.value))
+                mnemonics.put(it.key,
+                    GenericMnemonic(
+                        it.key,
+                        null,
+                        it.value
+                    )
+                )
             }
 
             phrases.forEach {
-                val m = mnemonics[it.key] ?: GenericMnemonic(it.key, null, null)
+                val m = mnemonics[it.key] ?: GenericMnemonic(
+                    it.key,
+                    null,
+                    null
+                )
                 mnemonics.put(it.key, m.copy(mnemonicPhrase = it.value.phrase))
             }
 

@@ -1,4 +1,4 @@
-package com.tiixel.periodictableprofessor.datarepository.card.generic
+package com.tiixel.periodictableprofessor.datarepository.element.generic
 
 data class GenericUserNote(
     val element: Byte,
