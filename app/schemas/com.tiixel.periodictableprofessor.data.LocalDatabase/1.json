@@ -1,0 +1,83 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "a95784ebd8669b97fefcd5b8f4b86308",
+    "entities": [
+      {
+        "tableName": "review_log",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`element` INTEGER NOT NULL, `difficulty` REAL NOT NULL, `review_date` INTEGER NOT NULL, `next_interval` INTEGER NOT NULL, `performance` INTEGER, PRIMARY KEY(`review_date`))",
+        "fields": [
+          {
+            "fieldPath": "element",
+            "columnName": "element",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "difficulty",
+            "columnName": "difficulty",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "review_date",
+            "columnName": "review_date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "next_interval",
+            "columnName": "next_interval",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "performance",
+            "columnName": "performance",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "review_date"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "user_note",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`element` INTEGER NOT NULL, `user_note` TEXT, PRIMARY KEY(`element`))",
+        "fields": [
+          {
+            "fieldPath": "element",
+            "columnName": "element",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "user_note",
+            "columnName": "user_note",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "element"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"a95784ebd8669b97fefcd5b8f4b86308\")"
+    ]
+  }
+}
