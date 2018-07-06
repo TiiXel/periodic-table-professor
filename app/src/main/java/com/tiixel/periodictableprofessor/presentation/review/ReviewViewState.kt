@@ -1,19 +1,23 @@
 package com.tiixel.periodictableprofessor.presentation.review
 
 import com.tiixel.periodictableprofessor.presentation.base.MviViewState
-import com.tiixel.periodictableprofessor.presentation.review.model.CardModel
+import com.tiixel.periodictableprofessor.presentation.review.model.ElementModel
 
 data class ReviewViewState(
-    val card: CardModel?,
+    val itemId: Byte?,
+    val element: ElementModel?,
+    val isNumberVisible: Boolean,
+    val isSymbolVisible: Boolean,
+    val isNameVisible: Boolean,
+    val isTablePositionVisible: Boolean,
+    val isPictureVisible: Boolean,
+    val isPhraseVisible: Boolean,
+    val isUserNoteVisible: Boolean,
     val newCardCount: Int,
     val dueSoonCount: Int,
     val dueTodayCount: Int,
     val nextReviewTimer: List<Int>?,
     val loadingInProgress: Boolean,
-    /**
-     * Can take error values from:
-     *  - [ReviewResult.LoadNextCardResult.Failure]
-     */
     val loadingFailedCause: Exception?,
     val reviewingInProgress: Boolean,
     val reviewingFailed: Boolean,
@@ -24,7 +28,15 @@ data class ReviewViewState(
 
         fun init(): ReviewViewState {
             return ReviewViewState(
-                card = null,
+                itemId = null,
+                element = null,
+                isNumberVisible = false,
+                isSymbolVisible = false,
+                isNameVisible = false,
+                isTablePositionVisible = false,
+                isPictureVisible = false,
+                isPhraseVisible = false,
+                isUserNoteVisible = false,
                 newCardCount = 0,
                 dueSoonCount = 0,
                 dueTodayCount = 0,

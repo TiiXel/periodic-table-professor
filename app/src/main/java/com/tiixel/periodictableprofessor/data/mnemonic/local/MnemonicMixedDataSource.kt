@@ -26,21 +26,11 @@ class MnemonicMixedDataSource @Inject constructor(
             val mnemonics = emptyMap<Byte, GenericMnemonic>().toMutableMap()
 
             pictures.forEach {
-                mnemonics.put(it.key,
-                    GenericMnemonic(
-                        it.key,
-                        null,
-                        it.value
-                    )
-                )
+                mnemonics.put(it.key, GenericMnemonic(it.key, null, it.value))
             }
 
             phrases.forEach {
-                val m = mnemonics[it.key] ?: GenericMnemonic(
-                    it.key,
-                    null,
-                    null
-                )
+                val m = mnemonics[it.key] ?: GenericMnemonic(it.key, null, null)
                 mnemonics.put(it.key, m.copy(mnemonicPhrase = it.value.phrase))
             }
 

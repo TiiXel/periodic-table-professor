@@ -1,36 +1,31 @@
 package com.tiixel.periodictableprofessor.presentation.review
 
 import com.tiixel.periodictableprofessor.domain.card.interactor.CardInteractor
-import com.tiixel.periodictableprofessor.presentation.review.model.CardModel
+import com.tiixel.periodictableprofessor.domain.element.interactor.ElementInteractor
 import com.tiixel.periodictableprofessor.presentation.review.model.CountsModel
 import com.tiixel.periodictableprofessor.util.schedulers.BaseSchedulerProvider
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
+import io.reactivex.Single
 import io.reactivex.rxkotlin.zipWith
 import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ReviewActionProcessor @Inject constructor(
+    private val elementInteractor: ElementInteractor,
     private val cardInteractor: CardInteractor,
     private val schedulerProvider: BaseSchedulerProvider
 ) {
 
     private val loadNextCardProcessor = ObservableTransformer<ReviewAction.LoadNextCard, ReviewResult> { actions ->
-        actions.flatMap { action ->
-            if (action.newCard) {
-                cardInteractor.getNewCardForReview()
-            } else {
-                cardInteractor.getNextCardForReview(action.dueSoonOnly)
-            }.toObservable()
-                .map {
-                    ReviewResult.LoadNextCardResult.Success(
-                        CardModel.mapFromDomain(
-                            it.first,
-                            it.second
-                        )
-                    )
-                }
+        actions.switchMap { action ->
+            when (action.newCard) {
+                true -> cardInteractor.getNewCardForReview()
+                false -> cardInteractor.getNextCardForReview(action.dueSoonOnly)
+            }.flatMap { elementInteractor.getElement(it.item.itemId).zipWith(Single.just(it.face)) }
+                .toObservable()
+                .map { ReviewResult.LoadNextCardResult.Success(it.first, it.second) }
                 .cast(ReviewResult.LoadNextCardResult::class.java)
                 .onErrorReturn { ReviewResult.LoadNextCardResult.Failure(it) }
                 .subscribeOn(schedulerProvider.io())
@@ -41,7 +36,7 @@ class ReviewActionProcessor @Inject constructor(
 
     private val reviewCardProcessor = ObservableTransformer<ReviewAction.ReviewCard, ReviewResult> { actions ->
         actions.flatMap { action ->
-            cardInteractor.reviewCard(action.element, action.performance)
+            cardInteractor.reviewCard(action.freshReview)
                 .toObservable<ReviewResult.ReviewCardResult>()
                 .map { ReviewResult.ReviewCardResult.Success }
                 .cast(ReviewResult.ReviewCardResult::class.java)

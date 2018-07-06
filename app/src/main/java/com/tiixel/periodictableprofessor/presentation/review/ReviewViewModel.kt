@@ -1,11 +1,14 @@
 package com.tiixel.periodictableprofessor.presentation.review
 
 import android.arch.lifecycle.ViewModel
+import com.tiixel.periodictableprofessor.domain.Review
+import com.tiixel.periodictableprofessor.domain.Reviewable
+import com.tiixel.periodictableprofessor.domain.ReviewableFace
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsAreNewException
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsDueSoonException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewException
 import com.tiixel.periodictableprofessor.presentation.base.MviViewModel
-import com.tiixel.periodictableprofessor.presentation.review.model.CardModel
+import com.tiixel.periodictableprofessor.presentation.review.mapper.ElementMapper
 import com.tiixel.periodictableprofessor.util.extensions.notOfType
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
@@ -39,7 +42,7 @@ class ReviewViewModel @Inject constructor(
     private fun compose(): Observable<ReviewViewState> {
         return intentsSubjects.compose(intentFilter)
             .map(this::actionFromIntent)
-            .concatMap { Observable.just(it, ReviewAction.GetCounts) } // TODO: Is this working this time?
+            .concatMap { Observable.just(it, ReviewAction.GetCounts) }
             .compose(actionProcessor.actionProcessor)
             .scan(ReviewViewState.init(), reducer)
             .distinctUntilChanged()
@@ -52,8 +55,11 @@ class ReviewViewModel @Inject constructor(
             is ReviewIntent.InitialIntent -> ReviewAction.LoadNextCard(intent.newCard, intent.dueSoonOnly)
             is ReviewIntent.LoadNextCardIntent -> ReviewAction.LoadNextCard(intent.newCard, intent.dueSoonOnly)
             is ReviewIntent.ReviewCardIntent -> ReviewAction.ReviewCard(
-                intent.element,
-                intent.performance
+                Review.FreshReview(
+                    item = Reviewable(intent.element),
+                    face = intent.face,
+                    performance = intent.performance
+                )
             )
             is ReviewIntent.CheckCardIntent -> ReviewAction.CheckCard
         }
@@ -69,8 +75,15 @@ class ReviewViewModel @Inject constructor(
                             previousState.copy(
                                 loadingInProgress = false,
                                 loadingFailedCause = null,
-                                card = result.card,
-                                showCheckButtonOverPerformance = true
+                                element = ElementMapper.fromDomain(result.element),
+                                showCheckButtonOverPerformance = true,
+                                isNameVisible = result.face == ReviewableFace.NAME,
+                                isSymbolVisible = result.face == ReviewableFace.SYMBOL,
+                                isUserNoteVisible = false,
+                                isNumberVisible = result.face == ReviewableFace.NUMBER,
+                                isPictureVisible = result.face == ReviewableFace.PICTURE,
+                                isPhraseVisible = false,
+                                isTablePositionVisible = false
                             )
                         }
                         is ReviewResult.LoadNextCardResult.Failure -> {
@@ -86,7 +99,7 @@ class ReviewViewModel @Inject constructor(
                             previousState.copy(
                                 loadingInProgress = false,
                                 loadingFailedCause = result.error as Exception,
-                                card = null,
+                                element = null,
                                 showCheckButtonOverPerformance = false
                             )
                         }
@@ -124,7 +137,12 @@ class ReviewViewModel @Inject constructor(
                             )
                         }
                         is ReviewResult.GetCountsResult.Failure -> {
-                            throw result.error
+                            when (result.error) {
+                                is NoNextReviewException -> {
+                                }
+                                else -> throw result.error
+                            }
+                            previousState
                         }
                         is ReviewResult.GetCountsResult.InFlight -> {
                             previousState
@@ -134,7 +152,13 @@ class ReviewViewModel @Inject constructor(
                 is ReviewResult.CheckCardResult -> {
                     previousState.copy(
                         showCheckButtonOverPerformance = false,
-                        card = CardModel.reveal(previousState.card!!)
+                        isNumberVisible = true,
+                        isSymbolVisible = true,
+                        isNameVisible = true,
+                        isTablePositionVisible = true,
+                        isPictureVisible = true,
+                        isPhraseVisible = true,
+                        isUserNoteVisible = true
                     )
                 }
             }

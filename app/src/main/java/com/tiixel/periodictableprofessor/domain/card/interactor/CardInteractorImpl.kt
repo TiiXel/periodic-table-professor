@@ -1,140 +1,89 @@
 package com.tiixel.periodictableprofessor.domain.card.interactor
 
-import com.tiixel.periodictableprofessor.domain.Element
-import com.tiixel.periodictableprofessor.domain.ReviewData
-import com.tiixel.periodictableprofessor.domain.ReviewPerformance
+import com.tiixel.periodictableprofessor.domain.Review
+import com.tiixel.periodictableprofessor.domain.Reviewable
 import com.tiixel.periodictableprofessor.domain.ReviewableFace
 import com.tiixel.periodictableprofessor.domain.algorithm.Sm2Plus
 import com.tiixel.periodictableprofessor.domain.card.contract.CardRepository
-import com.tiixel.periodictableprofessor.domain.element.contract.ElementRepository
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsAreNewException
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsDueSoonException
-import com.tiixel.periodictableprofessor.domain.exception.NoMnemonicForThisElementException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewException
 import io.reactivex.Completable
-import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.rxkotlin.zipWith
+import org.apache.commons.lang3.time.DateUtils
 import java.util.Date
 import java.util.Random
 import javax.inject.Inject
 
 class CardInteractorImpl @Inject constructor(
-    private val cardRepository: CardRepository,
-    private val elementRepository: ElementRepository
+    private val cardRepository: CardRepository
 ) : CardInteractor {
 
-    private var lastReviews: MutableMap<Byte, ReviewData>? = null
-
-    private fun getLastReviews(): Single<Map<Byte, ReviewData>> {
-        return if (lastReviews == null) {
-            cardRepository.getReviewLog()
-                .map { logs -> logs.groupBy { it.element } }
-                .map { logs -> logs.map { it.key to it.value.sortedBy { it.reviewDate }.last() }.toMap() }
-                .doOnSuccess { logs -> lastReviews = logs.toMutableMap() }
-        } else {
-            Single.just(lastReviews)
-        }
+    private fun getLastReviews(): Single<Map<Byte, Review>> {
+        return cardRepository.getReviewHistory()
+            .map { it.groupBy { it.item.itemId } }
+            .map { it.map { it.key to it.value.sortedBy { it.reviewDate }.last() }.toMap() }
     }
 
-    override fun getNewCardForReview(): Single<Pair<Element, ReviewableFace>> {
-        // TODO: Check that logs is shorter than mnemonic list
-        return elementRepository.getElements()
-            // Get all atomic numbers
-            // Keep atomic numbers NOT present in logs (ie never seen ones)
-            .zipWith(getLastReviews(), { elements, logs ->
-                elements.map { element ->
-                    if (element.atomicNumber !in logs.keys) return@map element else return@map null
-                }.filterNotNull()
-            })
-            // Return error if no cards are never seen
+    override fun getNewCardForReview(): Single<Review.UpcomingReview> {
+        return cardRepository.getReviewableIds()
+            .zipWith(getLastReviews()) { ids, next -> ids.filter { it !in next.keys } }
             .filter { it.isNotEmpty() }
             .switchIfEmpty(Single.error(NoCardsAreNewException))
-            // Select one random atomic number among never seen ones
-            .map { it.toList().shuffled().first() }
-            // Retry when mnemonic is null
-            .filter { it.mnemonicPhrase != null && it.mnemonicPicture != null }
-            .switchIfEmpty(Single.error(NoMnemonicForThisElementException))
-            .retryWhen {
-                it.flatMap<Boolean> {
-                    if (it === NoMnemonicForThisElementException)
-                        Flowable.just(true)
-                    else
-                        Flowable.error(it)
-                }
-            }
-            // Select face
-            .map { Pair(it, ReviewableFace.PICTURE) }
+            .map { it.shuffled().first() }
+            .map { Review.UpcomingReview(Reviewable(it), ReviewableFace.PICTURE) }
     }
 
-    override fun getNextCardForReview(dueSoonOnly: Boolean): Single<Pair<Element, ReviewableFace>> {
+    override fun getNextCardForReview(dueSoonOnly: Boolean): Single<Review.UpcomingReview> {
         return getLastReviews()
             .filter { it.isNotEmpty() }
             .switchIfEmpty(Single.error(NoNextReviewException))
-            .map { it.values }
-            .map {
-                if (dueSoonOnly) {
-                    it.filter { it.isDueSoon(reference = Date()) }
-                } else {
-                    it
-                }
-            }
+            .map { if (dueSoonOnly) it.filter { it.value.nextIsDueSoon(Date()) } else it }
             .filter { it.isNotEmpty() }
             .switchIfEmpty(Single.error(NoCardsDueSoonException))
-            .map { it.sortedBy { it.nextDateOverdue }.last() }
-            .zipWith(elementRepository.getElements()) { reviewData, elements ->
-                elements.first { it.atomicNumber == reviewData.element } to reviewData
-            }
+            .map { it.toList().sortedBy { it.second.nextOverdue(Date()) }.last().second }
+            .map { it.item.itemId to it.isKnown() }
             .map {
-                if (it.second.isKnown) {
-                    Pair(it.first, ReviewableFace.values()[Random().nextInt(ReviewableFace.values().size)])
-                } else {
-                    Pair(it.first, ReviewableFace.PICTURE)
-                }
+                it.first to
+                    if (it.second)
+                        ReviewableFace.values()[Random().nextInt(ReviewableFace.values().size)]
+                    else
+                        ReviewableFace.PICTURE
             }
+            .map { Review.UpcomingReview(Reviewable(it.first), ReviewableFace.SYMBOL) }
     }
 
     override fun getNextReviewDate(): Single<Date> {
         return getLastReviews()
             .filter { it.isNotEmpty() }
             .switchIfEmpty(Single.error(NoNextReviewException))
-            .map {
-                it.values.sortedBy { it.nextDateOverdue }.lastOrNull { !it.isDueSoon(Date()) }
-            }
-            .map { it.nextDate }
+            .map { it.toList().sortedBy { it.second.nextOverdue(Date()) }.last().second.nextDueDate }
     }
 
     override fun countCardsDueToday(reference: Date): Single<Int> {
         return getLastReviews()
-            .map { it.filter { it.value.isDueOnDay(reference) }.size }
+            .map { it.filter { it.value.nextIsDueOnDay(reference) || it.value.nextIsOverdue(reference) }.size }
     }
 
     override fun countCardsDueSoon(reference: Date): Single<Int> {
         return getLastReviews()
-            .map { it.filter { it.value.isDueSoon(reference) }.size }
+            .map { it.filter { it.value.nextIsDueSoon(reference) || it.value.nextIsOverdue(reference) }.size }
     }
 
     override fun countCardsNewOnDay(day: Date): Single<Int> {
-        return cardRepository.getReviewLog()
-            .map { logs -> logs.groupBy { it.element } }
-            .map { logs -> logs.map { it.key to it.value.sortedBy { it.reviewDate }.first() }.map { it.second } }
-            .map { logs -> logs.filter { it.isDueOnDay(day) } }
-            .map { logs -> logs.size }
+        return cardRepository.getReviewHistory()
+            .map { it.groupBy { it.item.itemId } }
+            .map { it.map { it.key to it.value.sortedBy { it.reviewDate }.first() } }
+            .map { it.filter { DateUtils.isSameDay(it.second.reviewDate, day) }.size }
     }
 
-    override fun reviewCard(element: Byte, performance: ReviewPerformance, time: Date): Completable {
+    override fun reviewCard(freshReview: Review.FreshReview): Completable {
         return getLastReviews()
-            .flatMapMaybe {
-                if (it.containsKey(element))
-                    Maybe.just(it[element])
-                else
-                    Maybe.empty()
-            }
-            .map { Sm2Plus.compute(it, performance, time) }
-            // TODO: The new entry in logs should be added when first retrieving the card
-            .defaultIfEmpty(Sm2Plus.defaultReview(element, time))
-            .doOnSuccess { lastReviews?.put(it.element, it) }
+            .flatMapMaybe { if (it.containsKey(freshReview.item.itemId)) Maybe.just(it[freshReview.item.itemId]) else Maybe.empty() }
+            .map { it.aggregateNewReview(freshReview, Sm2Plus::aggregator) }
+            .defaultIfEmpty(Sm2Plus.defaultReview(freshReview))
             .flatMapCompletable { cardRepository.logReview(it) }
     }
 }

@@ -1,20 +1,15 @@
 package com.tiixel.periodictableprofessor.presentation.review
 
-import com.tiixel.periodictableprofessor.domain.card.interactor.CardInteractor
+import com.tiixel.periodictableprofessor.domain.Element
+import com.tiixel.periodictableprofessor.domain.ReviewableFace
 import com.tiixel.periodictableprofessor.presentation.base.MviResult
-import com.tiixel.periodictableprofessor.presentation.review.model.CardModel
 
 sealed class ReviewResult : MviResult {
 
     sealed class LoadNextCardResult : ReviewResult() {
 
-        data class Success(val card: CardModel) : LoadNextCardResult()
+        data class Success(val element: Element, val face: ReviewableFace) : LoadNextCardResult()
 
-        /**
-         * May contain exceptions from :
-         * - [CardInteractor.getNewCardForReview]
-         * - [CardInteractor.getNextCardForReview]
-         */
         data class Failure(val error: Throwable) : LoadNextCardResult()
 
         object InFlight : LoadNextCardResult()

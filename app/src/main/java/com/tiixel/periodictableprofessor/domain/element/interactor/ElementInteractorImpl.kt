@@ -6,15 +6,15 @@ import com.tiixel.periodictableprofessor.domain.exception.AtomicNumberOutOfBound
 import io.reactivex.Single
 import javax.inject.Inject
 
-class ElementInteractorImpl @Inject constructor(private val repository: ElementRepository) :
-    ElementInteractor {
+class ElementInteractorImpl @Inject constructor(
+    private val repository: ElementRepository
+) : ElementInteractor {
 
     override fun getElement(z: Byte): Single<Element> {
-        if (Element.verifyBounds(z)) {
-            return repository.getElements()
-                .map { it.first { it.atomicNumber == z } }
+        return if (Element.verifyBounds(z)) {
+            repository.getElements().map { it.first { it.atomicNumber == z } }
         } else {
-            return Single.error(AtomicNumberOutOfBoundsException(z))
+            Single.error(AtomicNumberOutOfBoundsException(z))
         }
     }
 

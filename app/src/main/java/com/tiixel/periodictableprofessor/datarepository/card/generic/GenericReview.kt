@@ -3,12 +3,11 @@ package com.tiixel.periodictableprofessor.datarepository.card.generic
 import java.util.Date
 
 data class GenericReview(
-    val date: Date,
-    val element: Byte,
-    val performance: Byte
-) {
+    val itemId: Byte,
+    val face: Int,
+    val reviewDate: Date,
+    val performance: Int,
+    val nextDueDate: Date,
 
-    companion object {
-
-    }
-}
+    val aggregatedItemDifficulty: Float
+)

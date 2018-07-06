@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.tiixel.periodictableprofessor.R
 import com.tiixel.periodictableprofessor.domain.ReviewPerformance
+import com.tiixel.periodictableprofessor.domain.ReviewableFace
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsAreNewException
 import com.tiixel.periodictableprofessor.domain.exception.NoCardsDueSoonException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewException
@@ -148,35 +149,34 @@ class ReviewActivity : AppCompatActivity(), MviView<ReviewIntent, ReviewViewStat
         if (state.reviewingFailed) {
         }
 
-        // Display the card
-        if (state.card != null) {
+        // Display the element
+        if (state.element != null) {
 
-            review_atomic_number.text = state.card.number
-            review_atomic_number.visibility = if (state.card.visibleNumber) View.VISIBLE else View.INVISIBLE
+            review_atomic_number.text = state.element.number
+            review_atomic_number.visibility = if (state.isNumberVisible) View.VISIBLE else View.INVISIBLE
 
-            review_symbol.text = state.card.symbol
-            review_symbol.visibility = if (state.card.visibleSymbol) View.VISIBLE else View.INVISIBLE
+            review_symbol.text = state.element.symbol
+            review_symbol.visibility = if (state.isSymbolVisible) View.VISIBLE else View.INVISIBLE
 
-            review_name.text = state.card.name
-            review_name.visibility = if (state.card.visibleName) View.VISIBLE else View.INVISIBLE
+            review_name.text = state.element.name
+            review_name.visibility = if (state.isNameVisible) View.VISIBLE else View.INVISIBLE
 
-            review_mnemonic_picture.visibility = if (state.card.visibleMnemonicPicture) View.VISIBLE else View.INVISIBLE
+            review_mnemonic_picture.setImageBitmap(state.element.mnemonicPicture)
+            review_mnemonic_picture.visibility = if (state.isPictureVisible) View.VISIBLE else View.INVISIBLE
 
-            Markwon.setMarkdown(review_mnemonic_phrase, state.card.mnemonicPhrase)
-            review_mnemonic_phrase.visibility = if (state.card.visibleMnemonicPhrase) View.VISIBLE else View.INVISIBLE
+            Markwon.setMarkdown(review_mnemonic_phrase, state.element.mnemonicPhrase ?: "")
+            review_mnemonic_phrase.visibility = if (state.isPhraseVisible) View.VISIBLE else View.INVISIBLE
 
-            if (state.card.visibleNumber) {
-                review_periodic_table.colorizeElement(state.card.number.toByte())
+            if (state.isTablePositionVisible && state.itemId != null) {
+                review_periodic_table.colorizeElement(state.itemId)
             } else {
                 review_periodic_table.generateBlankCells()
             }
 
-            review_user_note.text = state.card.userNote
-            review_user_note.visibility = if (state.card.visibleUserNote) View.VISIBLE else View.INVISIBLE
+            review_user_note.text = state.element.userNote
+            review_user_note.visibility = if (state.isUserNoteVisible) View.VISIBLE else View.INVISIBLE
 
-            review_mnemonic_picture.setImageBitmap(state.card.mnemonicPicture)
-
-            if (state.card.userNote.isEmpty()) {
+            if (state.element.userNote.isNullOrEmpty()) {
                 review_user_note.visibility = View.GONE
                 review_button_edit_note.text = resources.getString(R.string.add_note)
             } else {
@@ -245,10 +245,10 @@ class ReviewActivity : AppCompatActivity(), MviView<ReviewIntent, ReviewViewStat
     }
 
     private fun reviewCard(performance: ReviewPerformance) {
-        viewState.card?.let {
-            val intent = ReviewIntent.ReviewCardIntent(it.number.toByte(), performance)
+        viewState.element?.let {
+            val intent = ReviewIntent.ReviewCardIntent(it.number.toByte(), ReviewableFace.SYMBOL, performance)
             reviewCardIntentPublisher.onNext(intent)
-        } ?: throw RuntimeException("You cannot review a null card: ${viewState.card}")
+        } ?: throw RuntimeException("You cannot review a null card.")
         loadNextCard()
     }
     //</editor-fold>

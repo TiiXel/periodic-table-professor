@@ -22,7 +22,7 @@ data class Element(
     val mnemonicPhrase: String?,
     val mnemonicPicture: ByteArray?,
     val mnemonicUserNote: String?
-) {
+) : Reviewable(atomicNumber) {
 
     val tableColumn: Byte = tableColumnOf(atomicNumber)
 

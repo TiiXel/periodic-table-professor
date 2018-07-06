@@ -1,12 +1,14 @@
 package com.tiixel.periodictableprofessor.domain.card.contract
 
-import com.tiixel.periodictableprofessor.domain.ReviewData
+import com.tiixel.periodictableprofessor.domain.Review
 import io.reactivex.Completable
 import io.reactivex.Single
 
 interface CardRepository {
 
-    fun getReviewLog(): Single<List<ReviewData>>
+    fun getReviewableIds(): Single<List<Byte>>
 
-    fun logReview(review: ReviewData): Completable
+    fun getReviewHistory(): Single<List<Review>>
+
+    fun logReview(review: Review): Completable
 }

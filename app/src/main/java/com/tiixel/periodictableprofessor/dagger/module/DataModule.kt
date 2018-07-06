@@ -24,6 +24,7 @@ class DataProvideModule {
     @Singleton
     fun provideLocalDatabase(application: Application): LocalDatabase {
         return Room.databaseBuilder(application.applicationContext, LocalDatabase::class.java, "user_database.db")
+            .addMigrations(LocalDatabase.Companion.Migration_1_2())
             .build()
     }
 
