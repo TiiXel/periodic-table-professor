@@ -3,7 +3,6 @@ package com.tiixel.periodictableprofessor.presentation.elementlist
 import com.tiixel.periodictableprofessor.domain.element.interactor.ElementInteractor
 import com.tiixel.periodictableprofessor.presentation.elementlist.model.ElementModel
 import com.tiixel.periodictableprofessor.util.schedulers.BaseSchedulerProvider
-import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import javax.inject.Inject
 
@@ -14,7 +13,7 @@ class ElementListActionProcessor @Inject constructor(
 
     private val loadElementsProcessor =
         ObservableTransformer<ElementListAction.LoadElementList, ElementListResult> { actions ->
-            actions.flatMap { action ->
+            actions.switchMap { action ->
                 elementInteractor.getElements()
                     .toObservable()
                     .map { ElementModel.listFromDomain(it, action.dataPoint) }
@@ -31,13 +30,6 @@ class ElementListActionProcessor @Inject constructor(
         ObservableTransformer<ElementListAction, ElementListResult> { action ->
             action.publish { shared ->
                 shared.ofType(ElementListAction.LoadElementList::class.java).compose(loadElementsProcessor)
-                    .mergeWith(
-                        shared.filter { action ->
-                            action !is ElementListAction.LoadElementList
-                        }.flatMap { action ->
-                            Observable.error<ElementListResult>(IllegalArgumentException("Unknown action type: $action"))
-                        }
-                    )
             }
         }
 }

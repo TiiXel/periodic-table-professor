@@ -34,7 +34,7 @@ class StudyActionProcessor @Inject constructor(
     }
 
     private val reviewProcessor = ObservableTransformer<StudyAction.Review, StudyResult> { actions ->
-        actions.flatMap { action ->
+        actions.switchMap { action ->
             reviewInteractor.review(action.freshReview)
                 .toObservable<StudyResult.ReviewResult>()
                 .map { StudyResult.ReviewResult.Success }
