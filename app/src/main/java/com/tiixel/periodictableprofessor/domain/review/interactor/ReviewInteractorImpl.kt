@@ -74,9 +74,7 @@ class ReviewInteractorImpl @Inject constructor(
 
     override fun countReviewsOnDay(relativeTo: Date): Single<Int> {
         return reviewRepository.getReviewHistory()
-            .map { it.groupBy { it.item.itemId } }
-            .map { it.map { it.key to it.value.sortedBy { it.reviewDate }.first() } }
-            .map { it.filter { DateUtils.isSameDay(it.second.reviewDate, relativeTo) }.size }
+            .map { it.filter { DateUtils.isSameDay(it.reviewDate, relativeTo) }.size }
     }
 
     override fun countReviewablesNewOnDay(relativeTo: Date): Single<Int> {
