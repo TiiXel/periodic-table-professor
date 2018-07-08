@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Periodic Table Professor</string>
+    <string name="app_description">An Android app that will help you memorize and associate name, atomic number and symbol of elements in the Periodic Table.</string>
+
+    <string name="about">About</string>
 
     <string name="ok">OK"</string>
     <string name="cancel">Cancel</string>
@@ -28,7 +31,7 @@
     <string name="performance_medium">Medium</string>
     <string name="performance_hard">Hard</string>
     <string name="performance_failed">Failed</string>
-    
+
     <string name="element_property_group_general">General properties</string>
     <string name="element_property_group_physical_chemical">Physical and chemical properties</string>
     <string name="element_property_group_geological">Geological properties</string>
