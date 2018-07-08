@@ -6,7 +6,7 @@ import com.tiixel.periodictableprofessor.dagger.module.ActivityModule
 import com.tiixel.periodictableprofessor.dagger.module.AppModule
 import com.tiixel.periodictableprofessor.dagger.module.DataBindModule
 import com.tiixel.periodictableprofessor.dagger.module.DataProvideModule
-import com.tiixel.periodictableprofessor.dagger.module.DataSourceModule
+import com.tiixel.periodictableprofessor.dagger.module.DataRepositoryModule
 import com.tiixel.periodictableprofessor.dagger.module.DomainModule
 import com.tiixel.periodictableprofessor.dagger.module.PresentationModule
 import com.tiixel.periodictableprofessor.dagger.module.ThreadModule
@@ -20,7 +20,7 @@ import javax.inject.Singleton
     modules = arrayOf(
         DataProvideModule::class,
         DataBindModule::class,
-        DataSourceModule::class,
+        DataRepositoryModule::class,
         DomainModule::class,
         PresentationModule::class,
         ActivityModule::class,

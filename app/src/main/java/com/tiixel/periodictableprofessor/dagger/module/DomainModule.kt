@@ -1,9 +1,9 @@
 package com.tiixel.periodictableprofessor.dagger.module
 
-import com.tiixel.periodictableprofessor.domain.card.CardInteractor
-import com.tiixel.periodictableprofessor.domain.card.CardInteractorImpl
-import com.tiixel.periodictableprofessor.domain.element.ElementInteractor
-import com.tiixel.periodictableprofessor.domain.element.ElementInteractorImpl
+import com.tiixel.periodictableprofessor.domain.element.interactor.ElementInteractor
+import com.tiixel.periodictableprofessor.domain.element.interactor.ElementInteractorImpl
+import com.tiixel.periodictableprofessor.domain.review.interactor.ReviewInteractor
+import com.tiixel.periodictableprofessor.domain.review.interactor.ReviewInteractorImpl
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton
@@ -13,9 +13,9 @@ abstract class DomainModule {
 
     @Binds
     @Singleton
-    abstract fun bindElementUseCase(elementUseCaseImpl: ElementInteractorImpl): ElementInteractor
+    abstract fun bindElementInteractor(elementInteractorImpl: ElementInteractorImpl): ElementInteractor
 
     @Binds
     @Singleton
-    abstract fun bindCardUseCase(cardUseCaseImpl: CardInteractorImpl): CardInteractor
+    abstract fun bindReviewInteractor(reviewInteractorImpl: ReviewInteractorImpl): ReviewInteractor
 }

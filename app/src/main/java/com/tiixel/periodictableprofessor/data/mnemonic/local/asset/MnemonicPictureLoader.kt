@@ -20,4 +20,22 @@ class MnemonicPictureLoader @Inject constructor(private val context: Context) {
         return data
     }
 
+    fun getPictures(): Map<Byte, ByteArray> {
+        val regex = Regex("^[0-9]{1,2}[a-z].*")
+        val filter = Regex("^([0-9]{1,2})")
+        val assets = context.resources.assets.list("pictures").filter { it.matches(regex) }
+
+        val pictures = emptyMap<Byte, ByteArray>().toMutableMap()
+
+        assets.forEach {
+            val reader = context.resources.assets.open("pictures/$it")
+            val data = reader.readBytes(1024)
+            reader.close()
+            filter.find(it)?.value?.toByte()?.let {
+                pictures.put(it, data)
+            }
+        }
+
+        return pictures
+    }
 }

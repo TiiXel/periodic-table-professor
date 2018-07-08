@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.review.ReviewActivity"/>
+        <activity android:name=".ui.study.StudyActivity"/>
 
         <activity android:name=".ui.element.ElementActivity"/>
 

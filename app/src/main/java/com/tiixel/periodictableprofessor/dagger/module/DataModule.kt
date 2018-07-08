@@ -8,10 +8,10 @@ import com.tiixel.periodictableprofessor.data.element.local.ElementGsonDataSourc
 import com.tiixel.periodictableprofessor.data.mnemonic.local.MnemonicMixedDataSource
 import com.tiixel.periodictableprofessor.data.note.local.db.UserNoteDbDataSource
 import com.tiixel.periodictableprofessor.data.review.local.ReviewDbDataSource
-import com.tiixel.periodictableprofessor.datasource.card.MnemonicLocalDataSource
-import com.tiixel.periodictableprofessor.datasource.card.ReviewLocalDataSource
-import com.tiixel.periodictableprofessor.datasource.card.UserNoteLocalDataSource
-import com.tiixel.periodictableprofessor.datasource.element.ElementLocalDataSource
+import com.tiixel.periodictableprofessor.datarepository.element.contract.ElementLocalDataSource
+import com.tiixel.periodictableprofessor.datarepository.element.contract.MnemonicLocalDataSource
+import com.tiixel.periodictableprofessor.datarepository.element.contract.UserNoteLocalDataSource
+import com.tiixel.periodictableprofessor.datarepository.review.contract.ReviewLocalDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -24,6 +24,7 @@ class DataProvideModule {
     @Singleton
     fun provideLocalDatabase(application: Application): LocalDatabase {
         return Room.databaseBuilder(application.applicationContext, LocalDatabase::class.java, "user_database.db")
+            .addMigrations(LocalDatabase.Companion.Migration_1_2())
             .build()
     }
 
