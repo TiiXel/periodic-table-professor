@@ -31,20 +31,24 @@ android {
 
     buildTypes {
         debug {
-            // Minifying the variant used for tests is not supported when using Jack.
             minifyEnabled false
-            // Uses new built-in shrinker http://tools.android.com/tech-docs/new-build-system/built-in-shrinker
             useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
             testCoverageEnabled true
+            applicationIdSuffix = ".debug"
         }
 
         release {
             minifyEnabled true
-            useProguard true
+            useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
+            // Load signing configuration from external file
+            if (file('signing.gradle').exists()) {
+                apply from: 'signing.gradle'
+                signingConfig signingConfigs.releaseConfig
+            }
         }
     }
 
