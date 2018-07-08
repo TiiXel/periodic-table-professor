@@ -6,7 +6,7 @@ apply plugin: 'kotlin-kapt'
 // Define app version number
 ext.versionMajor = 0
 ext.versionMinor = 2
-ext.versionPatch = 1
+ext.versionPatch = 2
 ext.versionClassifier = null
 ext.isSnapshot = true
 
