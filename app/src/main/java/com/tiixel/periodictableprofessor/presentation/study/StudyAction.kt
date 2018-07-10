@@ -6,7 +6,7 @@ sealed class StudyAction : MviAction {
 
     data class LoadNext(val newCard: Boolean, val dueSoonOnly: Boolean) : StudyAction()
 
-    data class Review(val freshReview: com.tiixel.periodictableprofessor.domain.Review.FreshReview) : StudyAction()
+    data class Review(val freshReview: com.tiixel.periodictableprofessor.domain.review.Review.FreshReview) : StudyAction()
 
     object GetCounts : StudyAction()
 

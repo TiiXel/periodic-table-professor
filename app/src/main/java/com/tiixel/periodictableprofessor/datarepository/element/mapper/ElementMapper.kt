@@ -3,7 +3,7 @@ package com.tiixel.periodictableprofessor.datarepository.element.mapper
 import com.tiixel.periodictableprofessor.datarepository.element.generic.GenericElement
 import com.tiixel.periodictableprofessor.datarepository.element.generic.GenericMnemonic
 import com.tiixel.periodictableprofessor.datarepository.element.generic.GenericUserNote
-import com.tiixel.periodictableprofessor.domain.Element
+import com.tiixel.periodictableprofessor.domain.element.Element
 
 object ElementMapper {
 

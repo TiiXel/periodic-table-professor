@@ -1,9 +1,9 @@
 package com.tiixel.periodictableprofessor.presentation.study
 
 import android.arch.lifecycle.ViewModel
-import com.tiixel.periodictableprofessor.domain.Review
-import com.tiixel.periodictableprofessor.domain.Reviewable
-import com.tiixel.periodictableprofessor.domain.ReviewableFace
+import com.tiixel.periodictableprofessor.domain.review.Review
+import com.tiixel.periodictableprofessor.domain.review.Reviewable
+import com.tiixel.periodictableprofessor.domain.review.ReviewableFace
 import com.tiixel.periodictableprofessor.domain.exception.NoNewReviewException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewSoonException

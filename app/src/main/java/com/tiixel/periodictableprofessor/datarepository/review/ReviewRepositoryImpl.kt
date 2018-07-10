@@ -2,8 +2,8 @@ package com.tiixel.periodictableprofessor.datarepository.review
 
 import com.tiixel.periodictableprofessor.datarepository.review.contract.ReviewLocalDataSource
 import com.tiixel.periodictableprofessor.datarepository.review.mapper.ReviewMapper
-import com.tiixel.periodictableprofessor.domain.Review
 import com.tiixel.periodictableprofessor.domain.element.contract.ElementRepository
+import com.tiixel.periodictableprofessor.domain.review.Review
 import com.tiixel.periodictableprofessor.domain.review.contract.ReviewRepository
 import io.reactivex.Completable
 import io.reactivex.Single

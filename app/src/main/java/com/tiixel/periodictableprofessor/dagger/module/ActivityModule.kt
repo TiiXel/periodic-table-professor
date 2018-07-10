@@ -17,7 +17,7 @@ abstract class ActivityModule {
     internal abstract fun contributeHomeActivity(): HomeActivity
 
     @ContributesAndroidInjector
-    internal abstract fun contributeLearnActivity(): StudyActivity
+    internal abstract fun contributeStudyActivity(): StudyActivity
 
     @ContributesAndroidInjector
     internal abstract fun contributeElementActivity(): ElementActivity

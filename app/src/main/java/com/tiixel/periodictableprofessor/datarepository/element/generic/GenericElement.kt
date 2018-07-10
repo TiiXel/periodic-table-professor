@@ -1,6 +1,6 @@
 package com.tiixel.periodictableprofessor.datarepository.element.generic
 
-import com.tiixel.periodictableprofessor.domain.Quantity
+import com.tiixel.periodictableprofessor.domain.element.Quantity
 
 data class GenericElement(
     val abundanceCrust: Quantity?,

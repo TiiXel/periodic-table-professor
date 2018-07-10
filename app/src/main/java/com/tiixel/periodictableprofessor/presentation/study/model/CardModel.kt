@@ -2,8 +2,8 @@ package com.tiixel.periodictableprofessor.presentation.study.model
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import com.tiixel.periodictableprofessor.domain.Element
-import com.tiixel.periodictableprofessor.domain.ReviewableFace
+import com.tiixel.periodictableprofessor.domain.element.Element
+import com.tiixel.periodictableprofessor.domain.review.ReviewableFace
 
 data class CardModel(
     val number: String,

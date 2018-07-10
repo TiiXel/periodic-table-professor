@@ -1,4 +1,4 @@
-package com.tiixel.periodictableprofessor.domain
+package com.tiixel.periodictableprofessor.domain.element
 
 import org.jscience.physics.amount.Amount
 import javax.measure.unit.Unit

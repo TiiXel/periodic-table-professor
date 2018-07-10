@@ -1,7 +1,7 @@
 package com.tiixel.periodictableprofessor.presentation.study
 
-import com.tiixel.periodictableprofessor.domain.ReviewPerformance
-import com.tiixel.periodictableprofessor.domain.ReviewableFace
+import com.tiixel.periodictableprofessor.domain.review.ReviewPerformance
+import com.tiixel.periodictableprofessor.domain.review.ReviewableFace
 import com.tiixel.periodictableprofessor.presentation.base.MviIntent
 
 sealed class StudyIntent : MviIntent {
