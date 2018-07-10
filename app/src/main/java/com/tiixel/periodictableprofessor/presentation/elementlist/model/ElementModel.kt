@@ -1,7 +1,7 @@
 package com.tiixel.periodictableprofessor.presentation.elementlist.model
 
-import com.tiixel.periodictableprofessor.domain.Element
-import com.tiixel.periodictableprofessor.domain.Quantity
+import com.tiixel.periodictableprofessor.domain.element.Element
+import com.tiixel.periodictableprofessor.domain.element.Quantity
 
 data class ElementModel(
     val atomicNumber: Byte,

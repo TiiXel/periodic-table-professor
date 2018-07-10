@@ -1,4 +1,6 @@
-package com.tiixel.periodictableprofessor.domain
+package com.tiixel.periodictableprofessor.domain.element
+
+import com.tiixel.periodictableprofessor.domain.review.Reviewable
 
 data class Element(
     val abundanceCrust: Quantity?,

@@ -1,6 +1,6 @@
 package com.tiixel.periodictableprofessor.domain.review.interactor
 
-import com.tiixel.periodictableprofessor.domain.Review
+import com.tiixel.periodictableprofessor.domain.review.Review
 import io.reactivex.Completable
 import io.reactivex.Single
 import java.util.Date

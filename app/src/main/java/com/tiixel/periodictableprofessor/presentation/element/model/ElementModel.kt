@@ -2,7 +2,7 @@ package com.tiixel.periodictableprofessor.presentation.element.model
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import com.tiixel.periodictableprofessor.domain.Element
+import com.tiixel.periodictableprofessor.domain.element.Element
 
 data class ElementModel(
     val abundanceCrust: String?,

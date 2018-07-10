@@ -1,8 +1,8 @@
 package com.tiixel.periodictableprofessor.domain.algorithm
 
-import com.tiixel.periodictableprofessor.domain.Review
-import com.tiixel.periodictableprofessor.domain.ReviewPerformance
-import com.tiixel.periodictableprofessor.domain.Reviewable
+import com.tiixel.periodictableprofessor.domain.review.Review
+import com.tiixel.periodictableprofessor.domain.review.ReviewPerformance
+import com.tiixel.periodictableprofessor.domain.review.Reviewable
 import java.util.Date
 import kotlin.math.max
 import kotlin.math.min

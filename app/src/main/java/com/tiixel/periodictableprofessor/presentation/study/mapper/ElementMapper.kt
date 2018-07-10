@@ -1,7 +1,7 @@
 package com.tiixel.periodictableprofessor.presentation.study.mapper
 
 import android.graphics.BitmapFactory
-import com.tiixel.periodictableprofessor.domain.Element
+import com.tiixel.periodictableprofessor.domain.element.Element
 import com.tiixel.periodictableprofessor.presentation.study.model.ElementModel
 
 object ElementMapper {

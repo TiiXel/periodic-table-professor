@@ -1,6 +1,6 @@
 package com.tiixel.periodictableprofessor.domain.element.interactor
 
-import com.tiixel.periodictableprofessor.domain.Element
+import com.tiixel.periodictableprofessor.domain.element.Element
 import com.tiixel.periodictableprofessor.domain.element.contract.ElementRepository
 import com.tiixel.periodictableprofessor.domain.exception.AtomicNumberOutOfBoundsException
 import io.reactivex.Single

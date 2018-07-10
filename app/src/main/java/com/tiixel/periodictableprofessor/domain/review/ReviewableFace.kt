@@ -1,4 +1,4 @@
-package com.tiixel.periodictableprofessor.domain
+package com.tiixel.periodictableprofessor.domain.review
 
 enum class ReviewableFace {
     // Data integrity relies on this enum's ordinals!

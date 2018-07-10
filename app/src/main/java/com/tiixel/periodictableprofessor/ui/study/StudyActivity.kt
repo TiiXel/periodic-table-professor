@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.tiixel.periodictableprofessor.R
-import com.tiixel.periodictableprofessor.domain.ReviewPerformance
-import com.tiixel.periodictableprofessor.domain.ReviewableFace
 import com.tiixel.periodictableprofessor.domain.exception.NoNewReviewException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewSoonException
+import com.tiixel.periodictableprofessor.domain.review.ReviewPerformance
+import com.tiixel.periodictableprofessor.domain.review.ReviewableFace
 import com.tiixel.periodictableprofessor.presentation.base.MviView
 import com.tiixel.periodictableprofessor.presentation.study.StudyIntent
 import com.tiixel.periodictableprofessor.presentation.study.StudyViewModel

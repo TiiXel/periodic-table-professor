@@ -1,8 +1,8 @@
 package com.tiixel.periodictableprofessor.domain.review.interactor
 
-import com.tiixel.periodictableprofessor.domain.Review
-import com.tiixel.periodictableprofessor.domain.Reviewable
-import com.tiixel.periodictableprofessor.domain.ReviewableFace
+import com.tiixel.periodictableprofessor.domain.review.Review
+import com.tiixel.periodictableprofessor.domain.review.Reviewable
+import com.tiixel.periodictableprofessor.domain.review.ReviewableFace
 import com.tiixel.periodictableprofessor.domain.algorithm.Sm2Plus
 import com.tiixel.periodictableprofessor.domain.exception.NoNewReviewException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewException

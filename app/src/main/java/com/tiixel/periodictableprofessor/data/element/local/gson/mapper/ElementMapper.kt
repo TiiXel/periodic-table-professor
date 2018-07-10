@@ -3,7 +3,7 @@ package com.tiixel.periodictableprofessor.data.element.local.gson.mapper
 import com.tiixel.periodictableprofessor.data.element.local.gson.entity.ElementEntity
 import com.tiixel.periodictableprofessor.data.element.local.gson.entity.ElementLangEntity
 import com.tiixel.periodictableprofessor.datarepository.element.generic.GenericElement
-import com.tiixel.periodictableprofessor.domain.Quantity
+import com.tiixel.periodictableprofessor.domain.element.Quantity
 import com.tiixel.periodictableprofessor.util.extensions.nullIfBlank
 import javax.measure.unit.NonSI
 import javax.measure.unit.NonSI.LITRE

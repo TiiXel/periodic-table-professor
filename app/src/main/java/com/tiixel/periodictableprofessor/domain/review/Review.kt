@@ -1,4 +1,4 @@
-package com.tiixel.periodictableprofessor.domain
+package com.tiixel.periodictableprofessor.domain.review
 
 import org.apache.commons.lang3.time.DateUtils
 import java.util.Date

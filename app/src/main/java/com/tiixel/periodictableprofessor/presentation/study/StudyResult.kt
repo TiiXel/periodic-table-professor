@@ -1,7 +1,7 @@
 package com.tiixel.periodictableprofessor.presentation.study
 
-import com.tiixel.periodictableprofessor.domain.Element
-import com.tiixel.periodictableprofessor.domain.ReviewableFace
+import com.tiixel.periodictableprofessor.domain.element.Element
+import com.tiixel.periodictableprofessor.domain.review.ReviewableFace
 import com.tiixel.periodictableprofessor.presentation.base.MviResult
 
 sealed class StudyResult : MviResult {

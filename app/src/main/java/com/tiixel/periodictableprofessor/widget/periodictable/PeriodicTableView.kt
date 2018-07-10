@@ -12,7 +12,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import com.tiixel.periodictableprofessor.R
-import com.tiixel.periodictableprofessor.domain.Element
+import com.tiixel.periodictableprofessor.domain.element.Element
 import com.tiixel.periodictableprofessor.ui.elementlist.model.ElementCellModel
 import io.reactivex.subjects.PublishSubject
 import kotlin.math.min

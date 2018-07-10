@@ -5,7 +5,7 @@ import com.tiixel.periodictableprofessor.datarepository.element.contract.Mnemoni
 import com.tiixel.periodictableprofessor.datarepository.element.contract.UserNoteLocalDataSource
 import com.tiixel.periodictableprofessor.datarepository.element.generic.GenericElement
 import com.tiixel.periodictableprofessor.datarepository.element.mapper.ElementMapper
-import com.tiixel.periodictableprofessor.domain.Element
+import com.tiixel.periodictableprofessor.domain.element.Element
 import com.tiixel.periodictableprofessor.domain.element.contract.ElementRepository
 import io.reactivex.Single
 import io.reactivex.rxkotlin.zipWith
