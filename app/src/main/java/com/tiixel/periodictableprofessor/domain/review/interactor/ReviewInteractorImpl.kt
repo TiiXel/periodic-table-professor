@@ -4,10 +4,12 @@ import com.tiixel.periodictableprofessor.domain.review.Review
 import com.tiixel.periodictableprofessor.domain.review.Reviewable
 import com.tiixel.periodictableprofessor.domain.review.ReviewableFace
 import com.tiixel.periodictableprofessor.domain.algorithm.Sm2Plus
+import com.tiixel.periodictableprofessor.domain.element.interactor.ElementInteractor
 import com.tiixel.periodictableprofessor.domain.exception.NoNewReviewException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewSoonException
 import com.tiixel.periodictableprofessor.domain.review.contract.ReviewRepository
+import com.tiixel.periodictableprofessor.domain.review.contract.ReviewableProvider
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -18,8 +20,16 @@ import java.util.Random
 import javax.inject.Inject
 
 class ReviewInteractorImpl @Inject constructor(
-    private val reviewRepository: ReviewRepository
+    private val reviewRepository: ReviewRepository,
+    elementInteractor: ElementInteractor
 ) : ReviewInteractor {
+
+    private val reviewableProviders: List<ReviewableProvider> = listOf(elementInteractor as ReviewableProvider)
+
+
+    private fun getReviewableIds(): Single<List<Byte>> {
+        return Single.merge(reviewableProviders.map { it.getReviewableIds() }).reduce(listOf()) { l1, l2 -> l1 + l2 }
+    }
 
     private fun getLastReviewForEach(): Single<Map<Byte, Review>> {
         return reviewRepository.getReviewHistory()
@@ -28,7 +38,7 @@ class ReviewInteractorImpl @Inject constructor(
     }
 
     override fun getReviewForNew(): Single<Review.UpcomingReview> {
-        return reviewRepository.getReviewableIds()
+        return getReviewableIds()
             .zipWith(getLastReviewForEach()) { ids, next -> ids.filter { it !in next.keys } }
             .filter { it.isNotEmpty() }
             .switchIfEmpty(Single.error(NoNewReviewException))
