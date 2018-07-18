@@ -21,7 +21,8 @@ data class Review(
 
     fun nextIsDueSoon(relativeTo: Date): Boolean = nextOverdue(relativeTo) >= 0.75
 
-    fun nextIsDueOnDay(relativeTo: Date): Boolean = DateUtils.isSameDay(relativeTo, nextDueDate)
+    fun nextIsDueOnPeriod(relativeTo: Date, granularity: Int): Boolean =
+        DateUtils.truncate(nextDueDate, granularity) == DateUtils.truncate(relativeTo, granularity)
 
     fun aggregateNewReview(freshReview: FreshReview, aggregator: (Review, FreshReview) -> Review): Review {
         return aggregator(this, freshReview)
