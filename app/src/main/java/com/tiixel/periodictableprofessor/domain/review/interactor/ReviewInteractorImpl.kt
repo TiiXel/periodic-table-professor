@@ -91,6 +91,8 @@ class ReviewInteractorImpl @Inject constructor(
                     }.size
                 }
             }
+            .map { it.fillHolesInDateMap(granularity) }
+            .map { it.toSortedMap() }
     }
 
     override fun countReviewsDueSoon(relativeTo: Date): Single<Int> {
@@ -107,6 +109,8 @@ class ReviewInteractorImpl @Inject constructor(
         return reviewRepository.getReviewHistory()
             .map { it.groupBy { DateUtils.truncate(it.reviewDate, granularity) } }
             .map { it.mapValues { it.value.size } }
+            .map { it.fillHolesInDateMap(granularity) }
+            .map { it.toSortedMap() }
     }
 
     override fun countReviewablesNewPerPeriod(granularity: Int): Single<Map<Date, Int>> {
@@ -115,6 +119,8 @@ class ReviewInteractorImpl @Inject constructor(
             .map { it.map { it.value.sortedBy { it.reviewDate }.first() } }
             .map { it.groupBy { DateUtils.truncate(it.reviewDate, granularity) } }
             .map { it.mapValues { it.value.size } }
+            .map { it.fillHolesInDateMap(granularity) }
+            .map { it.toSortedMap() }
     }
 
     override fun countKnownReviewablesPerPeriod(granularity: Int): Single<Map<Date, Int>> {
@@ -133,12 +139,15 @@ class ReviewInteractorImpl @Inject constructor(
                     // Map to date the result of the iteration over all reviews
                     date to ReviewsPerId_Dates.first.map { reviewsForId ->
                         // Remove reviews in the future relative to the date, sort by date, keep last
-                        reviewsForId.value.filter { DateUtils.truncate(it.reviewDate, granularity) <= date }.sortedBy { it.reviewDate }.lastOrNull()
+                        reviewsForId.value.filter { DateUtils.truncate(it.reviewDate, granularity) <= date }
+                            .sortedBy { it.reviewDate }.lastOrNull()
                     }
                 }.toMap()
             }
             .map { it.mapValues { it.value.filter { it != null && it.isKnown() } } }
             .map { it.mapValues { it.value.size } }
+            .map { it.fillHolesInDateMap(granularity) }
+            .map { it.toSortedMap() }
     }
 
     override fun review(freshReview: Review.FreshReview): Completable {
@@ -147,5 +156,23 @@ class ReviewInteractorImpl @Inject constructor(
             .map { it.aggregateNewReview(freshReview, Sm2Plus::aggregator) }
             .defaultIfEmpty(Sm2Plus.defaultReview(freshReview))
             .flatMapCompletable { reviewRepository.logReview(it) }
+    }
+
+    private fun <T : Number> Map<Date, T>.fillHolesInDateMap(granularity: Int): Map<Date, T> {
+        if (isEmpty()) return this
+
+        val start = keys.sorted().first()
+        val end = DateUtils.truncate(maxOf(Date(), keys.sorted().last()), granularity)
+        val c = Calendar.getInstance().apply { time = start }
+        val dates = mutableListOf<Date>()
+        while (c.time <= end) {
+            dates.add(c.time)
+            c.add(granularity, 1)
+        }
+        val r = toMutableMap<Date, Number>()
+        dates.forEach { date ->
+            if (!containsKey(date)) r[date] = 0
+        }
+        return r as Map<Date, T>
     }
 }
