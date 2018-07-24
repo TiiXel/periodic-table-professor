@@ -96,13 +96,10 @@ class ReviewInteractorImpl @Inject constructor(
     }
 
     override fun countReviewsDueSoon(relativeTo: Date): Single<Int> {
-        return reviewRepository.getReviewHistory()
-            // Remove reviews not due soon
+        return getLastReviewForEach()
+            .map { it.values }
             .map { it.filter { it.nextIsDueSoon(relativeTo) } }
-            // Group by itemId, keep values
-            .map { it.groupBy { it.item.itemId }.values }
-            // Return total size, as each item can only have one review due soon at a given time
-            .map { it.sumBy { it.size } }
+            .map { it.size }
     }
 
     override fun countReviewsPerPeriod(granularity: Int): Single<Map<Date, Int>> {
