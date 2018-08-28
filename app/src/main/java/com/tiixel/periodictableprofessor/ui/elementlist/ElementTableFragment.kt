@@ -2,10 +2,13 @@ package com.tiixel.periodictableprofessor.ui.elementlist
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.support.v4.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.tiixel.periodictableprofessor.R
@@ -17,14 +20,14 @@ import com.tiixel.periodictableprofessor.presentation.elementlist.model.ElementM
 import com.tiixel.periodictableprofessor.ui.element.ElementActivity
 import com.tiixel.periodictableprofessor.ui.elementlist.model.ElementCellModel
 import com.tiixel.periodictableprofessor.widget.periodictable.PeriodicTableView
-import dagger.android.AndroidInjection
+import dagger.android.support.AndroidSupportInjection
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.element_table_activity.*
+import kotlinx.android.synthetic.main.content_element_table.*
 import javax.inject.Inject
 
-class ElementTableActivity : AppCompatActivity(), MviView<ElementListIntent, ElementListViewState> {
+class ElementTableFragment : Fragment(), MviView<ElementListIntent, ElementListViewState> {
 
     // Intent publishers
     private val loadElementsIntentPublisher = PublishSubject.create<ElementListIntent.LoadElementListIntent>()
@@ -42,16 +45,21 @@ class ElementTableActivity : AppCompatActivity(), MviView<ElementListIntent, Ele
     //<editor-fold desc="Life cycle methods">
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.element_table_activity)
-        AndroidInjection.inject(this)
-
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ElementListViewModel::class.java)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.content_element_table, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Inflate views
         table = elements_table
 
         val spinnerAdapter = ArrayAdapter.createFromResource(
-            this,
+            requireContext(),
             R.array.table_spinner_element_one_line_properties,
             android.R.layout.simple_spinner_item
         )
@@ -63,8 +71,14 @@ class ElementTableActivity : AppCompatActivity(), MviView<ElementListIntent, Ele
         disposable.add(viewModel.states().subscribe(this::render))
         // Pass the UI's intents to the ViewModel
         viewModel.processIntents(intents())
+
         // Subscribe to the PeriodicTableView observable
         disposable.add(table.elementClickedObservable.subscribe(this::onElementClicked))
+    }
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
     }
 
     override fun onDestroy() {
@@ -100,7 +114,7 @@ class ElementTableActivity : AppCompatActivity(), MviView<ElementListIntent, Ele
     //</editor-fold>
 
     private fun onElementClicked(element: Byte) {
-        val intent = Intent(this, ElementActivity::class.java)
+        val intent = Intent(requireContext(), ElementActivity::class.java)
         intent.putExtra(ElementActivity.Extra.ELEMENT.key, element)
         startActivity(intent)
     }

@@ -1,9 +1,9 @@
 package com.tiixel.periodictableprofessor.dagger.module
 
+import com.tiixel.periodictableprofessor.ui.MainActivity
 import com.tiixel.periodictableprofessor.ui.element.ElementActivity
-import com.tiixel.periodictableprofessor.ui.elementlist.ElementTableActivity
-import com.tiixel.periodictableprofessor.ui.home.HomeActivity
-import com.tiixel.periodictableprofessor.ui.study.StudyActivity
+import com.tiixel.periodictableprofessor.ui.elementlist.ElementTableFragment
+import com.tiixel.periodictableprofessor.ui.study.StudyFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -11,13 +11,13 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityModule {
 
     @ContributesAndroidInjector
-    internal abstract fun contributeElementsTableActivity(): ElementTableActivity
+    internal abstract fun contributeMainActivity(): MainActivity
 
     @ContributesAndroidInjector
-    internal abstract fun contributeHomeActivity(): HomeActivity
+    internal abstract fun contributeElementsTableFragment(): ElementTableFragment
 
     @ContributesAndroidInjector
-    internal abstract fun contributeStudyActivity(): StudyActivity
+    internal abstract fun contributeStudyFragment(): StudyFragment
 
     @ContributesAndroidInjector
     internal abstract fun contributeElementActivity(): ElementActivity

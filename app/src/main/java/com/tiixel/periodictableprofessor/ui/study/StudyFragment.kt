@@ -2,9 +2,12 @@ package com.tiixel.periodictableprofessor.ui.study
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.support.v4.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.tiixel.periodictableprofessor.R
 import com.tiixel.periodictableprofessor.domain.exception.NoNewReviewException
 import com.tiixel.periodictableprofessor.domain.exception.NoNextReviewException
@@ -17,15 +20,15 @@ import com.tiixel.periodictableprofessor.presentation.study.StudyViewModel
 import com.tiixel.periodictableprofessor.presentation.study.StudyViewState
 import com.tiixel.periodictableprofessor.ui.study.mapper.TimerParser
 import com.tiixel.periodictableprofessor.widget.error.ErrorButton
-import dagger.android.AndroidInjection
+import dagger.android.support.AndroidSupportInjection
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.study_activity.*
+import kotlinx.android.synthetic.main.content_study.*
 import ru.noties.markwon.Markwon
 import javax.inject.Inject
 
-class StudyActivity : AppCompatActivity(), MviView<StudyIntent, StudyViewState> {
+class StudyFragment : Fragment(), MviView<StudyIntent, StudyViewState> {
 
     // Intent publishers
     private val loadNextIntentPublisher = PublishSubject.create<StudyIntent.LoadNextIntent>()
@@ -48,34 +51,42 @@ class StudyActivity : AppCompatActivity(), MviView<StudyIntent, StudyViewState> 
         DUE_TODAY_ONLY("due_today_only")
     }
 
-    private var reviewNewCards: Boolean = true
-    private var reviewDueTodayOnly: Boolean = false
+    private var reviewNewCards: Boolean = false
+    private var reviewDueTodayOnly: Boolean = true
 
     //<editor-fold desc="Life cycle methods">
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.study_activity)
-        setSupportActionBar(toolbar)
-        AndroidInjection.inject(this)
 
-        supportActionBar!!.run {
-            setDisplayHomeAsUpEnabled(true)
-        }
+        // Setup custom toolbar
+//        layoutInflater.inflate(R.layout.toolbar_study, toolbar, true)
+//
+//        reviewNewCards = intent?.extras?.getBoolean(Extra.NEW_CARDS.key) ?: reviewNewCards
+//        reviewDueTodayOnly = intent?.extras?.getBoolean(Extra.DUE_TODAY_ONLY.key) ?: reviewDueTodayOnly
 
-        reviewNewCards = intent?.extras?.getBoolean(Extra.NEW_CARDS.key) ?: reviewNewCards
-        reviewDueTodayOnly = intent?.extras?.getBoolean(Extra.DUE_TODAY_ONLY.key) ?: reviewDueTodayOnly
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory)
+        viewModel = ViewModelProviders.of(this as Fragment, viewModelFactory)
             .get(StudyViewModel::class.java)
+    }
 
-        review_periodic_table.generateBlankCells()
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return inflater.inflate(R.layout.content_study, container, false)
+    }
 
-        setupViewListeners()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Subscribe to the ViewModel and call render for every emitted state
         disposable.add(viewModel.states().subscribe(this::render))
         // Pass the UI's intents to the ViewModel
         viewModel.processIntents(intents())
+
+        review_periodic_table.generateBlankCells()
+        setupViewListeners()
+    }
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
     }
 
     override fun onDestroy() {
@@ -128,7 +139,7 @@ class StudyActivity : AppCompatActivity(), MviView<StudyIntent, StudyViewState> 
                 showError(
                     getString(
                         R.string.error_message_no_cards_due_soon,
-                        TimerParser.timerToString(this, state.nextReviewTimer),
+                        TimerParser.timerToString(requireContext(), state.nextReviewTimer),
                         state.newCardCount
                     ),
                     ErrorButton(getString(R.string.error_message_no_cards_due_soon_button_load_new), loadNewCard),
