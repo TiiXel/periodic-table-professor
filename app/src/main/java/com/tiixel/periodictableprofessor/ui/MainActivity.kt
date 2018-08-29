@@ -19,6 +19,7 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
 import com.tiixel.periodictableprofessor.R
 import com.tiixel.periodictableprofessor.ui.elementlist.ElementTableFragment
+import com.tiixel.periodictableprofessor.ui.statistics.StatisticsFragment
 import com.tiixel.periodictableprofessor.ui.study.StudyFragment
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.main_layout_drawer.*
@@ -68,6 +69,7 @@ class MainActivity : AppCompatActivity() {
 
         val fragmentClass = when (menuItem.itemId) {
             R.id.nav_study -> StudyFragment::class.java
+            R.id.nav_statistics -> StatisticsFragment::class.java
             R.id.nav_periodic_table -> ElementTableFragment::class.java
             R.id.nav_about -> LibsFragment::class.java
             else -> defaultFragmentClass

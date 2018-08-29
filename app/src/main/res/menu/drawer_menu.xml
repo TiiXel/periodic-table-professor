@@ -9,6 +9,12 @@
             android:title="@string/nav_study"/>
 
         <item
+            android:id="@+id/nav_statistics"
+            android:checked="true"
+            android:title="@string/nav_statistics"/>
+
+
+        <item
             android:id="@+id/nav_periodic_table"
             android:title="@string/nav_periodic_table"/>
 

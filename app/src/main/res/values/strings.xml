@@ -3,6 +3,7 @@
     <string name="app_description">An Android app that will help you memorize and associate name, atomic number and symbol of elements in the Periodic Table.</string>
 
     <string name="nav_study">Study</string>
+    <string name="nav_statistics">Statistics</string>
     <string name="nav_periodic_table">Periodic table</string>
     <string name="nav_about">About</string>
 
