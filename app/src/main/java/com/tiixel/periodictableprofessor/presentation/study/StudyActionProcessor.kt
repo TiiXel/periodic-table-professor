@@ -7,6 +7,8 @@ import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.Single
 import io.reactivex.rxkotlin.zipWith
+import org.apache.commons.lang3.time.DateUtils
+import java.util.Calendar
 import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -48,16 +50,16 @@ class StudyActionProcessor @Inject constructor(
 
     private val getCountsProcessor = ObservableTransformer<StudyAction.GetCounts, StudyResult> { actions ->
         actions.flatMap { _ ->
-            reviewInteractor.countReviewablesNewOnDay(Date())
+            reviewInteractor.countReviewablesNewPerPeriod(Calendar.DATE)
                 .zipWith(reviewInteractor.countReviewsDueSoon(Date()))
-                .zipWith(reviewInteractor.countReviewsDueOnDay(Date()))
+                .zipWith(reviewInteractor.countReviewsDuePerPeriod(Calendar.DATE))
                 .zipWith(reviewInteractor.getNextReviewDate())
                 .toObservable()
                 .map {
                     StudyResult.GetCountsResult.Success(
-                        new = it.first.first.first,
+                        new = it.first.first.first.getOrElse(DateUtils.truncate(Date(), Calendar.DATE)) { 0 },
                         dueSoon = it.first.first.second,
-                        dueToday = it.first.second,
+                        dueToday = it.first.second.getOrElse(DateUtils.truncate(Date(), Calendar.DATE)) { 0 },
                         nextReviewTimer = timer(it.second, Date())
                     )
                 }

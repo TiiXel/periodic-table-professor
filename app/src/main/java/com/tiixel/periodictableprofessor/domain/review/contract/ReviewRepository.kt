@@ -6,8 +6,6 @@ import io.reactivex.Single
 
 interface ReviewRepository {
 
-    fun getReviewableIds(): Single<List<Byte>>
-
     fun getReviewHistory(): Single<List<Review>>
 
     fun logReview(review: Review): Completable

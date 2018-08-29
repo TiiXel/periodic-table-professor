@@ -35,4 +35,42 @@ object ElementMapper {
             mnemonicUserNote = userNote?.userNote
         )
     }
+
+    fun toGenericElement(element: Element): GenericElement {
+        return GenericElement(
+            abundanceCrust = element.abundanceCrust,
+            abundanceSea = element.abundanceSea,
+            atomicNumber = element.atomicNumber,
+            atomicRadius = element.atomicRadius,
+            atomicWeight = element.atomicWeight,
+            description = element.description,
+            discoverers = element.discoverers,
+            discoveryLocation = element.discoveryLocation,
+            discoveryYear = element.discoveryYear,
+            electronicConfiguration = element.electronicConfiguration,
+            enPauling = element.enPauling,
+            isRadioactive = element.isRadioactive,
+            name = element.name,
+            nameOrigin = element.nameOrigin,
+            sources = element.sources,
+            symbol = element.symbol,
+            uses = element.uses,
+            vdwRadius = element.vdwRadius
+        )
+    }
+
+    fun toGenericMnemonic(element: Element): GenericMnemonic {
+        return GenericMnemonic(
+            element = element.atomicNumber,
+            mnemonicPhrase = element.mnemonicPhrase,
+            mnemonicPicture = element.mnemonicPicture
+        )
+    }
+
+    fun toGenericUserNote(element: Element): GenericUserNote {
+        return GenericUserNote(
+            element = element.atomicNumber,
+            userNote = element.mnemonicUserNote
+        )
+    }
 }

@@ -3,6 +3,7 @@ package com.tiixel.periodictableprofessor.dagger.module
 import com.tiixel.periodictableprofessor.ui.MainActivity
 import com.tiixel.periodictableprofessor.ui.element.ElementActivity
 import com.tiixel.periodictableprofessor.ui.elementlist.ElementTableFragment
+import com.tiixel.periodictableprofessor.ui.statistics.StatisticsFragment
 import com.tiixel.periodictableprofessor.ui.study.StudyFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -21,4 +22,7 @@ abstract class ActivityModule {
 
     @ContributesAndroidInjector
     internal abstract fun contributeElementActivity(): ElementActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun contributeStatisticsFragment(): StatisticsFragment
 }

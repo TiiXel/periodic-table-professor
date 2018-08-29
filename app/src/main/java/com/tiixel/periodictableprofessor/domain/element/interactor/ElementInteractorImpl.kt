@@ -10,6 +10,12 @@ class ElementInteractorImpl @Inject constructor(
     private val repository: ElementRepository
 ) : ElementInteractor {
 
+    override fun getReviewableIds(): Single<List<Byte>> {
+        return repository.getElements()
+            .map { it.filter { it.mnemonicPhrase != null && it.mnemonicPicture != null } }
+            .map { it.map { it.atomicNumber } }
+    }
+
     override fun getElement(z: Byte): Single<Element> {
         return if (Element.verifyBounds(z)) {
             repository.getElements().map { it.first { it.atomicNumber == z } }
