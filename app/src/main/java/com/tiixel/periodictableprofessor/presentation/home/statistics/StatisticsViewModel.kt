@@ -56,14 +56,20 @@ class StatisticsViewModel @Inject constructor(
                 is StatisticsResult.LoadStatsResult.Success -> {
                     previousState.copy(
                         loadingInProgress = false,
-                        dataItemsNewPerDay = result.itemsNewPerDay
+                        dataItemsNewPerDay = result.itemsNewPerDay,
+                        dataReviewsPerDay = result.reviewsPerDay,
+                        dataKnownReviewablesPerDay = result.knownReviewablesPerDay,
+                        dataReviewsDuePerDay = result.reviewsDuePerPeriod
                     )
                 }
                 is StatisticsResult.LoadStatsResult.Failure -> {
                     previousState.copy(
                         loadingInProgress = false,
                         loadingFailedCause = result.error,
-                        dataItemsNewPerDay = null
+                        dataItemsNewPerDay = null,
+                        dataReviewsPerDay = null,
+                        dataKnownReviewablesPerDay = null,
+                        dataReviewsDuePerDay = null
                     )
                     throw result.error
                 }

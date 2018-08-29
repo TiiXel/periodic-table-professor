@@ -6,7 +6,10 @@ import java.util.Date
 data class StatisticsViewState(
     val loadingInProgress: Boolean,
     val loadingFailedCause: Throwable?,
-    val dataItemsNewPerDay: Map<Date, Int>?
+    val dataItemsNewPerDay: Map<Date, Int>?,
+    val dataReviewsPerDay: Map<Date, Int>?,
+    val dataKnownReviewablesPerDay: Map<Date, Int>?,
+    val dataReviewsDuePerDay: Map<Date, Int>?
 ) : MviViewState {
 
     companion object {
@@ -15,7 +18,10 @@ data class StatisticsViewState(
             return StatisticsViewState(
                 loadingInProgress = true,
                 loadingFailedCause = null,
-                dataItemsNewPerDay = null
+                dataItemsNewPerDay = null,
+                dataReviewsPerDay = null,
+                dataKnownReviewablesPerDay = null,
+                dataReviewsDuePerDay = null
             )
         }
     }

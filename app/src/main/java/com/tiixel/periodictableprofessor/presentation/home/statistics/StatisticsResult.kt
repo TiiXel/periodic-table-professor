@@ -7,7 +7,12 @@ sealed class StatisticsResult : MviResult {
 
     sealed class LoadStatsResult : StatisticsResult() {
 
-        data class Success(val itemsNewPerDay: Map<Date, Int>) : LoadStatsResult()
+        data class Success(
+            val itemsNewPerDay: Map<Date, Int>,
+            val reviewsPerDay: Map<Date, Int>,
+            val knownReviewablesPerDay: Map<Date, Int>,
+            val reviewsDuePerPeriod: Map<Date, Int>
+        ) : LoadStatsResult()
 
         data class Failure(val error: Throwable) : LoadStatsResult()
 
