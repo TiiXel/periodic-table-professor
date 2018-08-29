@@ -5,7 +5,5 @@ import io.reactivex.Single
 
 interface ElementLocalDataSource {
 
-    fun getElement(z: Int): Single<GenericElement>
-
     fun getElements(): Single<List<GenericElement>>
 }

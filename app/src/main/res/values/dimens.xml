@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="tiny_text">6sp</dimen>
-    <dimen name="small_text">12sp</dimen>
     <dimen name="small_space">8dp</dimen>
     <dimen name="medium_space">16dp</dimen>
-    <dimen name="icon_size">20dp</dimen>
-    <dimen name="element_cell_size">32dp</dimen>
     <dimen name="touch_zone">42dp</dimen>
 </resources>

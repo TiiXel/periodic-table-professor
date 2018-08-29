@@ -11,8 +11,6 @@
     <string name="cancel">Cancel</string>
     <string name="reload">Reload</string>
 
-    <string name="activity_title_review">Review</string>
-
     <string name="error_message_default">Oops, there was an error fetching the data</string>
     <string name="error_message_default_button">Try again</string>
     <string name="error_message_all_cards_are_new">You haven\'t added any cards yet, would you like to start learning?</string>
@@ -25,8 +23,6 @@
 
     <string name="add_note">Add note</string>
     <string name="edit_note">Edit note</string>
-
-    <string name="add_new_card_how_many">How many cards would you add in your learning queue?</string>
 
     <string name="check">Check</string>
 

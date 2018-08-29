@@ -11,18 +11,6 @@ class UserNoteDbDataSource @Inject constructor(
     private val database: LocalDatabase
 ) : UserNoteLocalDataSource {
 
-    override fun getUserNote(element: Byte): Single<GenericUserNote> {
-        return Single.defer {
-            val userNote = database.userNoteDao().getUserNote(element)
-            Single.just(
-                GenericUserNote(
-                    element = element,
-                    userNote = userNote?.user_note
-                )
-            )
-        }
-    }
-
     override fun getUserNotes(): Single<List<GenericUserNote>> {
         return Single.defer {
             val userNotes = database.userNoteDao().getUserNotes()

@@ -14,11 +14,6 @@ class ElementGsonDataSource @Inject constructor(
     private val jsonAssets: JsonAssets
 ) : ElementLocalDataSource {
 
-    override fun getElement(z: Int): Single<GenericElement> {
-        return getElements()
-            .map { it.first { it.atomicNumber == z.toByte() } }
-    }
-
     override fun getElements(): Single<List<GenericElement>> {
         return Single.defer {
             val gson = Gson()

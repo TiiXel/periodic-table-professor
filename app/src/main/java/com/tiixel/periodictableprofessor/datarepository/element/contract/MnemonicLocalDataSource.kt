@@ -5,7 +5,5 @@ import io.reactivex.Single
 
 interface MnemonicLocalDataSource {
 
-    fun getMnemonic(element: Byte): Single<GenericMnemonic>
-
     fun getMnemonics(): Single<List<GenericMnemonic>>
 }

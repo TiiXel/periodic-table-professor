@@ -37,25 +37,4 @@ class MnemonicMixedDataSource @Inject constructor(
             Single.just(mnemonics.values.toList())
         }
     }
-
-    override fun getMnemonic(element: Byte): Single<GenericMnemonic> {
-        return Single.defer {
-            val picture = assets.getPicture(element)
-
-            val gson = Gson()
-
-            val phrasesJson = jsonAssets.mnemonicPhraseJson()
-            val phrases =
-                gson.fromJson<Array<MnemonicPhraseEntity>>(phrasesJson, Array<MnemonicPhraseEntity>::class.java)
-            val phrase = phrases.first { it.atomic_number == element }
-
-            Single.just(
-                GenericMnemonic(
-                    element = element,
-                    mnemonicPicture = picture,
-                    mnemonicPhrase = phrase.phrase
-                )
-            )
-        }
-    }
 }
