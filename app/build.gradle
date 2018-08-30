@@ -5,8 +5,8 @@ apply plugin: 'kotlin-kapt'
 
 // Define app version number
 ext.versionMajor = 0
-ext.versionMinor = 2
-ext.versionPatch = 3
+ext.versionMinor = 3
+ext.versionPatch = 0
 ext.versionClassifier = null
 ext.isSnapshot = true
 
@@ -22,6 +22,15 @@ android {
         versionName generateVersionName()
 
         testInstrumentationRunner "com.tiixel.periodictableprofessor.test.TestRunner"
+
+        multiDexEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     compileOptions {
@@ -58,6 +67,11 @@ android {
             events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
         }
     }
+
+    sourceSets {
+        androidTest.assets.srcDirs +=
+                files("$projectDir/schemas".toString())
+    }
 }
 
 kapt {
@@ -66,13 +80,13 @@ kapt {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.2.41"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.2.51"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     // App's dependencies, including test
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation "android.arch.lifecycle:runtime:1.1.1"
-    implementation "android.arch.persistence.room:runtime:1.1.0"
-    implementation "com.android.support.constraint:constraint-layout:1.1.0"
+    implementation "android.arch.persistence.room:runtime:1.1.1"
+    implementation "com.android.support.constraint:constraint-layout:1.1.2"
     implementation "com.android.support.test.espresso:espresso-idling-resource:3.0.2"
     implementation "com.android.support:appcompat-v7:27.1.1"
     implementation "com.android.support:cardview-v7:27.1.1"
@@ -92,16 +106,21 @@ dependencies {
     implementation 'com.tspoon.traceur:traceur:1.0.1'
     implementation 'org.apache.commons:commons-lang3:3.4'
     implementation 'ru.noties:markwon:1.0.4'
+    implementation 'com.android.support:multidex:1.0.3'
     kapt "android.arch.lifecycle:common-java8:1.1.1"
-    kapt "android.arch.persistence.room:compiler:1.1.0"
+    kapt "android.arch.persistence.room:compiler:1.1.1"
     kapt "com.google.dagger:dagger-android-processor:2.14.1"
     kapt "com.google.dagger:dagger-compiler:2.14.1"
     compileOnly 'javax.annotation:jsr250-api:1.0'
     implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation 'com.github.msayan:tutorial-view:v1.0.6'
 
     implementation('org.jscience:jscience:4.3.1') {
         exclude(group: 'org.javolution', module: 'javolution')
     }
+
+    implementation "com.mikepenz:aboutlibraries:6.1.0"
 
     // Icons lib
     implementation "com.mikepenz:iconics-core:3.0.4@aar"
@@ -113,7 +132,7 @@ dependencies {
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.3'
 
     // Dependencies for local unit tests
-    testImplementation "android.arch.persistence.room:testing:1.1.0"
+    testImplementation "android.arch.persistence.room:testing:1.1.1"
     testImplementation "com.nhaarman:mockito-kotlin:1.5.0"
     testImplementation "junit:junit:4.12"
     testImplementation "org.hamcrest:hamcrest-all:1.3"
@@ -124,17 +143,19 @@ dependencies {
     kaptTest "com.google.dagger:dagger-compiler:2.14.1"
 
     // Android Testing Support Library's runner and rules
-    androidTestImplementation "com.android.support.test:rules:0.5"
-    androidTestImplementation "com.android.support.test:runner:0.5"
+    androidTestImplementation "com.android.support.test:rules:1.0.2"
+    androidTestImplementation "com.android.support.test:runner:1.0.2"
 
     // Dependencies for Android unit tests
     androidTestImplementation "com.nhaarman:mockito-kotlin:1.5.0"
     androidTestImplementation "junit:junit:4.12"
-    androidTestImplementation "org.mockito:mockito-core:1.10.19"
+    androidTestImplementation "org.mockito:mockito-core:2.8.47"
     androidTestImplementation 'com.google.dexmaker:dexmaker:1.2'
     androidTestImplementation 'com.linkedin.dexmaker:dexmaker-mockito:2.2.0'
 
     kaptAndroidTest "com.google.dagger:dagger-compiler:2.14.1"
+
+    androidTestImplementation "android.arch.persistence.room:testing:1.1.1"
 
     // Espresso UI Testing
     androidTestImplementation "com.android.support.test.espresso:espresso-contrib:3.0.2"

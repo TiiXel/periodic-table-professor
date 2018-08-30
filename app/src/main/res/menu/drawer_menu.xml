@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_study"
+            android:checked="true"
+            android:title="@string/nav_study"/>
+
+        <item
+            android:id="@+id/nav_statistics"
+            android:checked="true"
+            android:title="@string/nav_statistics"/>
+
+
+        <item
+            android:id="@+id/nav_periodic_table"
+            android:title="@string/nav_periodic_table"/>
+
+        <item
+            android:id="@+id/nav_about"
+            android:title="@string/nav_about"/>
+
+        <item
+            android:id="@+id/nav_tutorial"
+            android:checked="true"
+            android:title="@string/nav_tutorial"/>
+
+    </group>
+</menu>

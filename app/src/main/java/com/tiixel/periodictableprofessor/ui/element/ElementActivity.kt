@@ -25,7 +25,7 @@ import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.element_activity.*
+import kotlinx.android.synthetic.main.activity_element.*
 import kotlinx.android.synthetic.main.view_element_property.view.*
 import kotlinx.android.synthetic.main.view_element_property_group.view.*
 import ru.noties.markwon.Markwon
@@ -54,7 +54,7 @@ class ElementActivity : AppCompatActivity(), MviView<ElementIntent, ElementViewS
     //<editor-fold desc="Life cycle methods">
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.element_activity)
+        setContentView(R.layout.activity_element)
         AndroidInjection.inject(this)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ElementViewModel::class.java)

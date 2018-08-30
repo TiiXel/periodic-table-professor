@@ -1,11 +1,16 @@
 <resources>
     <string name="app_name">Periodic Table Professor</string>
+    <string name="app_description">An Android app that will help you memorize and associate name, atomic number and symbol of elements in the Periodic Table.</string>
+
+    <string name="nav_study">Study</string>
+    <string name="nav_statistics">Statistics</string>
+    <string name="nav_periodic_table">Periodic table</string>
+    <string name="nav_about">About</string>
+    <string name="nav_tutorial">Tutorial</string>
 
     <string name="ok">OK"</string>
     <string name="cancel">Cancel</string>
     <string name="reload">Reload</string>
-
-    <string name="activity_title_review">Review</string>
 
     <string name="error_message_default">Oops, there was an error fetching the data</string>
     <string name="error_message_default_button">Try again</string>
@@ -20,15 +25,13 @@
     <string name="add_note">Add note</string>
     <string name="edit_note">Edit note</string>
 
-    <string name="add_new_card_how_many">How many cards would you add in your learning queue?</string>
-
     <string name="check">Check</string>
 
     <string name="performance_easy">Easy</string>
     <string name="performance_medium">Medium</string>
     <string name="performance_hard">Hard</string>
     <string name="performance_failed">Failed</string>
-    
+
     <string name="element_property_group_general">General properties</string>
     <string name="element_property_group_physical_chemical">Physical and chemical properties</string>
     <string name="element_property_group_geological">Geological properties</string>
@@ -70,16 +73,13 @@
 
     <string name="review_appbar_extra_counts">Reviewable now: %1$d, today: %2$d</string>
 
-    <string name="home_tab_learn_title">Learn</string>
-    <string name="home_tab_statistics_title">Statistics</string>
-
-    <string name="home_tour_title">Welcome!</string>
-    <string name="home_tour_message">Start a guided tour to explore Periodic Table Professor and discover the memorization mechanics.</string>
-    <string name="home_browse_title">The periodic table</string>
-    <string name="home_browse_message">Visualise the periodic table of the elements and learn more about them.</string>
-    <string name="home_study_title">Study</string>
-    <string name="home_study_review_message">Review cards due soon and memorize atomic number, symbol and name for elements of the periodic table.</string>
-    <string name="home_study_cram_message">Work on all known cards, regardless of when the algorithm would suggests you to review them, to cement your knowledge.</string>
-    <string name="home_study_new_message">Expose new cards for elements you don\'t know yet.</string>
+    <string name="tutorial_welcome_title">Welcome</string>
+    <string name="tutorial_welcome_content">This app will will help you memorize and associate name, atomic number and symbol of elements in the Periodic Table.</string>
+    <string name="tutorial_cards_title">Cards</string>
+    <string name="tutorial_cards_content">A card constitutes a mnemonic mean to memorize the name, atomic number and symbol for an element. The picture is designed to remind you of the data, and a sentence tells you how to use the image to memorize the element.</string>
+    <string name="tutorial_reviewing_title">Reviewing</string>
+    <string name="tutorial_reviewing_content">When using this app, you are studying. The app will first show you only one part of the card. You have to remind the other ones, and check whether you are correct or not.</string>
+    <string name="tutorial_intervals_title">Intervals</string>
+    <string name="tutorial_intervals_content">You then evaluate your performance. The algorithm will determine, based on your performance history, when you should review this card again. The app will let you review the card when the algorithm thinks is best.</string>
 
 </resources>

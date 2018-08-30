@@ -5,7 +5,8 @@ import android.arch.lifecycle.ViewModelProvider
 import com.tiixel.periodictableprofessor.dagger.ViewModelFactory
 import com.tiixel.periodictableprofessor.presentation.element.ElementViewModel
 import com.tiixel.periodictableprofessor.presentation.elementlist.ElementListViewModel
-import com.tiixel.periodictableprofessor.presentation.review.ReviewViewModel
+import com.tiixel.periodictableprofessor.presentation.home.statistics.StatisticsViewModel
+import com.tiixel.periodictableprofessor.presentation.study.StudyViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -29,13 +30,18 @@ internal abstract class PresentationModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ReviewViewModel::class)
-    abstract fun bindLearnViewModel(viewModel: ReviewViewModel): ViewModel
+    @ViewModelKey(StudyViewModel::class)
+    abstract fun bindStudyViewModel(viewModel: StudyViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(ElementViewModel::class)
     abstract fun bindElementViewModel(viewModel: ElementViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(StatisticsViewModel::class)
+    abstract fun bindStatisticsViewModel(viewModel: StatisticsViewModel): ViewModel
 
     @Binds
     @Singleton

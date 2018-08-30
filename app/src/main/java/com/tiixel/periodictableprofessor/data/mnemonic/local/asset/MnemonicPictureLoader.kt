@@ -5,19 +5,22 @@ import javax.inject.Inject
 
 class MnemonicPictureLoader @Inject constructor(private val context: Context) {
 
-    fun getPicture(element: Byte) : ByteArray? {
+    fun getPictures(): Map<Byte, ByteArray> {
+        val regex = Regex("^[0-9]{1,3}[a-z].*")
+        val filter = Regex("^([0-9]{1,3})")
+        val assets = context.resources.assets.list("pictures").filter { it.matches(regex) }
 
-        System.out.println("Accessing : $element")
+        val pictures = emptyMap<Byte, ByteArray>().toMutableMap()
 
-        val regex = Regex("^${element}[a-z].*")
-        val asset = context.resources.assets.list("pictures").firstOrNull { it.matches(regex) } ?: return null
+        assets.forEach {
+            val reader = context.resources.assets.open("pictures/$it")
+            val data = reader.readBytes(1024)
+            reader.close()
+            filter.find(it)?.value?.toByte()?.let {
+                pictures.put(it, data)
+            }
+        }
 
-        val reader = context.resources.assets.open("pictures/$asset")
-
-        val data = reader.readBytes(1024)
-        reader.close()
-
-        return data
+        return pictures
     }
-
 }

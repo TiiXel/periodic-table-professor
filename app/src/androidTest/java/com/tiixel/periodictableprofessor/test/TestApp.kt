@@ -3,6 +3,7 @@ package com.tiixel.periodictableprofessor.test
 import android.app.Activity
 import android.app.Application
 import android.support.test.InstrumentationRegistry
+import com.tiixel.periodictableprofessor.dagger.DaggerTestAppComponent
 import com.tiixel.periodictableprofessor.dagger.TestAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector

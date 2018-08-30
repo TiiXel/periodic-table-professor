@@ -1,0 +1,89 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "bffc08ef7016b227c6715ee73c605fc3",
+    "entities": [
+      {
+        "tableName": "review_log",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`itemId` INTEGER NOT NULL, `face` INTEGER, `review_date` INTEGER NOT NULL, `next_due_date` INTEGER NOT NULL, `performance` INTEGER NOT NULL, `aggregated_item_difficulty` REAL NOT NULL, PRIMARY KEY(`review_date`))",
+        "fields": [
+          {
+            "fieldPath": "itemId",
+            "columnName": "itemId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "face",
+            "columnName": "face",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "review_date",
+            "columnName": "review_date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "next_due_date",
+            "columnName": "next_due_date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "performance",
+            "columnName": "performance",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "aggregated_item_difficulty",
+            "columnName": "aggregated_item_difficulty",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "review_date"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "user_note",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`element` INTEGER NOT NULL, `user_note` TEXT, PRIMARY KEY(`element`))",
+        "fields": [
+          {
+            "fieldPath": "element",
+            "columnName": "element",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "user_note",
+            "columnName": "user_note",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "element"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"bffc08ef7016b227c6715ee73c605fc3\")"
+    ]
+  }
+}

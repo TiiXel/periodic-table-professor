@@ -10,16 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.elementlist.ElementTableActivity"/>
-        <activity android:name=".ui.home.HomeActivity">
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.review.ReviewActivity"/>
 
         <activity android:name=".ui.element.ElementActivity"/>
+
+        <activity android:name=".ui.tutorial.Tutorial"/>
 
     </application>
 </manifest>

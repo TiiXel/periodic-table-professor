@@ -12,7 +12,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import com.tiixel.periodictableprofessor.R
-import com.tiixel.periodictableprofessor.domain.Element
+import com.tiixel.periodictableprofessor.domain.element.Element
 import com.tiixel.periodictableprofessor.ui.elementlist.model.ElementCellModel
 import io.reactivex.subjects.PublishSubject
 import kotlin.math.min
@@ -21,7 +21,7 @@ import kotlin.math.roundToInt
 class PeriodicTableView(context: Context, attrs: AttributeSet?, style: Int) : View(context, attrs, style) {
 
     /**
-     * The list of [PeriodicTableCellModel] to be displayed in the [PeriodicTableView].
+     * The list of [ElementCellModel] to be displayed in the [PeriodicTableView].
      *
      * The size of this list has to be 118.
      */
@@ -66,7 +66,7 @@ class PeriodicTableView(context: Context, attrs: AttributeSet?, style: Int) : Vi
     val elementClickedObservable: PublishSubject<Byte> = PublishSubject.create()
 
     /**
-     * Whether or not to draw the [PeriodicTableCellModel.number], [PeriodicTableCellModel.symbol], [PeriodicTableCellModel.additionalInfo]
+     * Whether or not to draw the [ElementCellModel.number], [ElementCellModel.symbol], [ElementCellModel.data]
      */
     private val drawDetails: Boolean
 
@@ -93,7 +93,7 @@ class PeriodicTableView(context: Context, attrs: AttributeSet?, style: Int) : Vi
     private val cellPadding = 2f
 
     /**
-     * The background color of each [PeriodicTableCellModel]'s cell.
+     * The background color of each [ElementCellModel]'s cell.
      *
      * Defined here to avoid instantiation in [onDraw]
      */
@@ -102,7 +102,7 @@ class PeriodicTableView(context: Context, attrs: AttributeSet?, style: Int) : Vi
         isFilterBitmap = true
     }
     /**
-     * The color used to draw the [PeriodicTableCellModel.symbol].
+     * The color used to draw the [ElementCellModel.symbol].
      *
      * Defined here to avoid instantiation in [onDraw]
      */
@@ -111,7 +111,7 @@ class PeriodicTableView(context: Context, attrs: AttributeSet?, style: Int) : Vi
         isSubpixelText = true
     }
     /**
-     * The color used to draw the [PeriodicTableCellModel.number].
+     * The color used to draw the [ElementCellModel.number].
      *
      * Defined here to avoid instantiation in [onDraw]
      */
@@ -122,7 +122,7 @@ class PeriodicTableView(context: Context, attrs: AttributeSet?, style: Int) : Vi
         isSubpixelText = true
     }
     /**
-     * The color used to draw the [PeriodicTableCellModel.additionalInfo].
+     * The color used to draw the [ElementCellModel.data].
      *
      * Defined here to avoid instantiation in [onDraw]
      */
