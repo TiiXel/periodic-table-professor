@@ -171,6 +171,10 @@ class MainActivity : AppCompatActivity() {
             .withListener(libsListener)
             .withAboutSpecial1("Play Store")
             .withAboutSpecial2("GitHub")
+            .withAboutSpecial3("Data")
+            .withAboutSpecial3Description("<b>Data sources</b><br><br>" +
+                "- Memory peg system: John P. Pratt's website<br><br>" +
+                "- Elements chemical and physical data: mendeleev python package database")
             .withLicenseShown(true)
             .supportFragment()
     }
