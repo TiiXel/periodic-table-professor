@@ -58,9 +58,9 @@ download the master branch sources and compile the apk.
 - [ ] Clean up gradle scripts
 - [ ] Write unit tests
 - [ ] Allow users to add personal notes for elements
-- [ ] Implement a statistics page, showing graphs of known elements over time
+- [x] Implement a statistics page, showing graphs of known elements over time
 - [ ] Correct colors displayed in the Periodic Table activity
 - [ ] Enhance the Periodic Table view, make it follow Material Design rules
 - [x] Add an activity to display more details regarding a selected element
-- [ ] Welcome new users with a guided tour of the app
+- [x] Welcome new users with a guided tour of the app
 - [ ] Add an option to notify users when a card is ready to be reviewed
