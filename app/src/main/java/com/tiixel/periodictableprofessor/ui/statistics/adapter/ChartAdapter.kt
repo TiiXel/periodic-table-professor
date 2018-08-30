@@ -26,7 +26,7 @@ object ChartAdapter {
 
         chartModels.forEach { model ->
 
-            if (model.data != null) {
+            if (model.data != null && model.data.isNotEmpty()) {
 
                 val barDataSet = LineDataSet(mutableListOf(), model.title)
                 barDataSet.color = model.color
