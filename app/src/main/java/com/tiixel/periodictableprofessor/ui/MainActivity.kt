@@ -1,6 +1,7 @@
 package com.tiixel.periodictableprofessor.ui
 
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -21,6 +22,7 @@ import com.tiixel.periodictableprofessor.R
 import com.tiixel.periodictableprofessor.ui.elementlist.ElementTableFragment
 import com.tiixel.periodictableprofessor.ui.statistics.StatisticsFragment
 import com.tiixel.periodictableprofessor.ui.study.StudyFragment
+import com.tiixel.periodictableprofessor.ui.tutorial.Tutorial
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.main_layout_drawer.*
 
@@ -31,6 +33,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Show tutorial
+        val sharedPref = getSharedPreferences(Tutorial.tutorialSharedPreferencesFile, Context.MODE_PRIVATE)
+        val tutorialCompleted = sharedPref.getBoolean(Tutorial.tutorialCompletedSharedPreferencesKey, false)
+        if (!tutorialCompleted) startActivity(Intent(this, Tutorial::class.java))
+
         AndroidInjection.inject(this)
 
         setContentView(R.layout.main_layout_drawer)
@@ -47,7 +55,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         main_layout_drawer.setNavigationItemSelectedListener { menuItem ->
-            selectDrawerItem(menuItem)
+
+            if (menuItem.itemId == R.id.nav_tutorial) startActivity(Intent(this, Tutorial::class.java))
+            else selectDrawerItem(menuItem)
+
             return@setNavigationItemSelectedListener true
         }
 

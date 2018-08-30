@@ -114,6 +114,7 @@ dependencies {
     compileOnly 'javax.annotation:jsr250-api:1.0'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation 'com.github.msayan:tutorial-view:v1.0.6'
 
     implementation('org.jscience:jscience:4.3.1') {
         exclude(group: 'org.javolution', module: 'javolution')
