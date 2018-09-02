@@ -3,8 +3,6 @@
 An Android app that will help you memorize and associate name, atomic number and
 symbol of elements in the Periodic Table.
 
-Please note that this is a work in progress.
-
 ## How ?
 
 John P. Pratt's [website](http://www.johnpratt.com/atomic/periodic.html) is a
@@ -43,15 +41,10 @@ python package database
 
 ## How do I use it ?
 
-This application has not been released yet. It's not ready to be used, many
-features are missing or not working as intended.
+This application is currently in its beta phase on the Play Store. You can
+register from the beta program by clicking this link [here](https://play.google.com/apps/testing/com.tiixel.periodictableprofessor).
 
-A pre-release is available on the [releases](https://github.com/TiiXel/periodic-table-professor/releases)
-page of this Github repository, you can download and install it to your Android
-device.
-
-If you want to use and test the latest code, which might be unstable, you can
-download the master branch sources and compile the apk.
+Feel free to report bug and issues here on GitHub!
 
 ## Main todo list
 
